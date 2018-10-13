@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>OC--实例对象、类对象和元类对象是如何分工的 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本文已经默认你已经了解了实例对象、类对象和元类对象，关于什么是实例对象、类对象和元类对象，请自行了解不在本文的范围内。 *前言平时开发的过程中我们会创建类，然后给这个类增加属性，方法，甚至添加协议和分类，然后分类有添加方法等等，那么这些添加的东西在内存中是如何存放的呢，当我们调用某个方法的时候又是如何完成调用的呢？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OC--实例对象、类对象和元类对象是如何分工的">
+<meta property="og:url" content="http://yoursite.com/2018/08/02/2018-08-11-10/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="本文已经默认你已经了解了实例对象、类对象和元类对象，关于什么是实例对象、类对象和元类对象，请自行了解不在本文的范围内。 *前言平时开发的过程中我们会创建类，然后给这个类增加属性，方法，甚至添加协议和分类，然后分类有添加方法等等，那么这些添加的东西在内存中是如何存放的呢，当我们调用某个方法的时候又是如何完成调用的呢？">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-10-12T14:12:59.889Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OC--实例对象、类对象和元类对象是如何分工的">
+<meta name="twitter:description" content="本文已经默认你已经了解了实例对象、类对象和元类对象，关于什么是实例对象、类对象和元类对象，请自行了解不在本文的范围内。 *前言平时开发的过程中我们会创建类，然后给这个类增加属性，方法，甚至添加协议和分类，然后分类有添加方法等等，那么这些添加的东西在内存中是如何存放的呢，当我们调用某个方法的时候又是如何完成调用的呢？">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-08-11-10" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/02/2018-08-11-10/" class="article-date">
+  <time datetime="2018-08-02T07:12:08.000Z" itemprop="datePublished">2018-08-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OC--实例对象、类对象和元类对象是如何分工的
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文已经默认你已经了解了<code>实例对象</code>、<code>类对象</code>和<code>元类对象</code>，关于什么是<code>实例对象</code>、<code>类对象</code>和<code>元类对象</code>，请自行了解不在本文的范围内。</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="*前言"></a>*前言</h3><p>平时开发的过程中我们会创建类，然后给这个类增加属性，方法，甚至添加协议和分类，然后分类有添加方法等等，那么这些添加的东西在内存中是如何存放的呢，当我们调用某个方法的时候又是如何完成调用的呢？</p>
+<a id="more"></a>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="*准备工作"></a>*准备工作</h3><p>创建一个<code>command line tool</code>项目， 编辑<code>main.m</code>内容如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">#import &lt;malloc/malloc.h&gt;</span><br><span class="line"></span><br><span class="line">@interface Animal : NSObject &#123;</span><br><span class="line">    @public</span><br><span class="line">    int _age;</span><br><span class="line">    char _a;</span><br><span class="line">    double _b;</span><br><span class="line">    NSString *_name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, copy) NSString *testProperty;</span><br><span class="line"></span><br><span class="line">- (int)testFunction:(int)a;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Animal</span><br><span class="line"></span><br><span class="line">- (int)testFunction:(int)a &#123;</span><br><span class="line">    return 10;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将代码通过<code>clang</code>命令重写成 架构为arm64的<code>c++</code>代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcrun -sdk iphoneos clang -arch arm64 -rewrite-objc main.m</span><br></pre></td></tr></table></figure>
+<p>会在<code>main.m</code>同层目录下生成<code>main.cpp</code>文件</p>
+<h3 id="3中对象的生成"><a href="#3中对象的生成" class="headerlink" title="*3中对象的生成"></a>*3中对象的生成</h3><p>查看<code>main.cpp</code>文件会看到三个核心的对象，分别对象<code>实例对象</code>、<code>类对象</code>和<code>元类对象</code></p>
+<p><code>实例对象</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct Animal_IMPL &#123;</span><br><span class="line">	struct NSObject_IMPL NSObject_IVARS;</span><br><span class="line">	int _age;</span><br><span class="line">	char _a;</span><br><span class="line">	double _b;</span><br><span class="line">	NSString *_name;</span><br><span class="line">	NSString *_testProperty;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>类对象</code>，代码做了适量的删减</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct _class_t OBJC_CLASS_$_Animal __attribute__ ((used, section (&quot;__DATA,__objc_data&quot;))) = &#123;</span><br><span class="line">	0, // &amp;OBJC_METACLASS_$_Animal,</span><br><span class="line">	0, // &amp;OBJC_CLASS_$_NSObject,</span><br><span class="line">	0, // (void *)&amp;_objc_empty_cache,</span><br><span class="line">	0, // unused, was (void *)&amp;_objc_empty_vtable,</span><br><span class="line">	&amp;_OBJC_CLASS_RO_$_Animal,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>元类对象</code>，代码做了适量的删减</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct _class_t OBJC_METACLASS_$_Animal __attribute__ ((used, section (&quot;__DATA,__objc_data&quot;))) = &#123;</span><br><span class="line">	0, // &amp;OBJC_METACLASS_$_NSObject,</span><br><span class="line">	0, // &amp;OBJC_METACLASS_$_NSObject,</span><br><span class="line">	0, // (void *)&amp;_objc_empty_cache,</span><br><span class="line">	0, // unused, was (void *)&amp;_objc_empty_vtable,</span><br><span class="line">	&amp;_OBJC_METACLASS_RO_$_Animal,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="实例对象职责"><a href="#实例对象职责" class="headerlink" title="*实例对象职责"></a>*实例对象职责</h3><p>由<code>main.m</code>函数的中<code>Animal</code>类的代码可以知道，我们一共给<code>Animal</code>对象增加了以下内容</p>
+<p><strong>共有成员变量4个</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int _age;</span><br><span class="line">char _a;</span><br><span class="line">double _b;</span><br><span class="line">NSString *_name;</span><br></pre></td></tr></table></figure>
+<p><strong>属性1个</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, copy) NSString *testProperty;</span><br></pre></td></tr></table></figure>
+<p><strong>实例方法1个</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (int)testFunction:(int)a;</span><br></pre></td></tr></table></figure>
+<p><strong>类方法1个</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ (int)testClassFunction;</span><br></pre></td></tr></table></figure>
+<p>由实例对象的结构可以知道</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct Animal_IMPL &#123;</span><br><span class="line">	struct NSObject_IMPL NSObject_IVARS;</span><br><span class="line">	int _age;</span><br><span class="line">	char _a;</span><br><span class="line">	double _b;</span><br><span class="line">	NSString *_name;</span><br><span class="line">	NSString *_testProperty;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这个对象拥有了4个成员变量和一个<code>_testProperty</code>的属性，除了一个父类的结构体之外并无其他，得出以下结论</p>
+<ol>
+<li>实例对象只存放成员变量；</li>
+<li>属性会生成<code>_</code>+<code>属性名称</code>的成员变量 （这也进一步说明@property会生成_的成员变量）</li>
+</ol>
+<h2 id="至此成员变量已经有人认领了—-gt-实例对象；"><a href="#至此成员变量已经有人认领了—-gt-实例对象；" class="headerlink" title="至此成员变量已经有人认领了—&gt; 实例对象；"></a>至此成员变量已经有人认领了—&gt; <code>实例对象</code>；</h2><h3 id="类对象职责"><a href="#类对象职责" class="headerlink" title="*类对象职责"></a>*类对象职责</h3><p>由类对象的数据结构可知是为<code>_class_t</code>类型的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct _class_t &#123;</span><br><span class="line">	struct _class_t *isa; // 指向是哪个对象的实例</span><br><span class="line">	struct _class_t *superclass; // 指向自己的父类</span><br><span class="line">	void *cache; // #warning 暂时不清楚</span><br><span class="line">	void *vtable; // 标识为未使用的</span><br><span class="line">	struct _class_ro_t *ro; // 存储内容的详细信息</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>再看下<code>类对象</code>的结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct _class_t OBJC_CLASS_$_Animal __attribute__ ((used, section (&quot;__DATA,__objc_data&quot;))) = &#123;</span><br><span class="line">	0, // &amp;OBJC_METACLASS_$_Animal,</span><br><span class="line">	0, // &amp;OBJC_CLASS_$_NSObject,</span><br><span class="line">	0, // (void *)&amp;_objc_empty_cache,</span><br><span class="line">	0, // unused, was (void *)&amp;_objc_empty_vtable,</span><br><span class="line">	&amp;_OBJC_CLASS_RO_$_Animal,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>类对象的<code>ro</code>指向<code>_OBJC_CLASS_RO_$_Animal</code>地址，结构如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">static struct _class_ro_t _OBJC_CLASS_RO_$_Animal __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = &#123;</span><br><span class="line">	0, __OFFSETOFIVAR__(struct Animal, _age), sizeof(struct Animal_IMPL), </span><br><span class="line">	0, </span><br><span class="line">	&quot;Animal&quot;,</span><br><span class="line">	(const struct _method_list_t *)&amp;_OBJC_$_INSTANCE_METHODS_Animal,</span><br><span class="line">	0, </span><br><span class="line">	(const struct _ivar_list_t *)&amp;_OBJC_$_INSTANCE_VARIABLES_Animal,</span><br><span class="line">	0, w</span><br><span class="line">	(const struct _prop_list_t *)&amp;_OBJC_$_PROP_LIST_Animal,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>可以知道是<code>_class_ro_t</code>类型的 <code>_class_ro_t</code>结构如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">struct _class_ro_t &#123;</span><br><span class="line">	unsigned int flags; // 1 标识元类对象 0 标识类对象</span><br><span class="line">	unsigned int instanceStart; //  #warning所管理的实例对象的开始</span><br><span class="line">	unsigned int instanceSize; // 所管理的实例对象的大小</span><br><span class="line">	const unsigned char *ivarLayout; // #warning </span><br><span class="line">	const char *name; // 类的名称</span><br><span class="line">	const struct _method_list_t *baseMethods; // 方法列表</span><br><span class="line">	const struct _objc_protocol_list *baseProtocols; // 协议列表</span><br><span class="line">	const struct _ivar_list_t *ivars; // 成员变量列表</span><br><span class="line">	const unsigned char *weakIvarLayout; // #warning </span><br><span class="line">	const struct _prop_list_t *properties; // 属性列表</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>点击<code>_OBJC_$_INSTANCE_METHODS_Animal</code>如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static struct /*_method_list_t*/ &#123;</span><br><span class="line">    unsigned int entsize;  // sizeof(struct _objc_method)</span><br><span class="line">    unsigned int method_count;</span><br><span class="line">    struct _objc_method method_list[3]; // 装着_objc_method结构的方法</span><br><span class="line">&#125; _OBJC_$_INSTANCE_METHODS_Animal __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = &#123;</span><br><span class="line">    sizeof(_objc_method),</span><br><span class="line">    3,</span><br><span class="line">    &#123;(struct objc_selector *)&quot;testFunction:&quot;, &quot;i20@0:8i16&quot;, (void *)_I_Animal_testFunction_&#125;,</span><br><span class="line">    &#123;(struct objc_selector *)&quot;testProperty&quot;, &quot;@16@0:8&quot;, (void *)_I_Animal_testProperty&#125;,</span><br><span class="line">    &#123;(struct objc_selector *)&quot;setTestProperty:&quot;, &quot;v24@0:8@16&quot;, (void *)_I_Animal_setTestProperty_&#125;</span><br><span class="line">    &#125; // I 表示instance</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>装着所有的实例方法（也可以看出@property会生成对应的set和get方法）。</p>
+<p><code>_objc_method</code>结构如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct _objc_method &#123;</span><br><span class="line">	struct objc_selector * _cmd; // 方法的编号</span><br><span class="line">	const char *method_type; // 方法签名</span><br><span class="line">	void  *_imp; // 真正函数的实现</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="至此，实例方法有人认领了—-gt-类对象；"><a href="#至此，实例方法有人认领了—-gt-类对象；" class="headerlink" title="至此，实例方法有人认领了—&gt; 类对象；"></a>至此，实例方法有人认领了—&gt; <code>类对象</code>；</h2><p><strong>成员变量</strong></p>
+<p>指向<code>_OBJC_$_INSTANCE_VARIABLES_Animal</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">static struct /*_ivar_list_t*/ &#123;</span><br><span class="line">	unsigned int entsize;  // sizeof(struct _prop_t)</span><br><span class="line">	unsigned int count;</span><br><span class="line">	struct _ivar_t ivar_list[5];</span><br><span class="line">&#125; _OBJC_$_INSTANCE_VARIABLES_Animal __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = &#123;</span><br><span class="line">	sizeof(_ivar_t),</span><br><span class="line">	5,</span><br><span class="line">	&#123;(unsigned long int *)&amp;OBJC_IVAR_$_Animal$_age, &quot;_age&quot;, &quot;i&quot;, 2, 4&#125;,</span><br><span class="line">	 &#123;(unsigned long int *)&amp;OBJC_IVAR_$_Animal$_a, &quot;_a&quot;, &quot;c&quot;, 0, 1&#125;,</span><br><span class="line">	 &#123;(unsigned long int *)&amp;OBJC_IVAR_$_Animal$_b, &quot;_b&quot;, &quot;d&quot;, 3, 8&#125;,</span><br><span class="line">	 &#123;(unsigned long int *)&amp;OBJC_IVAR_$_Animal$_name, &quot;_name&quot;, &quot;@\&quot;NSString\&quot;&quot;, 3, 8&#125;,</span><br><span class="line">	 &#123;(unsigned long int *)&amp;OBJC_IVAR_$_Animal$_testProperty, &quot;_testProperty&quot;, &quot;@\&quot;NSString\&quot;&quot;, 3, 8&#125;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>_ivar_t</code>结构如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct _ivar_t &#123;</span><br><span class="line">	unsigned long int *offset;  // 变量的相对于开始位置的偏移量</span><br><span class="line">	const char *name; // 变量名称</span><br><span class="line">	const char *type; // 变量的类型编码</span><br><span class="line">	unsigned int alignment; // #warning我暂时没查到资料</span><br><span class="line">	unsigned int  size; // s所占的字节大小</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这里都是对于成员变量的描述信息</p>
+<p><strong>属性变量</strong></p>
+<p>指向<code>_OBJC_$_PROP_LIST_Animal</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">static struct /*_prop_list_t*/ &#123;</span><br><span class="line">	unsigned int entsize;  // sizeof(struct _prop_t)</span><br><span class="line">	unsigned int count_of_properties;</span><br><span class="line">	struct _prop_t prop_list[1];</span><br><span class="line">&#125; _OBJC_$_PROP_LIST_Animal __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = &#123;</span><br><span class="line">	sizeof(_prop_t),</span><br><span class="line">	1,</span><br><span class="line">	&#123;&#123;&quot;testProperty&quot;,&quot;T@\&quot;NSString\&quot;,C,N,V_testProperty&quot;&#125;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>_prop_t</code>结构如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct _prop_t &#123;</span><br><span class="line">	const char *name;  // 属性名称</span><br><span class="line">	const char *attributes; // 属性的属性信息</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>发现只有<code>testProperty</code>一个属性，简单说下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;&quot;testProperty&quot;,&quot;T@\&quot;NSString\&quot;,C,N,V_testProperty&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">T@&quot;NSString&quot;:表示这个属性的类型是 NSString 型</span><br><span class="line">C：表示属性的引用类型是 copy</span><br><span class="line">N：表示 nonatomic</span><br><span class="line">V_testProperty: 表示属性生成的实例变量是：_testProperty,我们可以用_testProperty来访问属性testProperty的值。</span><br></pre></td></tr></table></figure>
+<p><strong>结论</strong><br>成员变量和属性变量还是有区别的  成员变量包含属性变量</p>
+<p>只剩下类方法无人认领了，猜也猜到了—&gt; <code>元类对象</code></p>
+<h3 id="元类对象职责"><a href="#元类对象职责" class="headerlink" title="*元类对象职责"></a>*元类对象职责</h3><p>由下面代码可以知道<code>METACLASS</code>也是<code>_class_t</code>类型的，只不过<code>_class_ro_t</code>指向的是<code>_OBJC_METACLASS_RO_$_Animal</code>的地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct _class_t OBJC_METACLASS_$_Animal __attribute__ ((used, section (&quot;__DATA,__objc_data&quot;))) = &#123;</span><br><span class="line">	0, // &amp;OBJC_METACLASS_$_NSObject,</span><br><span class="line">	0, // &amp;OBJC_METACLASS_$_NSObject,</span><br><span class="line">	0, // (void *)&amp;_objc_empty_cache,</span><br><span class="line">	0, // unused, was (void *)&amp;_objc_empty_vtable,</span><br><span class="line">	&amp;_OBJC_METACLASS_RO_$_Animal,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>_OBJC_METACLASS_RO_$_Animal</strong> 如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">static struct _class_ro_t _OBJC_METACLASS_RO_$_Animal __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = &#123;</span><br><span class="line">	1, sizeof(struct _class_t), sizeof(struct _class_t), </span><br><span class="line">	0, </span><br><span class="line">	&quot;Animal&quot;,</span><br><span class="line">	(const struct _method_list_t *)&amp;_OBJC_$_CLASS_METHODS_Animal,</span><br><span class="line">	0, </span><br><span class="line">	0, </span><br><span class="line">	0, </span><br><span class="line">	0, </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong><em>OBJC</em>$_CLASS_METHODS_Animal</strong> 如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">static struct /*_method_list_t*/ &#123;</span><br><span class="line">	unsigned int entsize;  // sizeof(struct _objc_method)</span><br><span class="line">	unsigned int method_count;</span><br><span class="line">	struct _objc_method method_list[1];</span><br><span class="line">&#125; _OBJC_$_CLASS_METHODS_Animal __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = &#123;</span><br><span class="line">	sizeof(_objc_method),</span><br><span class="line">	1,</span><br><span class="line">	&#123;&#123;(struct objc_selector *)&quot;testClassFunction&quot;, &quot;i16@0:8&quot;, (void *)_C_Animal_testClassFunction&#125;&#125; // C表示class</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>到此为止<code>类</code>方法也有人认领了—&gt; <code>元类对象</code><br>也可以看出<code>类对象</code>和<code>元类对象</code>的数据结构是一样的，只不过放的东西不一样罢了</p>
+<h3 id="3中对象如何关联的"><a href="#3中对象如何关联的" class="headerlink" title="*3中对象如何关联的"></a>*3中对象如何关联的</h3><p><code>实例对象</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct Animal_IMPL &#123;</span><br><span class="line">	struct NSObject_IMPL NSObject_IVARS;</span><br><span class="line">	int _age;</span><br><span class="line">	char _a;</span><br><span class="line">	double _b;</span><br><span class="line">	NSString *_name;</span><br><span class="line">	NSString *_testProperty;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>类对象</code>，代码做了适量的删减</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct _class_t OBJC_CLASS_$_Animal __attribute__ ((used, section (&quot;__DATA,__objc_data&quot;))) = &#123;</span><br><span class="line">	0, // &amp;OBJC_METACLASS_$_Animal,</span><br><span class="line">	0, // &amp;OBJC_CLASS_$_NSObject,</span><br><span class="line">	0, // (void *)&amp;_objc_empty_cache,</span><br><span class="line">	0, // unused, was (void *)&amp;_objc_empty_vtable,</span><br><span class="line">	&amp;_OBJC_CLASS_RO_$_Animal,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>元类对象</code>，代码做了适量的删减</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct _class_t OBJC_METACLASS_$_Animal __attribute__ ((used, section (&quot;__DATA,__objc_data&quot;))) = &#123;</span><br><span class="line">	0, // &amp;OBJC_METACLASS_$_NSObject,</span><br><span class="line">	0, // &amp;OBJC_METACLASS_$_NSObject,</span><br><span class="line">	0, // (void *)&amp;_objc_empty_cache,</span><br><span class="line">	0, // unused, was (void *)&amp;_objc_empty_vtable,</span><br><span class="line">	&amp;_OBJC_METACLASS_RO_$_Animal,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>有必要把上面的代码再写一遍，3中对象的数据结构以及知道了，那这三个是如何关联起来的呢，对于<code>类对象</code>和<code>元类对象</code>在内存里面只有一份，编译阶段就可以初始化了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">static void OBJC_CLASS_SETUP_$_Animal(void ) &#123;</span><br><span class="line">	OBJC_METACLASS_$_Animal.isa = &amp;OBJC_METACLASS_$_NSObject;</span><br><span class="line">	OBJC_METACLASS_$_Animal.superclass = &amp;OBJC_METACLASS_$_NSObject;</span><br><span class="line">	OBJC_METACLASS_$_Animal.cache = &amp;_objc_empty_cache;</span><br><span class="line">	OBJC_CLASS_$_Animal.isa = &amp;OBJC_METACLASS_$_Animal;</span><br><span class="line">	OBJC_CLASS_$_Animal.superclass = &amp;OBJC_CLASS_$_NSObject;</span><br><span class="line">	OBJC_CLASS_$_Animal.cache = &amp;_objc_empty_cache;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而对于<code>实例对象</code>，可以有很多多个，只能等到初始化的时候才能指定了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">inline void </span><br><span class="line">objc_object::initInstanceIsa(Class cls, bool hasCxxDtor)</span><br><span class="line">&#123;</span><br><span class="line">    assert(!cls-&gt;instancesRequireRawIsa());</span><br><span class="line">    assert(hasCxxDtor == cls-&gt;hasCxxDtor());</span><br><span class="line"></span><br><span class="line">    initIsa(cls, true, hasCxxDtor);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">inline void </span><br><span class="line">objc_object::initIsa(Class cls, bool nonpointer, bool hasCxxDtor) </span><br><span class="line">&#123; </span><br><span class="line">    assert(!isTaggedPointer()); </span><br><span class="line">    </span><br><span class="line">    if (!nonpointer) &#123;</span><br><span class="line">        isa.cls = cls;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        assert(!DisableNonpointerIsa);</span><br><span class="line">        assert(!cls-&gt;instancesRequireRawIsa());</span><br><span class="line"></span><br><span class="line">        isa_t newisa(0);</span><br><span class="line"></span><br><span class="line">#if SUPPORT_INDEXED_ISA</span><br><span class="line">        assert(cls-&gt;classArrayIndex() &gt; 0);</span><br><span class="line">        newisa.bits = ISA_INDEX_MAGIC_VALUE;</span><br><span class="line">        // isa.magic is part of ISA_MAGIC_VALUE</span><br><span class="line">        // isa.nonpointer is part of ISA_MAGIC_VALUE</span><br><span class="line">        newisa.has_cxx_dtor = hasCxxDtor;</span><br><span class="line">        newisa.indexcls = (uintptr_t)cls-&gt;classArrayIndex();</span><br><span class="line">#else</span><br><span class="line">        newisa.bits = ISA_MAGIC_VALUE;</span><br><span class="line">        // isa.magic is part of ISA_MAGIC_VALUE</span><br><span class="line">        // isa.nonpointer is part of ISA_MAGIC_VALUE</span><br><span class="line">        newisa.has_cxx_dtor = hasCxxDtor;</span><br><span class="line">        newisa.shiftcls = (uintptr_t)cls &gt;&gt; 3;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">        // This write must be performed in a single store in some cases</span><br><span class="line">        // (for example when realizing a class because other threads</span><br><span class="line">        // may simultaneously try to use the class).</span><br><span class="line">        // fixme use atomics here to guarantee single-store and to</span><br><span class="line">        // guarantee memory order w.r.t. the class index table</span><br><span class="line">        // ...but not too atomic because we don&apos;t want to hurt instantiation</span><br><span class="line">        isa = newisa;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>到这三者已经串联起来了<br>什么是isa不是本文的重点</p>
+<p>最后会有个对外输出的指针供运行时调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">static struct _class_t *L_OBJC_LABEL_CLASS_$ [1] __attribute__((used, section (&quot;__DATA, __objc_classlist,regular,no_dead_strip&quot;)))= &#123;</span><br><span class="line">	&amp;OBJC_CLASS_$_Animal,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="各种情况的调用"><a href="#各种情况的调用" class="headerlink" title="*各种情况的调用"></a>*各种情况的调用</h3><p>获取属性：通过<code>实例对象</code>拿的；<br>获取对象方法：<code>实例对象</code>通过<code>isa</code>找到对应实例的<code>类对象</code>拿的；<br>获取类方法：<code>实例对象</code>通过<code>isa</code>找到对应实例的<code>类对象</code>拿的；</p>
+<h3 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h3><ol>
+<li><code>协议</code>、<code>分类</code>方法没有分析，读者可自行分析，后面我也会输出文章；</li>
+<li>所有的这些属性存进去了，能不能获取到呢；</li>
+<li>对外输出的指针如何被runtime调用的；</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/02/2018-08-11-10/" data-id="cjn75migt0003izbuwpgvgqvy" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/02/2018-08-11-13/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          OC--如何获取变量和方法的信息
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/07/29/2018-08-11-11/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">OC-对象的内存分配</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

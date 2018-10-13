@@ -62,10 +62,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-2018-10-07-25" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/10/13/hello-world/" class="article-date">
-  <time datetime="2018-10-13T07:25:39.280Z" itemprop="datePublished">2018-10-13</time>
+    <a href="/2018/10/07/2018-10-07-25/" class="article-date">
+  <time datetime="2018-10-07T07:43:57.000Z" itemprop="datePublished">2018-10-07</time>
 </a>
     
   </div>
@@ -76,7 +76,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/13/hello-world/">Hello World</a>
+      <a class="article-title" href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
     </h1>
   
 
@@ -84,20 +84,432 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+        <h2 id="一、函数的入参和返回值"><a href="#一、函数的入参和返回值" class="headerlink" title="一、函数的入参和返回值"></a>一、函数的入参和返回值</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code    ss:stack       ds:data</span><br><span class="line"></span><br><span class="line">stack segment</span><br><span class="line">        </span><br><span class="line">      db 20 dup(0)  </span><br><span class="line">stack ends</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">data segment </span><br><span class="line">     result2 db 0h</span><br><span class="line">     result db 0h</span><br><span class="line">data ends    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">         </span><br><span class="line">start: </span><br><span class="line"></span><br><span class="line">     mov ax,data</span><br><span class="line">     mov ds,ax</span><br><span class="line">            </span><br><span class="line">     mov ax,stack       </span><br><span class="line">     mov ss , ax      </span><br><span class="line">     mov sp, 20</span><br><span class="line">      </span><br><span class="line">     </span><br><span class="line">     ;第一种      </span><br><span class="line">     ;mov ax , 1111h  </span><br><span class="line">     ;mov bx, 2222h</span><br><span class="line">     ;call sum</span><br><span class="line">     </span><br><span class="line">     ;第二种  </span><br><span class="line">     ;call sum2</span><br><span class="line">     </span><br><span class="line">     ;第三种 通过poo两次来维持栈平衡</span><br><span class="line">      ;push  1111h</span><br><span class="line">      ;push  2222h</span><br><span class="line">      ;call sum3 </span><br><span class="line">      ;pop si</span><br><span class="line">      ;pop si </span><br><span class="line">                </span><br><span class="line">      ;第四种  通过移动sp指针来维持栈平衡</span><br><span class="line">      ;push  1111h</span><br><span class="line">      ;push  2222h</span><br><span class="line">      ;call sum3</span><br><span class="line">      ;add sp,4 </span><br><span class="line">        </span><br><span class="line">      ;第五种  通过移动sp指针来维持栈平衡  </span><br><span class="line">      push  1111h</span><br><span class="line">      push  2222h</span><br><span class="line">      call sum4</span><br><span class="line">      </span><br><span class="line">     mov ax, 4c00h</span><br><span class="line">     int 21h </span><br><span class="line">     </span><br><span class="line"> ;通过寄存器 存储值 速度快   </span><br><span class="line"> ; 入参放到bx,cx， 返回值在ax上</span><br><span class="line">sum:</span><br><span class="line">    mov cx , bx</span><br><span class="line">    add ax ,cx</span><br><span class="line">    </span><br><span class="line">    ret   </span><br><span class="line"></span><br><span class="line">;将入参存到ds段中 缺点：全局共享</span><br><span class="line">sum2:</span><br><span class="line"></span><br><span class="line">    mov offset result,22h</span><br><span class="line">    </span><br><span class="line">    ret     </span><br><span class="line">        </span><br><span class="line">;将入参放到栈中</span><br><span class="line">sum3:</span><br><span class="line">    </span><br><span class="line">    mov bp,sp ;  由于无法直接修改sp的值 这里利用bp寄存器暂时保存下sp的值</span><br><span class="line">    mov ax,  ss:[bp + 2]</span><br><span class="line">    add ax,  ss:[bp + 4]</span><br><span class="line">    </span><br><span class="line">    ret     ;外平栈  需要调用者主动回收栈空间</span><br><span class="line"></span><br><span class="line">;将入参放到栈中</span><br><span class="line">sum4:</span><br><span class="line">    </span><br><span class="line">    mov bp,sp ;</span><br><span class="line">    mov ax,  ss:[bp + 2]</span><br><span class="line">    add ax,  ss:[bp + 4]</span><br><span class="line">    </span><br><span class="line">    ret  4   ;内平栈        </span><br><span class="line">         </span><br><span class="line">code ends     </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+<p>上面展示了一个函数入参的方式有哪些，一般的cpu都是少量参数通过寄存器传参，当参数大于一定个数的时候就会采用栈传递参数,各个cpu不一样。可以通过函数调用协议来制定参数传递的方式的，分别有<code>__stdcall</code>、<code>__cdecl</code>、<code>__fastcall</code>,下面通过<code>win32</code>来看看各个关键字有什么不同</p>
+        
+          <p class="article-more-link">
+            <a href="/2018/10/07/2018-10-07-25/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/10/13/hello-world/" data-id="cjn75le420000i8bur3a8334o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/10/07/2018-10-07-25/" data-id="cjn75mihl000mizbut4f9flby" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2018-10-07-26" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/07/2018-10-07-26/" class="article-date">
+  <time datetime="2018-10-07T07:36:21.000Z" itemprop="datePublished">2018-10-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>学习汇编最重要的是就是学习寄存器和指令，8086汇编拥有14个16位的寄存器，分别<code>AX、BX、CX、DX、SI、DI、BP、SP、IP、CS、DS、SS、ES、PSW</code><br>，该篇将来介绍各个寄存器作用。</p>
+        
+          <p class="article-more-link">
+            <a href="/2018/10/07/2018-10-07-26/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/07/2018-10-07-26/" data-id="cjn75mihm000oizbudkdprtm5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2018-10-06-24" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/06/2018-10-06-24/" class="article-date">
+  <time datetime="2018-10-06T11:41:46.000Z" itemprop="datePublished">2018-10-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="为什么要学习汇编"><a href="#为什么要学习汇编" class="headerlink" title="为什么要学习汇编"></a>为什么要学习汇编</h2><hr>
+<p>我们平时写的高级语言经过编译后都会到汇编最终到机器语言，它可以直接操作硬件，对性能高的一些程序采用汇编的方式，比如逆向工程，破解软件的时候都会和汇编打交道，当然对我来说是因为在看runtime源码的过程中，关于<code>_objc_msgSend</code>等等一些代码的时候也是汇编实现的，都告诉我是时候学习汇编了，这里并没有直接从<code>arm</code>汇编而是从<code>8086</code>汇编入门，理由很简单，<code>简单</code>，本系列文章是帮助大家汇编入门，更多的细节靠我几篇博客岂能说的清楚，还需要自己大量补课。</p>
+        
+          <p class="article-more-link">
+            <a href="/2018/10/06/2018-10-06-24/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/06/2018-10-06-24/" data-id="cjn75mihm000nizbu5ipwo3e6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2018-09-16-23" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/04/2018-09-16-23/" class="article-date">
+  <time datetime="2018-09-04T09:12:38.000Z" itemprop="datePublished">2018-09-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>有过一些oc基础的开发对oc的消息机制应该都是不陌生的，调用某个对象的方法其实就是给对象发送一条消息，然后接收的对象根据接收到的方法，查找自己的方法列表，然后调用的过程。那oc是如何查找方法的？，是每一次都是去遍历自己的方法列表吗，那这样岂不是效率很低？，如何才能提高查找效率呢？我相信你也有这样的疑惑的，本篇将带来苹果的底层是如何实现的。</p>
+        
+          <p class="article-more-link">
+            <a href="/2018/09/04/2018-09-16-23/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/09/04/2018-09-16-23/" data-id="cjn75mihj000kizbun5ocqgrl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2018-09-16-22" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/25/2018-09-16-22/" class="article-date">
+  <time datetime="2018-08-25T07:15:09.000Z" itemprop="datePublished">2018-08-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上篇讲到了<code>Block</code>其实就是<code>oc对象</code></p>
+<p>本文主要讲解<code>Block值捕获</code>以及如何修改<code>block</code>捕获的变量,说明下本文的目录结构</p>
+<ol>
+<li><p>Block是如何捕获变量的</p>
+<ul>
+<li>捕获的是auto局部变量<ul>
+<li>基本数据类型</li>
+<li>对象类型</li>
+</ul>
+</li>
+<li>捕获的是非auto变量（static变量的和全局变量）<ul>
+<li>基本数据类型</li>
+<li>对象类型</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Block捕获对对象的引用计数的影响</p>
+<ul>
+<li>对象类型</li>
+</ul>
+</li>
+<li><p>__block如何做到可以修改变量的</p>
+<ul>
+<li>__block变量的内存结构</li>
+</ul>
+</li>
+</ol>
+        
+          <p class="article-more-link">
+            <a href="/2018/08/25/2018-09-16-22/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/25/2018-09-16-22/" data-id="cjn75mihk000lizbuu6186ck4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2018-09-16-21" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/19/2018-09-16-21/" class="article-date">
+  <time datetime="2018-08-19T10:45:14.000Z" itemprop="datePublished">2018-08-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/19/2018-09-16-21/">OC--Block--(一)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##基本知识点回顾</p>
+<p>我们知道按照变量的作用域划分的话，变量可划分为<code>局部变量</code>和<code>全局变量</code>，而<code>局部变量</code>又分为<code>自动变量</code>和<code>静态变量</code>，<code>全局变量</code>分为<code>静态全局变量</code>和<code>非静态全局变量</code></p>
+        
+          <p class="article-more-link">
+            <a href="/2018/08/19/2018-09-16-21/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/19/2018-09-16-21/" data-id="cjn75mihh000iizbu3jh43h4k" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2018-08-12-20" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/12/2018-08-12-20/" class="article-date">
+  <time datetime="2018-08-12T07:19:56.000Z" itemprop="datePublished">2018-08-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/12/2018-08-12-20/">OC--分类</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本篇是解决<a href="http://fangshufeng.com/blog/2018/08/02/oc-instance-metaclass/" target="_blank" rel="noopener">上一篇</a>的第一个问题的；</p>
+<p>读过我<a href="http://fangshufeng.com/blog/2018/08/02/oc-instance-metaclass/" target="_blank" rel="noopener">实例对象、类对象和元类对象是如何分工的</a>的朋友应该知道一个类的实例方法是存放在<code>类对象</code>中的，类方法是存在<code>元类对象</code>中，这些是在编译阶段就能确定的，但是我们并没有发现分类的方法，也就有了下面的疑问：</p>
+<ol>
+<li>分类的加载时机；</li>
+<li>分类中的方法存放的地方；</li>
+<li>如果分类和原来的类拥有共同的方法，调用结果如何；</li>
+<li>如果同一个类的多个分类拥有同一个方法，调用结果如何；</li>
+<li>load方法是如何加载的；</li>
+<li>继承中的load方法是如何调用的；</li>
+<li>initialize方法如何加载的；</li>
+<li>综合结论</li>
+</ol>
+        
+          <p class="article-more-link">
+            <a href="/2018/08/12/2018-08-12-20/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/12/2018-08-12-20/" data-id="cjn75mihi000jizbul0jjraat" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2018-08-11-12" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/11/2018-08-11-12/" class="article-date">
+  <time datetime="2018-08-11T15:37:03.000Z" itemprop="datePublished">2018-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/11/2018-08-11-12/">OC-KVC调用和赋值原理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文主要介绍kvo是如何查找变量然后赋值，以及通过key取出值的</p>
+        
+          <p class="article-more-link">
+            <a href="/2018/08/11/2018-08-11-12/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/11/2018-08-11-12/" data-id="cjn75migs0002izbucixjyu46" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2018-08-11-5" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/08/2018-08-11-5/" class="article-date">
+  <time datetime="2018-08-08T02:35:59.000Z" itemprop="datePublished">2018-08-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/08/2018-08-11-5/">OC--KVO实现原理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>创建一个<code>iOS</code>项目<br>新建类<code>TestObj</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//TestObj.h</span><br><span class="line"></span><br><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">@interface TestObj : NSObject</span><br><span class="line"></span><br><span class="line">@property (nonatomic, copy) NSString *name;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">//TestObj.m</span><br><span class="line"></span><br><span class="line">#import &quot;TestObj.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation TestObj</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p><code>ViewController</code>如果要需要监听<code>TestObj</code>对象的<code>name</code>值的改变，代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#import &quot;TestObj.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) TestObj *obj1;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    TestObj *obj1 = [[TestObj alloc] init];</span><br><span class="line">    obj1.name = @&quot;jack&quot;;</span><br><span class="line">    _obj1 = obj1;</span><br><span class="line">    </span><br><span class="line">    [self.obj1 addObserver:self forKeyPath:@&quot;name&quot; options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event &#123;</span><br><span class="line">    self.obj1.name = @&quot;Tom&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary&lt;NSKeyValueChangeKey,id&gt; *)change context:(void *)context &#123;</span><br><span class="line">    NSLog(@&quot;%@对象的%@值改变了%@&quot;,object,keyPath,change);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运作模拟器点击后输出以下 很简单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> &lt;TestObj: 0x6000024d4400&gt;对象的name值改变了&#123;</span><br><span class="line">    kind = 1;</span><br><span class="line">    new = Tom;</span><br><span class="line">    old = jack;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2018/08/08/2018-08-11-5/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/08/2018-08-11-5/" data-id="cjn75mih9000eizbu4b6utlg7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2018-08-11-13" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/02/2018-08-11-13/" class="article-date">
+  <time datetime="2018-08-02T15:23:41.000Z" itemprop="datePublished">2018-08-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/02/2018-08-11-13/">OC--如何获取变量和方法的信息</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这一篇是解决<a href="https://www.jianshu.com/p/14b096d6a233" target="_blank" rel="noopener">上一篇</a>遗留问题中的第2个问题的，如果没有读过的请先阅读上一篇的内容</p>
+<p>变量:有<code>成员变量</code>和<code>属性变量</code>2者是包含关系，这个上篇已经解释过了；<br>方法：分为<code>实例方法</code>和<code>类方法</code>；</p>
+        
+          <p class="article-more-link">
+            <a href="/2018/08/02/2018-08-11-13/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/02/2018-08-11-13/" data-id="cjn75migy0005izbuth42a7gt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -108,6 +520,11 @@
 
   
 
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
 
 </section>
         
@@ -125,7 +542,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -138,7 +555,23 @@
       <ul>
         
           <li>
-            <a href="/2018/10/13/hello-world/">Hello World</a>
+            <a href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
           </li>
         
       </ul>

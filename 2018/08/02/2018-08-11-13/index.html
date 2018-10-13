@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>OC--如何获取变量和方法的信息 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="这一篇是解决上一篇遗留问题中的第2个问题的，如果没有读过的请先阅读上一篇的内容 变量:有成员变量和属性变量2者是包含关系，这个上篇已经解释过了；方法：分为实例方法和类方法；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OC--如何获取变量和方法的信息">
+<meta property="og:url" content="http://yoursite.com/2018/08/02/2018-08-11-13/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="这一篇是解决上一篇遗留问题中的第2个问题的，如果没有读过的请先阅读上一篇的内容 变量:有成员变量和属性变量2者是包含关系，这个上篇已经解释过了；方法：分为实例方法和类方法；">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-d6ecf4a9aa89c8b1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-12d9c6c165dca46e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-16T13:48:06.922Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OC--如何获取变量和方法的信息">
+<meta name="twitter:description" content="这一篇是解决上一篇遗留问题中的第2个问题的，如果没有读过的请先阅读上一篇的内容 变量:有成员变量和属性变量2者是包含关系，这个上篇已经解释过了；方法：分为实例方法和类方法；">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-d6ecf4a9aa89c8b1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-08-11-13" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/02/2018-08-11-13/" class="article-date">
+  <time datetime="2018-08-02T15:23:41.000Z" itemprop="datePublished">2018-08-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OC--如何获取变量和方法的信息
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这一篇是解决<a href="https://www.jianshu.com/p/14b096d6a233" target="_blank" rel="noopener">上一篇</a>遗留问题中的第2个问题的，如果没有读过的请先阅读上一篇的内容</p>
+<p>变量:有<code>成员变量</code>和<code>属性变量</code>2者是包含关系，这个上篇已经解释过了；<br>方法：分为<code>实例方法</code>和<code>类方法</code>；</p>
+<a id="more"></a>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>还是上一篇中的样例代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">#import &lt;malloc/malloc.h&gt;</span><br><span class="line">//#import &quot;TestObj.h&quot;</span><br><span class="line"></span><br><span class="line">@interface Animal : NSObject &#123;</span><br><span class="line">    @public</span><br><span class="line">    int _age;</span><br><span class="line">    char _a;</span><br><span class="line">    double _b;</span><br><span class="line">    NSString *_name;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, copy) NSString *testProperty;</span><br><span class="line"></span><br><span class="line">- (int)testFunction:(int)a;</span><br><span class="line"></span><br><span class="line">+ (int)testClassFunction;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Animal</span><br><span class="line"></span><br><span class="line">- (int)testFunction:(int)a &#123;</span><br><span class="line">    </span><br><span class="line">    return 10;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">+ (int)testClassFunction &#123;</span><br><span class="line">    return 10;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="runtime方法记忆的小技巧"><a href="#runtime方法记忆的小技巧" class="headerlink" title="runtime方法记忆的小技巧"></a>runtime方法记忆的小技巧</h3><p>有时候调用<code>runtime</code>的方法的时候特别难以记忆，如果对应到<code>_class_ro_t</code>类结构，现在是不是很好记忆了</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-d6ecf4a9aa89c8b1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15331809233311.jpg"></p>
+<p>看上面这些提示会发现和<code>类对象</code>已经<code>元类对象</code>的结构正好对应上了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">struct _class_ro_t &#123;</span><br><span class="line">	unsigned int flags;</span><br><span class="line">	unsigned int instanceStart;</span><br><span class="line">	unsigned int instanceSize;</span><br><span class="line">	const unsigned char *ivarLayout;</span><br><span class="line">	const char *name;</span><br><span class="line">	const struct _method_list_t *baseMethods;</span><br><span class="line">	const struct _objc_protocol_list *baseProtocols;</span><br><span class="line">	const struct _ivar_list_t *ivars;</span><br><span class="line">	const unsigned char *weakIvarLayout;</span><br><span class="line">	const struct _prop_list_t *properties;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>你只要对着这些数据结构敲对应的属性名称，就会找到相应的方法</p>
+<h3 id="成员变量获取"><a href="#成员变量获取" class="headerlink" title="成员变量获取"></a>成员变量获取</h3><p>由上一篇知道成员变量的信息是保存在<code>类对象</code>中的，当然是需要通过<code>类对象</code>去拿的；</p>
+<p>很容易得到类对象关于成员变量的数据结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">static struct /*_ivar_list_t*/ &#123;</span><br><span class="line">	unsigned int entsize;  // sizeof(struct _prop_t)</span><br><span class="line">	unsigned int count;</span><br><span class="line">	struct _ivar_t ivar_list[5];</span><br><span class="line">&#125; _OBJC_$_INSTANCE_VARIABLES_Animal __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = &#123;</span><br><span class="line">	sizeof(_ivar_t),</span><br><span class="line">	5,</span><br><span class="line">	&#123;(unsigned long int *)&amp;OBJC_IVAR_$_Animal$_age, &quot;_age&quot;, &quot;i&quot;, 2, 4&#125;,</span><br><span class="line">	 &#123;(unsigned long int *)&amp;OBJC_IVAR_$_Animal$_a, &quot;_a&quot;, &quot;c&quot;, 0, 1&#125;,</span><br><span class="line">	 &#123;(unsigned long int *)&amp;OBJC_IVAR_$_Animal$_b, &quot;_b&quot;, &quot;d&quot;, 3, 8&#125;,</span><br><span class="line">	 &#123;(unsigned long int *)&amp;OBJC_IVAR_$_Animal$_name, &quot;_name&quot;, &quot;@\&quot;NSString\&quot;&quot;, 3, 8&#125;,</span><br><span class="line">	 &#123;(unsigned long int *)&amp;OBJC_IVAR_$_Animal$_testProperty, &quot;_testProperty&quot;, &quot;@\&quot;NSString\&quot;&quot;, 3, 8&#125;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>可以看到变量的信息都存放在装着<code>_ivar_t</code>的<code>ivar_list</code>数组里面，知道了使用<code>runtime</code>的小技巧很容易知道获取成员变量列表会找<code>Ivar</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        Animal *animal = [[Animal alloc] init];</span><br><span class="line">        </span><br><span class="line">        unsigned  count = 0;</span><br><span class="line">        Ivar *ivarList =  class_copyIvarList([animal class], &amp;count); // 获取到成员变量的列表</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由<code>struct _ivar_t ivar_list[5];</code>就知道这个<code>ivar_list</code>装的都是<code>_ivar_t</code>类型的变量</p>
+<p><code>_ivar_t</code>如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct _ivar_t &#123;</span><br><span class="line">	unsigned long int *offset;  // pointer to ivar offset location</span><br><span class="line">	const char *name;</span><br><span class="line">	const char *type;</span><br><span class="line">	unsigned int alignment;</span><br><span class="line">	unsigned int  size;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>所以我们把代码写完</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        Animal *animal = [[Animal alloc] init];</span><br><span class="line">        </span><br><span class="line">        unsigned  count = 0;</span><br><span class="line">        </span><br><span class="line">        Ivar *ivarList =  class_copyIvarList([animal class], &amp;count);</span><br><span class="line">        </span><br><span class="line">        for (int i = 0;  i &lt; count; i++) &#123;</span><br><span class="line">            Ivar ivar =  ivarList[I];</span><br><span class="line">         </span><br><span class="line">            NSLog(@&quot;属性名称:%@, 偏移量:%ld,变量类型编码:%@&quot;,</span><br><span class="line">                  [NSString stringWithUTF8String:ivar_getName(ivar)],</span><br><span class="line">                  ivar_getOffset(ivar),</span><br><span class="line">                  [NSString stringWithUTF8String:ivar_getTypeEncoding(ivar)]</span><br><span class="line">                  );</span><br><span class="line">        &#125;</span><br><span class="line">        free(ivarList);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">属性名称:_age, 偏移量:8,变量类型编码:i</span><br><span class="line">属性名称:_a, 偏移量:12,变量类型编码:c</span><br><span class="line">属性名称:_b, 偏移量:16,变量类型编码:d</span><br><span class="line">属性名称:_name, 偏移量:24,变量类型编码:@&quot;NSString&quot;</span><br><span class="line">属性名称:_testProperty, 偏移量:32,变量类型编码:@&quot;NSString&quot;</span><br></pre></td></tr></table></figure>
+<p>这种方式可以拿到所有的成员变量列表以及类型编码，这2者应该没什么难理解的，也许这个偏移量咋一看不知道怎么得出这些数字的，</p>
+<p>这里还是要回到一开始存的时候</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">static struct /*_ivar_list_t*/ &#123;</span><br><span class="line">	unsigned int entsize;  // sizeof(struct _prop_t)</span><br><span class="line">	unsigned int count;</span><br><span class="line">	struct _ivar_t ivar_list[5];</span><br><span class="line">&#125; _OBJC_$_INSTANCE_VARIABLES_Animal __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = &#123;</span><br><span class="line">	sizeof(_ivar_t),</span><br><span class="line">	5,</span><br><span class="line">	&#123;(unsigned long int *)&amp;OBJC_IVAR_$_Animal$_age, &quot;_age&quot;, &quot;i&quot;, 2, 4&#125;,</span><br><span class="line">	 &#123;(unsigned long int *)&amp;OBJC_IVAR_$_Animal$_a, &quot;_a&quot;, &quot;c&quot;, 0, 1&#125;,</span><br><span class="line">	 &#123;(unsigned long int *)&amp;OBJC_IVAR_$_Animal$_b, &quot;_b&quot;, &quot;d&quot;, 3, 8&#125;,</span><br><span class="line">	 &#123;(unsigned long int *)&amp;OBJC_IVAR_$_Animal$_name, &quot;_name&quot;, &quot;@\&quot;NSString\&quot;&quot;, 3, 8&#125;,</span><br><span class="line">	 &#123;(unsigned long int *)&amp;OBJC_IVAR_$_Animal$_testProperty, &quot;_testProperty&quot;, &quot;@\&quot;NSString\&quot;&quot;, 3, 8&#125;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>以<code>_age</code>为例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;(unsigned long int *)&amp;OBJC_IVAR_$_Animal$_age, &quot;_age&quot;, &quot;i&quot;, 2, 4&#125;,</span><br></pre></td></tr></table></figure>
+<p><code>OBJC_IVAR_$_Animal$_age</code>其实就是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extern &quot;C&quot; unsigned long int OBJC_IVAR_$_Animal$_age __attribute__ ((used, section (&quot;__DATA,__objc_ivar&quot;))) = __OFFSETOFIVAR__(struct Animal, _age);</span><br></pre></td></tr></table></figure>
+<p>而<code>__OFFSETOFIVAR__</code>就是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define __OFFSETOFIVAR__(TYPE, MEMBER) ((long long) &amp;((TYPE *)0)-&gt;MEMBER)</span><br></pre></td></tr></table></figure>
+<p>表达的意思就是变量距离一开始的位置是多少（我们也可以通过这种方式拿到各个变量的偏移量，见文章最后的小demo），看过我的<a href="https://www.jianshu.com/p/3d699f1ae6a3" target="_blank" rel="noopener">第一篇文章</a>的应该知道继承<code>NSObject</code>的对象都有一个4个字节的<code>isa</code>，所以有一下结论:</p>
+<ol>
+<li><code>_age</code>是从第<code>8</code>字节开始的；</li>
+<li>由于<code>_age</code>占用4个字节，所以<code>_a</code>的开始位置为<code>8</code> + <code>4</code> = <code>12</code>;</li>
+<li><code>_b</code> 为 isa的<code>8</code> + age 的<code>4</code> + a的<code>1</code> 但是由于内存对齐的调整，后面的3位放不下字节长度为<code>4</code>的<code>_b</code>，所以为isa的<code>8</code> + age 的<code>4</code> + a的<code>1</code> + 空出来的<code>3</code>个字节 = <code>16</code>；</li>
+<li>剩下以此类推。。。</li>
+</ol>
+<p>也就是下面这张图</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-12d9c6c165dca46e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15331909124115.jpg"></p>
+<p>读者也可以根据我第一篇的文章看看具体的对象实际分配了多少内存。</p>
+<h3 id="属性变量获取"><a href="#属性变量获取" class="headerlink" title="属性变量获取"></a>属性变量获取</h3><p>属性变量也是放在<code>类对象</code>中的所以<code>class_copyPropertyList</code>第一个参数传的是<code>类对象</code></p>
+<p>还是贴出对应的代码吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">static struct /*_prop_list_t*/ &#123;</span><br><span class="line">	unsigned int entsize;  // sizeof(struct _prop_t)</span><br><span class="line">	unsigned int count_of_properties;</span><br><span class="line">	struct _prop_t prop_list[1];</span><br><span class="line">&#125; _OBJC_$_PROP_LIST_Animal __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = &#123;</span><br><span class="line">	sizeof(_prop_t),</span><br><span class="line">	1,</span><br><span class="line">	&#123;&#123;&quot;testProperty&quot;,&quot;T@\&quot;NSString\&quot;,C,N,V_testProperty&quot;&#125;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>_prop_t</code>结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct _prop_t &#123;</span><br><span class="line">	const char *name;</span><br><span class="line">	const char *attributes;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>和成员变量一样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        Animal *animal = [[Animal alloc] init];</span><br><span class="line">        </span><br><span class="line">        unsigned  count = 0;</span><br><span class="line">        </span><br><span class="line">        objc_property_t *propertyList =  class_copyPropertyList([animal class], &amp;count);</span><br><span class="line"></span><br><span class="line">        for (int i = 0;  i &lt; count; i++) &#123;</span><br><span class="line">            </span><br><span class="line">          objc_property_t  property =  propertyList[I];</span><br><span class="line">         </span><br><span class="line">            NSLog(@&quot;属性名称:%@,变量类型编码:%@&quot;,</span><br><span class="line">                  [NSString stringWithUTF8String:property_getName(property)],</span><br><span class="line">                  [NSString stringWithUTF8String:property_getAttributes(property)]</span><br><span class="line">                  );</span><br><span class="line">        &#125;</span><br><span class="line">        free(propertyList);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">属性名称:testProperty,变量类型编码:T@&quot;NSString&quot;,C,N,V_testProperty</span><br></pre></td></tr></table></figure>
+<h3 id="实例方法"><a href="#实例方法" class="headerlink" title="实例方法"></a>实例方法</h3><p>实例方法也是放在<code>类对象</code>中的所以<code>class_...</code>第一个参数传的也是<code>类对象</code></p>
+<p>实例方法代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">static struct /*_method_list_t*/ &#123;</span><br><span class="line">	unsigned int entsize;  // sizeof(struct _objc_method)</span><br><span class="line">	unsigned int method_count;</span><br><span class="line">	struct _objc_method method_list[3];</span><br><span class="line">&#125; _OBJC_$_INSTANCE_METHODS_Animal __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = &#123;</span><br><span class="line">	sizeof(_objc_method),</span><br><span class="line">	3,</span><br><span class="line">	&#123;(struct objc_selector *)&quot;testFunction:&quot;, &quot;i20@0:8i16&quot;, (void *)_I_Animal_testFunction_&#125;,</span><br><span class="line">	&#123;(struct objc_selector *)&quot;testProperty&quot;, &quot;@16@0:8&quot;, (void *)_I_Animal_testProperty&#125;,</span><br><span class="line">	&#123;(struct objc_selector *)&quot;setTestProperty:&quot;, &quot;v24@0:8@16&quot;, (void *)_I_Animal_setTestProperty_&#125;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>_objc_method</code>结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct _objc_method &#123;</span><br><span class="line">    struct objc_selector * _cmd;</span><br><span class="line">    const char *method_type;</span><br><span class="line">    void  *_imp;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        Animal *animal = [[Animal alloc] init];</span><br><span class="line">        </span><br><span class="line">        unsigned  count = 0;</span><br><span class="line">        </span><br><span class="line">        Method *methodList =  class_copyMethodList(object_getClass(animal), &amp;count);</span><br><span class="line"></span><br><span class="line">        for (int i = 0;  i &lt; count; i++) &#123;</span><br><span class="line">            </span><br><span class="line">          Method  method =  methodList[I];</span><br><span class="line">            </span><br><span class="line">            NSLog(@&quot;方法名称:%@ ,方法地址:%p,方法类型编码:%@&quot;,</span><br><span class="line">                 NSStringFromSelector(method_getName(method)),</span><br><span class="line">                 method_getImplementation(method),</span><br><span class="line">                  [NSString stringWithUTF8String:method_getTypeEncoding(method)]</span><br><span class="line">                  );</span><br><span class="line">        &#125;</span><br><span class="line">        free(methodList);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">方法名称:testFunction: ,方法地址:0x100000ac0,方法类型编码:i20@0:8i16</span><br><span class="line">方法名称:.cxx_destruct ,方法地址:0x100000b70,方法类型编码:v16@0:8</span><br><span class="line">方法名称:testProperty ,方法地址:0x100000b00,方法类型编码:@16@0:8</span><br><span class="line">方法名称:setTestProperty: ,方法地址:0x100000b30,方法类型编码:v24@0:8@16</span><br></pre></td></tr></table></figure>
+<p>会发现多了个<code>.cxx_destruct</code>，这个应该是框架加上去的，先不管这些，从输出结果拿到了所有的实例变方法</p>
+<h3 id="类方法"><a href="#类方法" class="headerlink" title="类方法"></a>类方法</h3><p>类方法是放在<code>元类对象</code>中的所以<code>class_...</code>第一个参数传的也是<code>元类对象</code></p>
+<p>只需要把获取<code>实例方法</code>的一行代码修改下就可以了</p>
+<p>将<code>class_copyMethodList</code>的第一个参数，由类对象换成元类对象就可以了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Method *methodList =  class_copyMethodList(object_getClass(animal), &amp;count);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Method *methodList =  class_copyMethodList(object_getClass(object_getClass(animal)), &amp;count);</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">方法名称:testClassFunction ,方法地址:0x100000af0,方法类型编码:i16@0:8</span><br></pre></td></tr></table></figure>
+<p>###<strong>OFFSETOFIVAR</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">struct TestStruct &#123;</span><br><span class="line">    int a;</span><br><span class="line">    char b;</span><br><span class="line">    double name;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#define t__OFFSETOFIVAR__(TYPE, MEMBER) ((long long) &amp;((TYPE *)0)-&gt;MEMBER)</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">       struct TestStruct temp ;</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;%lld&quot;,t__OFFSETOFIVAR__(struct TestStruct, a));</span><br><span class="line">        NSLog(@&quot;%lld&quot;,t__OFFSETOFIVAR__(struct TestStruct, b));</span><br><span class="line">        NSLog(@&quot;%lld&quot;,t__OFFSETOFIVAR__(struct TestStruct, name));</span><br><span class="line">       &#125;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line">4</span><br><span class="line">8</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/02/2018-08-11-13/" data-id="cjn75migy0005izbuth42a7gt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/08/2018-08-11-5/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          OC--KVO实现原理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/02/2018-08-11-10/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">OC--实例对象、类对象和元类对象是如何分工的</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

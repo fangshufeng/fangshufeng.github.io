@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>谈谈isa | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="先来做几道题目，做的出来的就不要往下看了。123456789101112131415161718192021222324252627282930313233343536373839404142434445@interface Animal : NSObject@end@implementation Animal@end@interface Dog  : Animal@end@implementat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谈谈isa">
+<meta property="og:url" content="http://yoursite.com/2017/04/26/2018-08-11-4/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="先来做几道题目，做的出来的就不要往下看了。123456789101112131415161718192021222324252627282930313233343536373839404142434445@interface Animal : NSObject@end@implementation Animal@end@interface Dog  : Animal@end@implementat">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-eb5374d3f3c389c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-10-12T14:23:02.394Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="谈谈isa">
+<meta name="twitter:description" content="先来做几道题目，做的出来的就不要往下看了。123456789101112131415161718192021222324252627282930313233343536373839404142434445@interface Animal : NSObject@end@implementation Animal@end@interface Dog  : Animal@end@implementat">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3279997-eb5374d3f3c389c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-08-11-4" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/26/2018-08-11-4/" class="article-date">
+  <time datetime="2017-04-26T07:19:26.000Z" itemprop="datePublished">2017-04-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      谈谈isa
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="先来做几道题目，做的出来的就不要往下看了。"><a href="#先来做几道题目，做的出来的就不要往下看了。" class="headerlink" title="先来做几道题目，做的出来的就不要往下看了。"></a>先来做几道题目，做的出来的就不要往下看了。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@interface Animal : NSObject</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line">@implementation Animal</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface Dog  : Animal</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Dog</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface Demo40ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Demo40ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    Animal *p     = [[Animal alloc] init];</span><br><span class="line">    </span><br><span class="line">    BOOL isEqual  = [p isKindOfClass:[Animal class]]; </span><br><span class="line">    BOOL isEqual1 = [Animal isKindOfClass:[Animal class]]; </span><br><span class="line">    BOOL isEqual2 = [NSObject isKindOfClass:[NSObject class]]; </span><br><span class="line">    </span><br><span class="line">    BOOL isEqual3 = [p isMemberOfClass:[Animal class]]; </span><br><span class="line">    BOOL isEqual4 = [Animal isMemberOfClass:[Animal class]]; </span><br><span class="line">    BOOL isEqual5 = [NSObject isMemberOfClass:[NSObject class]]; </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    BOOL isEqual6 = [(id)[NSObject class] isKindOfClass:[NSObject class]]; </span><br><span class="line">    BOOL isEqual7 = [(id)[NSObject class] isMemberOfClass:[NSObject class]];</span><br><span class="line">    BOOL isEqual8 = [(id)[Dog class] isKindOfClass:[Dog class]]; </span><br><span class="line">    BOOL isEqual9 = [(id)[Dog class] isMemberOfClass:[Dog class]];</span><br><span class="line">    </span><br><span class="line">NSLog(@&quot;%d__%d_%d_%d__%d_%d_%d__%d_%d_&quot;,isEqual,isEqual1,isEqual2,isEqual3,isEqual4,isEqual5,isEqual6,isEqual7,isEqual8,isEqual9);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>下面公布答案，答对的就撤了吧不要在这里浪费时间了，没答出来的那就跟着我一起一探究竟吧😁😀😃</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1__0_1_1__0_0_1__0_0_</span><br></pre></td></tr></table></figure>
+<p>先打开<a href="https://opensource.apple.com/tarballs/objc4/" target="_blank" rel="noopener">objc</a>来看看<br><code>+ isMemberOfClass</code>,<br><code>- isMemberOfClass</code>,<br><code>+ isKindOfClass</code>,<br><code>- isKindOfClass</code>，<br><code>+ (Class)class</code>，<br><code>- (Class)class</code><br>的实现，这些方法都是成对出现的，分别是对象方法和类方法。</p>
+<p>分别解释一下各个方法，注意区分区别：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1. isMemberOfClass 方法 </span><br><span class="line">     </span><br><span class="line">     先看+方法</span><br><span class="line">    + (BOOL)isMemberOfClass:(Class)cls &#123;</span><br><span class="line">        return object_getClass((id)self) == cls;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    `object_getClass`方法的实现如下，其实就是取isa</span><br><span class="line">    </span><br><span class="line">    Class object_getClass(id obj) &#123;</span><br><span class="line">          if (obj) return obj-&gt;getIsa();</span><br><span class="line">          else return Nil;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    再看-方法</span><br><span class="line">    </span><br><span class="line">    - (BOOL)isMemberOfClass:(Class)cls &#123;</span><br><span class="line">        return [self class] == cls;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    `- (Class)class`的实现如下，实际上也是取isa</span><br><span class="line">    </span><br><span class="line">    - (Class)class &#123;</span><br><span class="line">        return object_getClass(self);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">2. isKindOfClass 方法</span><br><span class="line">   </span><br><span class="line">    先看+方法,通过`object_getClass`方法取得isa，然后和cls对比，相等的话就返回YES,否则会寻找self的isa的父类，如果相等返回YES，否则返回NO.</span><br><span class="line">    </span><br><span class="line">    + (BOOL)isKindOfClass:(Class)cls &#123;</span><br><span class="line">            for (Class tcls = object_getClass((id)self); tcls; tcls = tcls- </span><br><span class="line">            &gt;superclass) &#123;</span><br><span class="line">                if (tcls == cls) return YES;</span><br><span class="line">            &#125;</span><br><span class="line">          return NO;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">   在看-方法，和+方法一样</span><br><span class="line">    </span><br><span class="line">    - (BOOL)isKindOfClass:(Class)cls &#123;</span><br><span class="line">            for (Class tcls = [self class]; tcls; tcls = tcls-&gt;superclass) &#123;</span><br><span class="line">                if (tcls == cls) return YES;</span><br><span class="line">            &#125;</span><br><span class="line">            return NO;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">3.  class 方法</span><br><span class="line"> </span><br><span class="line">    先看+方法 返回自身</span><br><span class="line">    + (Class)class &#123;</span><br><span class="line">        return self;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    再看-方法 返回self的isa</span><br><span class="line">    - (Class)class &#123;</span><br><span class="line">        return object_getClass(self);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    注意这里的区别</span><br></pre></td></tr></table></figure>
+<p>上面提到了isa，那么isa到底是个什么的东西呢 ？</p>
+<p>直接xcode搜索NSObject可以看到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@interface NSObject &lt;NSObject&gt; &#123;</span><br><span class="line">    Class isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再点进去看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/// An opaque type that represents an Objective-C class.</span><br><span class="line">typedef struct objc_class *Class;</span><br><span class="line"></span><br><span class="line">/// Represents an instance of a class.</span><br><span class="line">struct objc_object &#123;</span><br><span class="line">    Class isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">/// A pointer to an instance of a class.</span><br><span class="line">typedef struct objc_object *id;</span><br><span class="line"></span><br><span class="line">struct objc_class &#123;</span><br><span class="line">    Class isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line"></span><br><span class="line">#if !__OBJC2__</span><br><span class="line">    Class super_class                                        OBJC2_UNAVAILABLE;</span><br><span class="line">    const char *name                                         OBJC2_UNAVAILABLE;</span><br><span class="line">    long version                                             OBJC2_UNAVAILABLE;</span><br><span class="line">    long info                                                OBJC2_UNAVAILABLE;</span><br><span class="line">    long instance_size                                       OBJC2_UNAVAILABLE;</span><br><span class="line">    struct objc_ivar_list *ivars                             OBJC2_UNAVAILABLE;</span><br><span class="line">    struct objc_method_list **methodLists                    OBJC2_UNAVAILABLE;</span><br><span class="line">    struct objc_cache *cache                                 OBJC2_UNAVAILABLE;</span><br><span class="line">    struct objc_protocol_list *protocols                     OBJC2_UNAVAILABLE;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">&#125; OBJC2_UNAVAILABLE;</span><br></pre></td></tr></table></figure>
+<p>可以得出结论</p>
+<ol>
+<li><code>Class</code>就是指向<code>objc_class</code>结构体的指针；</li>
+<li><code>id</code>就是指向<code>objc_object</code>结构体的指针；</li>
+</ol>
+<p>由类和对象的定义，我们可以看出，其成员变量中都含有isa指针，isa指向的是一个类，其指向该对象所属的类。我们可以把isa当作是一个对象的标志，因此类也是一个对象，我们称之为类对象，其isa指针，指向该类对象所属的类，我们称之为元类(metaClass)</p>
+<p>isa指向的类可以通过【object class】 来获取，但是如果是类对象的话通过【class】来获取的话是本身而不是元类，这取决于上面提到的class的实现。我们可以通过object_getClass()来获取isa，适用于实例对象和类对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">Animal *animal = [[Animal alloc] init];</span><br><span class="line">    Dog *dog = [[Dog alloc] init];</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;对象 dog --&gt; isa 指向的地址是 %p&quot;,[dog class]);</span><br><span class="line">    NSLog(@&quot;Dog --&gt; isa 指向的地址是 %p&quot;,object_getClass([Dog class]));</span><br><span class="line">    NSLog(@&quot;Dog --&gt; isa --&gt; isa 指向的地址是 %p&quot;,object_getClass(object_getClass([Dog class])));</span><br><span class="line">    NSLog(@&quot;Dog --&gt; isa --&gt; superclass 的地址是 %p&quot;,[object_getClass([Dog class]) superclass]);</span><br><span class="line">    NSLog(@&quot;dog --&gt; superclass 的地址 %p&quot;,[dog superclass]);</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;============================&quot;);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;对象 animal --&gt; isa 指向地址是 %p&quot;,[animal class]);</span><br><span class="line">    NSLog(@&quot;Animal --&gt; isa 指向地址是 %p&quot;,object_getClass([Animal class]));</span><br><span class="line">    NSLog(@&quot;Animal --&gt; isa --&gt; isa 指向的地址是 %p&quot;,object_getClass(object_getClass([Animal class])));</span><br><span class="line">    NSLog(@&quot;Animal --&gt; isa --&gt; superclass  的地址是 %p&quot;,[object_getClass([Animal class]) superclass]);</span><br><span class="line">    NSLog(@&quot;animal --&gt; superclass 的地址 %p&quot;,[animal superclass]);</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;============================&quot;);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;NSObject 的地址 %p&quot;,[NSObject class]);</span><br><span class="line">    NSLog(@&quot;NSObject --&gt; isa 的地址是 %p&quot;,object_getClass([NSObject class]));</span><br><span class="line">    NSLog(@&quot;NSObject --&gt; isa --&gt; isa 的地址是 %p&quot;,object_getClass(object_getClass([NSObject class])));</span><br><span class="line">    NSLog(@&quot;NSObject --&gt; isa --&gt; superclass 的地址是 %p&quot;,[object_getClass([NSObject class]) superclass]);</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;NSObject --&gt; superclass 的地址 %p&quot;,[NSObject superclass]);</span><br></pre></td></tr></table></figure>
+<p>打印结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">对象 dog --&gt; isa 指向的地址是 0x1097e37c8</span><br><span class="line">Dog --&gt; isa 指向的地址是 0x1097e37a0</span><br><span class="line">Dog --&gt; isa --&gt; isa 指向的地址是 0x10c6eae38</span><br><span class="line">Dog --&gt; isa --&gt; superclass 的地址是 0x1097e3750</span><br><span class="line">dog --&gt; superclass 的地址 0x1097e3778</span><br><span class="line"></span><br><span class="line">============================</span><br><span class="line"></span><br><span class="line">对象 animal --&gt; isa 指向地址是 0x1097e3778</span><br><span class="line">Animal --&gt; isa 指向地址是 0x1097e3750</span><br><span class="line">Animal --&gt; isa --&gt; isa 指向的地址是 0x10c6eae38</span><br><span class="line">Animal --&gt; isa --&gt; superclass  的地址是 0x10c6eae38</span><br><span class="line">animal --&gt; superclass 的地址 0x10c6eae88</span><br><span class="line"></span><br><span class="line">============================</span><br><span class="line"></span><br><span class="line">NSObject 的地址 0x10c6eae88</span><br><span class="line">NSObject --&gt; isa 的地址是 0x10c6eae38</span><br><span class="line">NSObject --&gt; isa --&gt; isa 的地址是 0x10c6eae38</span><br><span class="line">NSObject --&gt; isa --&gt; superclass 的地址是 0x10c6eae88</span><br><span class="line">NSObject --&gt; superclass 的地址 0x0</span><br></pre></td></tr></table></figure>
+<p>可以得出下面一张图</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-eb5374d3f3c389c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="362FFD36-BE20-48E0-9019-92A371200071.png"></p>
+<p>由打印的结果以及上面的图可以得出以下结论：</p>
+<ol>
+<li>实例对象的isa指向对象所属的类；</li>
+<li>类对象的isa指向的是类对象所属的类，也就是元类；</li>
+<li>元类对象的isa指向元类对象所属的类，也就是根元类；</li>
+<li>根元类的isa指向本身。</li>
+</ol>
+<p>好了有了上面的理解，我们再来一一解答之前的题目。</p>
+<ul>
+<li>BOOL isEqual  = [p isKindOfClass:[Animal class]]; </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1. 由于调用的是`- isKindOfClass`方法，所以【p isKindOfClass：】是取出p的isa，由于对象的isa指向的所属的类，也就是Animal类；</span><br><span class="line">2. [Animal class]调用的是`+class`方法，返回是本身，也就是Animal类，所以isEqual == YES.</span><br></pre></td></tr></table></figure>
+<ul>
+<li>BOOL isEqual1 = [Animal isKindOfClass:[Animal class]]; </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. [Animal isKindOfClass],结合`+isKindOfClass`的定义，取得是Animal的isa，所以是Animl的元类；</span><br><span class="line">2. [Animal class]取的是Animal类，所以isEqual1 == NO；</span><br></pre></td></tr></table></figure>
+<ul>
+<li>BOOL isEqual2 = [NSObject isKindOfClass:[NSObject class]]; </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. [NSObject class]取的是类NSObject ；</span><br><span class="line">2. [NSObject isKindOfClass]取得是NSObject的isa也就是NSObject的元类，此时为NO；</span><br><span class="line">3. 由`isKindOfClass`的定义会去寻找NSObject的元类的父类，也就是NSObject，正好等于NSObject 所以isEqual2 == YES.</span><br></pre></td></tr></table></figure>
+<ul>
+<li>BOOL isEqual3 = [p isMemberOfClass:[Animal class]];  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. [Animal class] - &gt; Animal;</span><br><span class="line">2. [p isMemberOfClass] -&gt; Animal 所以 isEqual3 == YES</span><br></pre></td></tr></table></figure>
+<ul>
+<li>BOOL isEqual4 = [Animal isMemberOfClass:[Animal class]]; </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. [Animal class] - &gt; Animal;</span><br><span class="line">2. [Animal isMemberOfClass] -&gt; Animal 的元类 所以isEqual4 == NO</span><br></pre></td></tr></table></figure>
+<ul>
+<li>BOOL isEqual5 = [NSObject isMemberOfClass:[NSObject class]]; </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. [NSObject class] - &gt; NSObject;</span><br><span class="line">2. [NSObject isMemberOfClass:] - &gt;  NSObject的元类 所以 isEqual5 == NO</span><br></pre></td></tr></table></figure>
+<ul>
+<li>BOOL isEqual6 = [(id)[NSObject class] isKindOfClass:[NSObject class]]; </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. [NSObject class] - &gt; NSObject;</span><br><span class="line">2. (id)[NSObject class] - &gt;   NSObject;</span><br><span class="line">3. [(id)[NSObject class] isKindOfClass] - &gt; NSObject的元类 不相等；</span><br><span class="line">4.  NSObject的元类的父类 - &gt;  NSObject 所以 isEqual6 == YES</span><br></pre></td></tr></table></figure>
+<ul>
+<li>BOOL isEqual7 = [(id)[NSObject class] isMemberOfClass:[NSObject class]];</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. [NSObject class] - &gt; NSObject;</span><br><span class="line">2. (id)[NSObject class] - &gt;   NSObject;</span><br><span class="line">3. [(id)[NSObject class] isMemberOfClass] - &gt; NSObject的元类 不相等 所以 isEqual7 == NO；</span><br></pre></td></tr></table></figure>
+<ul>
+<li>BOOL isEqual8 = [(id)[Dog class] isKindOfClass:[Dog class]]; </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. [Dog class] - &gt; Dog</span><br><span class="line">2. (id)[Dog class] - &gt; Dog</span><br><span class="line">3. [(id)[Dog class] isKindOfClass] - &gt; Dog 的元类 不相等；</span><br><span class="line">4. Dog 的元类 的父类 - &gt; Animal的元类的父类 不等于Dog；</span><br><span class="line">5. Animal的元类的父类的父类 -&gt; 根元类 还是不等于 Dog；</span><br><span class="line">6. 跟元类的父类 - &gt; NSObject 不等于Dog  </span><br><span class="line">7. NSObject的父类  - &gt; nil  所以isEqual8 == NO。</span><br></pre></td></tr></table></figure>
+<ul>
+<li>BOOL isEqual9 = [(id)[Dog class] isMemberOfClass:[Dog class]];</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. [Dog class] - &gt; Dog</span><br><span class="line">2. (id)[Dog class] - &gt; Dog</span><br><span class="line">3. [(id)[Dog class] isMemberOfClass] - &gt; Dog 的元类 不相等 所以isEqual9 == NO；</span><br><span class="line">4.</span><br></pre></td></tr></table></figure>
+<p>相信到这里大家应该有个很好的认识了。</p>
+<p>参考：<br><a href="http://www.sealiesoftware.com/blog/archive/2009/04/14/objc_explain_Classes_and_metaclasses.html" target="_blank" rel="noopener">http://www.sealiesoftware.com/blog/archive/2009/04/14/objc_explain_Classes_and_metaclasses.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/26/2018-08-11-4/" data-id="cjn75mih8000dizbuaw8dv2ra" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/25/2018-08-11-3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          如何实现一个自己的for...in...操作呢
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/15/2018-08-11-18/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Vim常见命令</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

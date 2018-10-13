@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>使用CocoaPods建立私有仓库 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="大致分为以下几步:  1.本地建立一个索引库Spec Repo,映射到远程仓库(将来使用该仓库里面的.podspec文件定位到相应的代码)   2.创建pod工程(实现具体的组件代码)   3.生成spec文件   4.向本地的Spec Repo提交spec文件   5.pod新的文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用CocoaPods建立私有仓库">
+<meta property="og:url" content="http://yoursite.com/2017/03/14/2017-03-14-1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="大致分为以下几步:  1.本地建立一个索引库Spec Repo,映射到远程仓库(将来使用该仓库里面的.podspec文件定位到相应的代码)   2.创建pod工程(实现具体的组件代码)   3.生成spec文件   4.向本地的Spec Repo提交spec文件   5.pod新的文件">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-d5c130a195791cfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-10-12T14:23:23.053Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用CocoaPods建立私有仓库">
+<meta name="twitter:description" content="大致分为以下几步:  1.本地建立一个索引库Spec Repo,映射到远程仓库(将来使用该仓库里面的.podspec文件定位到相应的代码)   2.创建pod工程(实现具体的组件代码)   3.生成spec文件   4.向本地的Spec Repo提交spec文件   5.pod新的文件">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3279997-d5c130a195791cfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2017-03-14-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/14/2017-03-14-1/" class="article-date">
+  <time datetime="2017-03-14T10:33:10.000Z" itemprop="datePublished">2017-03-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用CocoaPods建立私有仓库
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>大致分为以下几步:</p>
+<blockquote>
+<p>1.本地建立一个索引库Spec Repo,映射到远程仓库(将来使用该仓库里面的.podspec文件定位到相应的代码)</p>
+</blockquote>
+<blockquote>
+<p>2.创建pod工程(实现具体的组件代码)</p>
+</blockquote>
+<blockquote>
+<p>3.生成spec文件</p>
+</blockquote>
+<blockquote>
+<p>4.向本地的Spec Repo提交spec文件</p>
+</blockquote>
+<blockquote>
+<p>5.pod新的文件</p>
+</blockquote>
+<a id="more"></a>
+<p>###(一).本地创建索引库<br>官方的pod其实就是一个仓库里面放了很多开源的Spec Repo(关于如何创建cocoapods这里就不做说明了)假设你已经安装好了cocoapods  当cd 到~/.cocoapods/repos可发现如下截图那个master中就是官方的Spec Repo所在</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-d5c130a195791cfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="C127BB3E-7C72-480C-9E5F-59DCE4CAF72B.png"></p>
+<p>看到这个目录之后我们要做的第一步就是在repos目录下建立属于自己的私有Spec Repo用来管理我们的代码,开始接下来的操作<br>1.在终端运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pod repo add [本地repos的名称] [远程仓库的地址,这里可以用开源中国的,公司自己的代码管理平台地址等等,用来管理自己的私有源的地址]</span><br><span class="line">pod repo add DemoSpec  https://XXX.git</span><br></pre></td></tr></table></figure></p>
+<p>运行完上面的代码重新cd 到~/.cocoapods/repos可以发现刚刚建立的文件以及可以看到了</p>
+<p>###(二).创建pod工程<br>这里没什么好说的,就是自己本地找个目录创建一个新的工程,可以使用pod的,有旧的项目的话更简单了(这里不做过多的讲解)</p>
+<p>###(三).生成spec文件<br>自己建一个pod工程（具体不做详解了，不知道的自行百度）这里只讲如何创建spec文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pod spec create [项目sepc的名字] [代码的远程仓库的地址和第一步的地址最后不要一样]</span><br><span class="line">pod spec create PodTestSpec https://xxx.git</span><br></pre></td></tr></table></figure></p>
+<p>成功以后会看到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Pod::Spec.new do |s|</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  s.name         = &quot;PodTestSepec&quot; #podsepc名称</span><br><span class="line"></span><br><span class="line">  s.version      = &quot;1.0.0&quot;#版本号</span><br><span class="line"></span><br><span class="line">  s.summary      = &quot;year descr.&quot;#框架的妙手</span><br><span class="line"></span><br><span class="line">  s.homepage     = &quot;https://www.baidu.com&quot;#写你主页的地址  这里是我随意写的</span><br><span class="line"></span><br><span class="line">  s.license      = &quot;MIT&quot;  #通行证</span><br><span class="line"></span><br><span class="line">  s.author             = &#123; &quot;fangshufeng&quot; =&gt; &quot;1039640335@qq.com&quot; &#125;</span><br><span class="line"></span><br><span class="line">    s.platform     = :ios, &quot;7.0&quot;</span><br><span class="line"></span><br><span class="line">  s.source       = &#123; :git =&gt; &quot;地址二&quot;, :tag =&gt; &quot;1.0.0&quot; &#125;#地址二写的就是步骤3写的地址 tag是版本号</span><br><span class="line"></span><br><span class="line">  s.source_files  = &quot;podTest/**/*.&#123;h,m&#125;&quot;#文件的目录</span><br><span class="line"></span><br><span class="line">   s.resource  = &quot;podTest/podTest.bundle&quot;#文件的资源 包括图片什么的</span><br><span class="line"></span><br><span class="line">   s.requires_arc = true</span><br></pre></td></tr></table></figure></p>
+<p>这里列举的是一些常用的</p>
+<p>1.先编辑你的spec的文件写成你自己的项目相关的<br>2.然后再git上打上tag注意这里要和你spec里面写的一样（sourcetree什么都可以）<br>3.在当前工程的目录下输入下面的命令验证sepc文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod lib lint</span><br></pre></td></tr></table></figure></p>
+<p>###四.向本地的Spec Repo提交spec文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod repo push DemoSpec PodTestSpec.podspec  #前面是本地Repo名字 后面是podspec名字</span><br></pre></td></tr></table></figure></p>
+<p>一般如果使用subspec文件的话，可能会依赖其他的三方库，有时候第三方库有警告可能会导致验证不过，可以使用下面的命令来屏蔽<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod repo push DemoSpec PodTestSpec.podspec --use-libraries --allow-warnings --sources=&apos;https://github.com/CocoaPods/Specs&apos;</span><br></pre></td></tr></table></figure></p>
+<p>如果下面的错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The repo `YourSpecs` at `../../../.cocoapods/repos/YourSpecs ` is not clean 错误</span><br></pre></td></tr></table></figure></p>
+<p>可以按照下面的步骤解决<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.cocoapods/repos/YourSpecs   使用git clean -f</span><br></pre></td></tr></table></figure></p>
+<p>有时候私有源要指定地址，可以使用<code>sources</code>跟上源的地址，有多个源的话以逗号隔开</p>
+<p>完成之后这个组件库就添加到我们的私有Spec Repo中了，可以进入到~/.cocoapods/repos/DemoSpec目录下查看<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">├── LICENSE</span><br><span class="line">├── DemoSpex</span><br><span class="line">│   └── 1.0.0</span><br><span class="line">│       └── PodTestSepc.podspec</span><br><span class="line">└── README.md</span><br></pre></td></tr></table></figure></p>
+<p>再search命令查看你是否制作成功了（需要花点时间，耐心等候）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ pod search PodTestSpec</span><br><span class="line"> </span><br><span class="line">-&gt; PodTestSpec (0.1.0)</span><br><span class="line">   year descr.</span><br><span class="line">   pod &apos;PodTestSpec&apos;, &apos;~&gt; 1.0.0&apos;</span><br><span class="line">   - Homepage: https://www.baidu.com</span><br><span class="line">   - Source:   地址二</span><br><span class="line">   - Versions: 1.0.0 [DemoSpec repo]</span><br></pre></td></tr></table></figure></p>
+<p>到此我们的私有pod以及制作好了 </p>
+<p>###(五).pod的使用<br>另外新建一个工程<br>在podfile中加入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">source &quot;地址一&quot;//就是第一步写的源地址</span><br><span class="line"> platform :ios, &apos;7.0&apos;</span><br><span class="line"></span><br><span class="line">target &apos;hh&apos; do</span><br><span class="line">  # Uncomment the next line if you&apos;re using Swift or would like to use dynamic frameworks</span><br><span class="line">  # use_frameworks!</span><br><span class="line"></span><br><span class="line">  pod &apos;PodTestSpec&apos;, &apos;~&gt; 1.0.0&apos;</span><br><span class="line">  </span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>关于pod的一些常见的操作请看<a href="http://www.jianshu.com/p/c4f00deaa660" target="_blank" rel="noopener">这个</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/14/2017-03-14-1/" data-id="cjn75migo0001izbuir5lf7ec" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/15/2018-08-11-18/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Vim常见命令
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/09/2018-05-02-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">CocoaPods常见命令</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

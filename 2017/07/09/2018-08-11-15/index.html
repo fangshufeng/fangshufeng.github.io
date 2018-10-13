@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>React-Native - FlexBox布局 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="弹性盒模型（The Flexible Box Module）,又叫Flexbox，意为“弹性布局”，旨在通过弹性的方式来对齐和分布容器中内容的空间，使其能适应不同屏幕，为盒装模型提供最大的灵活性，Flexbox可以在不同屏幕尺寸上提供一致的布局结构。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React-Native - FlexBox布局">
+<meta property="og:url" content="http://yoursite.com/2017/07/09/2018-08-11-15/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="弹性盒模型（The Flexible Box Module）,又叫Flexbox，意为“弹性布局”，旨在通过弹性的方式来对齐和分布容器中内容的空间，使其能适应不同屏幕，为盒装模型提供最大的灵活性，Flexbox可以在不同屏幕尺寸上提供一致的布局结构。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-6e0f4f74dfa1388e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-af2d833236d15d81.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-e8447df0f7433b97.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-621b4292a24283e8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-8f3fce4774122cc0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-458ebdcacaa8c797.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-3930894b856f421d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-b3546770c8ec8814.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-c12c7dc5b4f68206.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-48300ece95f53af1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-dc887eff67c90304.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-8c247ac5768387d3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-a4b98b315fdb19f2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-ea85c495cda3aad8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-a04949652caf2a8b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-64f42c49ccbc1235.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-d111067851b15549.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-11T14:53:26.123Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React-Native - FlexBox布局">
+<meta name="twitter:description" content="弹性盒模型（The Flexible Box Module）,又叫Flexbox，意为“弹性布局”，旨在通过弹性的方式来对齐和分布容器中内容的空间，使其能适应不同屏幕，为盒装模型提供最大的灵活性，Flexbox可以在不同屏幕尺寸上提供一致的布局结构。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3279997-6e0f4f74dfa1388e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-08-11-15" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/09/2018-08-11-15/" class="article-date">
+  <time datetime="2017-07-09T14:01:27.000Z" itemprop="datePublished">2017-07-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      React-Native - FlexBox布局
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>弹性盒模型（The Flexible Box Module）,又叫Flexbox，意为“弹性布局”，旨在通过弹性的方式来对齐和分布容器中内容的空间，使其能适应不同屏幕，为盒装模型提供最大的灵活性，Flexbox可以在不同屏幕尺寸上提供一致的布局结构。</p>
+<a id="more"></a>
+<p>在<code>React-Native</code>使用<code>FlexBox</code>布局能够大大提升我们的开发效率<code>FlexBox</code>能做的有</p>
+<ol>
+<li>适配屏幕；</li>
+<li>快速垂直和水平居中</li>
+<li>自动分配宽度和高度。</li>
+</ol>
+<p>###一、主轴和侧轴，标志着在主轴和侧轴上的布局方式，在<code>React-Native</code>中默认的主轴方式是竖直的，当然，也可以根据需要选择合适的对齐方式。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-6e0f4f74dfa1388e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>###二、常见的属性</p>
+<p>（1）.  <code>flexDirection</code>：（row | column）<br><img src="http://upload-images.jianshu.io/upload_images/3279997-af2d833236d15d81.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Component &#125; from &apos;react&apos;;</span><br><span class="line">import &#123;</span><br><span class="line">    AppRegistry,</span><br><span class="line">    StyleSheet,</span><br><span class="line">    Text,</span><br><span class="line">    View</span><br><span class="line">&#125; from &apos;react-native&apos;;</span><br><span class="line"></span><br><span class="line">export default class untitled extends Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;View style=&#123;styles.container&#125;&gt;</span><br><span class="line"></span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;red&apos;&#125;&#125; &gt;测试一&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;yellow&apos;&#125;&#125;&gt;测试二&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;gray&apos;&#125;&#125;&gt;测试三&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;blue&apos;&#125;&#125;&gt;测试四&lt;/Text&gt;</span><br><span class="line"></span><br><span class="line">            &lt;/View&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const styles = StyleSheet.create(&#123;</span><br><span class="line">    container: &#123;</span><br><span class="line">          backgroundColor:&apos;skyblue&apos;,</span><br><span class="line">      marginTop:100,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">AppRegistry.registerComponent(&apos;untitled&apos;, () =&gt; untitled);</span><br></pre></td></tr></table></figure>
+<p>看结果可知默认是竖直的</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-e8447df0f7433b97.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>把样式代码改一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const styles = StyleSheet.create(&#123;</span><br><span class="line">    container: &#123;</span><br><span class="line">      backgroundColor:&apos;skyblue&apos;,</span><br><span class="line">      marginTop:100,</span><br><span class="line">        flexDirection:&apos;row&apos;, //添加了这行</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-621b4292a24283e8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>（2）.   <code>justifyContent</code>：（<code>flex-start</code>、<code>center</code>、<code>flex-end</code>、<code>space-around</code>以及<code>space-between</code>）来控制主轴的布局样式</p>
+<pre><code>我们分别来试试这个属性
+</code></pre><p><code>flex-start</code>  默认就是这个样式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const styles = StyleSheet.create(&#123;</span><br><span class="line">    container: &#123;</span><br><span class="line">      backgroundColor:&apos;skyblue&apos;,</span><br><span class="line">      marginTop:100,</span><br><span class="line">      flexDirection:&apos;row&apos;,</span><br><span class="line">    justifyContent:&apos;flex-start&apos;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-8f3fce4774122cc0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><code>center</code>居中</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-458ebdcacaa8c797.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><code>flex-end</code></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-3930894b856f421d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><code>space-around</code> 表示单个元素周边的间距 注意对比<code>space-between</code></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-b3546770c8ec8814.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><code>space-between</code>表示两个元素之间 注意对比<code>space-around</code></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-c12c7dc5b4f68206.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>（3）. <code>alignItems</code>（<code>flex-start</code>、<code>center</code>、<code>flex-end</code>以及<code>stretch</code>）这个是用来控制侧轴方向的对齐方式的，此时的侧轴是Y轴</p>
+<p>我们再来吧代码改一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">export default class untitled extends Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;View style=&#123;styles.container&#125;&gt;</span><br><span class="line"></span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;red&apos;,height:80&#125;&#125; &gt;测试一&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;yellow&apos;,height:90&#125;&#125;&gt;测试二&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;gray&apos;,height:50&#125;&#125;&gt;测试三&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;blue&apos;,height:100&#125;&#125;&gt;测试四&lt;/Text&gt;</span><br><span class="line"></span><br><span class="line">            &lt;/View&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>给每个item都加上一个高度 也就是默认<code>flex-start</code>的显示</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-48300ece95f53af1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><code>center</code> </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-dc887eff67c90304.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><code>flex-end</code></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-8c247ac5768387d3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><code>stretch</code></p>
+<blockquote>
+<p>注意：要使stretch选项生效的话，子元素在次轴方向上不能有固定的尺寸。以下面的代码为例：只有将子元素样式中的width: 50去掉之后，alignItems: ‘stretch’才能生效。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">export default class untitled extends Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;View style=&#123;styles.container&#125;&gt;</span><br><span class="line"></span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;red&apos;&#125;&#125; &gt;测试一&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;yellow&apos;&#125;&#125;&gt;测试二&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;gray&apos;&#125;&#125;&gt;测试三&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;blue&apos;&#125;&#125;&gt;测试四&lt;/Text&gt;</span><br><span class="line"></span><br><span class="line">            &lt;/View&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const styles = StyleSheet.create(&#123;</span><br><span class="line">    container: &#123;</span><br><span class="line">      backgroundColor:&apos;skyblue&apos;,</span><br><span class="line">      marginTop:100,</span><br><span class="line">      flexDirection:&apos;row&apos;,</span><br><span class="line">        alignItems:&apos;stretch&apos;,</span><br><span class="line">        height:100,</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-a4b98b315fdb19f2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>（4）. <code>flexWrap</code>（<code>nowrap | wrap</code>）,这个是用来当主轴显示不下的时候该怎么显示的</p>
+<p><code>nowrap</code>，默认不换行</p>
+<p><code>wrap</code>，显示不下换行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">export default class untitled extends Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;View style=&#123;styles.container&#125;&gt;</span><br><span class="line"></span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;red&apos;,width:90&#125;&#125; &gt;测试一&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;yellow&apos;,width:100&#125;&#125;&gt;测试二&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;gray&apos;,width:200&#125;&#125;&gt;测试三&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;blue&apos;,width:300&#125;&#125;&gt;测试四&lt;/Text&gt;</span><br><span class="line"></span><br><span class="line">            &lt;/View&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const styles = StyleSheet.create(&#123;</span><br><span class="line">    container: &#123;</span><br><span class="line">      backgroundColor:&apos;skyblue&apos;,</span><br><span class="line">      marginTop:100,</span><br><span class="line">      flexDirection:&apos;row&apos;,</span><br><span class="line">        alignItems:&apos;stretch&apos;,</span><br><span class="line">        flexWrap:&apos;wrap&apos;,</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-ea85c495cda3aad8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>（5）. <code>flex</code>控制显示范围的</p>
+<p>宽度 ＝ 弹性宽度 * ( flexGrow / sum( flexGorw ) )</p>
+<p><code>flexGrow</code>是占的份额，<code>sum( flexGorw )</code>是总的份额，也就是对应元素在父控件位置所占的比例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">export default class untitled extends Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;View style=&#123;styles.container&#125;&gt;</span><br><span class="line"></span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;red&apos;,flex:1&#125;&#125; &gt;测试一&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;yellow&apos;,flex:2&#125;&#125;&gt;测试二&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;gray&apos;,flex:1&#125;&#125;&gt;测试三&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;blue&apos;,flex:4&#125;&#125;&gt;测试四&lt;/Text&gt;</span><br><span class="line"></span><br><span class="line">            &lt;/View&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>sum( flexGorw ) = 1 + 2 + 1 + 4 = 8<br>所以:<br><code>测试一</code> 1 / 8;<br><code>测试二</code> 2 / 8;<br><code>测试三</code> 1 / 8;<br><code>测试四</code> 4 / 8;</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-a04949652caf2a8b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>（6）. <code>alignSelf</code>，给某个item添加例外的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">export default class untitled extends Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;View style=&#123;styles.container&#125;&gt;</span><br><span class="line"></span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;red&apos;,flex:1,height:100&#125;&#125; &gt;测试一&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;yellow&apos;,flex:2,height:50&#125;&#125;&gt;测试二&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;gray&apos;,flex:1,height:80&#125;&#125;&gt;测试三&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;blue&apos;,flex:4,height:30&#125;&#125;&gt;测试四&lt;/Text&gt;</span><br><span class="line"></span><br><span class="line">            &lt;/View&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const styles = StyleSheet.create(&#123;</span><br><span class="line">    container: &#123;</span><br><span class="line">      backgroundColor:&apos;skyblue&apos;,</span><br><span class="line">      marginTop:100,</span><br><span class="line">      flexDirection:&apos;row&apos;,</span><br><span class="line">        alignItems:&apos;flex-end&apos;,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-64f42c49ccbc1235.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>像上面的在侧轴上是<code>flex-end</code>，如果只想让<code>测试四</code>居中怎么办呢，就可以使用<code>alignSelf</code>属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">export default class untitled extends Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;View style=&#123;styles.container&#125;&gt;</span><br><span class="line"></span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;red&apos;,flex:1,height:100&#125;&#125; &gt;测试一&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;yellow&apos;,flex:2,height:50&#125;&#125;&gt;测试二&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;gray&apos;,flex:1,height:80&#125;&#125;&gt;测试三&lt;/Text&gt;</span><br><span class="line">              &lt;Text style=&#123;&#123;backgroundColor:&apos;blue&apos;,flex:4,height:30,alignSelf:&apos;center&apos;&#125;&#125;&gt;测试四&lt;/Text&gt;</span><br><span class="line"></span><br><span class="line">            &lt;/View&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">`</span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-d111067851b15549.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/09/2018-08-11-15/" data-id="cjn75mih20007izbult04cajf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/09/13/2018-08-11-16/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          梳理ReactNative中oc到js的数据流动
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/25/2018-08-11-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">如何实现一个自己的for...in...操作呢</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>【8086汇编】-- 常用寄存器 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="学习汇编最重要的是就是学习寄存器和指令，8086汇编拥有14个16位的寄存器，分别AX、BX、CX、DX、SI、DI、BP、SP、IP、CS、DS、SS、ES、PSW，该篇将来介绍各个寄存器作用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【8086汇编】-- 常用寄存器">
+<meta property="og:url" content="http://yoursite.com/2018/10/07/2018-10-07-26/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="学习汇编最重要的是就是学习寄存器和指令，8086汇编拥有14个16位的寄存器，分别AX、BX、CX、DX、SI、DI、BP、SP、IP、CS、DS、SS、ES、PSW，该篇将来介绍各个寄存器作用。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-108fd3aae4b83a42.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-37199e9be84eefc1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-095024735551d8f7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-475447300e6b38b4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-5a3ef1152def0c25.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-b868f2a4835cae81.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-163dfc65f0fc83ae.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-f9854c22dc6aafcb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-0f560d0980839f6e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-6d5f9c4a640ca990.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-e9a4f015729ee5a4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-446ee7474438eae3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-453b67606721e5dc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-0b919c852e6a3005.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-aac40325007d60ed.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-93ee9409ee8d9d9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-9f787cec1f45eee2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-820d59b89e388e1f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-befc9cde7920f5fa.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-e33638015ec81012.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2018-10-07T07:39:59.087Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【8086汇编】-- 常用寄存器">
+<meta name="twitter:description" content="学习汇编最重要的是就是学习寄存器和指令，8086汇编拥有14个16位的寄存器，分别AX、BX、CX、DX、SI、DI、BP、SP、IP、CS、DS、SS、ES、PSW，该篇将来介绍各个寄存器作用。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-108fd3aae4b83a42.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-10-07-26" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/07/2018-10-07-26/" class="article-date">
+  <time datetime="2018-10-07T07:36:21.000Z" itemprop="datePublished">2018-10-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【8086汇编】-- 常用寄存器
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>学习汇编最重要的是就是学习寄存器和指令，8086汇编拥有14个16位的寄存器，分别<code>AX、BX、CX、DX、SI、DI、BP、SP、IP、CS、DS、SS、ES、PSW</code><br>，该篇将来介绍各个寄存器作用。</p>
+<a id="more"></a>
+<h2 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h2><hr>
+<p><code>AX、BX、CX、DX</code>一般存放一些一般的数据，被称为通用寄存器，分别拥有高8位和低8位，以<code>AX</code>寄存器为例</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-108fd3aae4b83a42.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15387929970381.jpg"></p>
+<p><code>H</code>和<code>L</code>分别表示高和低的意思</p>
+<p>来个简单的汇编指令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">mov ax, 1234H</span><br></pre></td></tr></table></figure>
+<p>上面的意思就是将16进制的1234送入到<code>ax</code>寄存器中，其他的通用寄存器类似<code>ax</code></p>
+<p><strong>备注：在8086中 在数字后面加H表示十六进制</strong></p>
+<h2 id="CS和IP寄存器"><a href="#CS和IP寄存器" class="headerlink" title="CS和IP寄存器"></a>CS和IP寄存器</h2><hr>
+<p>这2个寄存器是8086CPU中最重要的寄存器，这2个指令决定了CPU将要读取的指令地址。<code>CS</code>为代码段寄存器，<code>IP</code>为指针指令寄存器。任意时刻cs:ip对应的内存地址的内容都会被当做指令执行，上篇说到，数据和指令没有本质区别，只是特定时刻当做不同用途罢了。</p>
+<p>本文采取了<code>王爽的《汇编语言》</code>的图来解辅助解释cs和ip寄存器</p>
+<p>下图展示了8086CPU读取和执行指令的过程</p>
+<p>此时的cs和ip分别是2000和0000。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-37199e9be84eefc1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15387938093937.jpg"></p>
+<p>图2.12 经过地址加法器计算出物理地址为<code>20000</code> </p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-095024735551d8f7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15387945081888.jpg"></p>
+<p>图2.13 将计算出的物理地址送到输入输出控制电路</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-475447300e6b38b4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15387947385805.jpg"></p>
+<p>图2.14 将物理地址20000送到地址总线</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-5a3ef1152def0c25.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15387948448393.jpg"></p>
+<p>找到了物理地址为<code>20000</code>的内容为<code>B8</code>则吞3个字节内容为<code>B8 23 01</code>，对应的汇编指令为<code>mov ax,0123H</code>，通过数据总线返回到CPU</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-b868f2a4835cae81.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15387949124754.jpg"></p>
+<p>图2.16 通过输入输出电路将内容送到指令缓冲器</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-163dfc65f0fc83ae.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15387950283272.jpg"></p>
+<p>图2.17展示此时的IP位增加3B,因为刚才哪个指令增加了3个字节</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-f9854c22dc6aafcb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15387951153112.jpg"></p>
+<p>图2.18 接下来执行指令缓存器中的指令</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-0f560d0980839f6e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15387951457944.jpg"></p>
+<p>接下来重复刚才的过程</p>
+<p>到目前为止一直都在纸上谈兵，我们通过工具<code>emu8086</code>简单看下是不是这样的</p>
+<p>新建一个空的工程，这里就写了2条简单的指令</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-6d5f9c4a640ca990.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15387955290141.jpg"></p>
+<p>点击<code>emulate</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-e9a4f015729ee5a4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15387956280058.jpg"></p>
+<p>我们看到：</p>
+<ol>
+<li>cs = 0100,ip = 0000</li>
+<li>mov ax , 0123h ,对应的指令为<code>B8 23 01</code>, mov bx,0003h, 对应的指令为<code>BB 03 00</code>，至于为什么是2301 这是大小端的问题，不知道大小端的同学自行补下课</li>
+</ol>
+<p>这时我们点击下<code>single step</code>发现代码执行到 第四行 <code>AX</code>的已经为<code>0123</code>了，并且ip的值已经增加了3，即将执行第四行指令了</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-446ee7474438eae3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15387958372346.jpg"></p>
+<p><strong>所以：cs：ip决定了下面执行哪行代码，也知道了它的重要性了</strong></p>
+<p>那么我们如何修改主动修改cs和ip的值呢❓❓❓ </p>
+<p>遗憾的是8086没有提供直接修改cs和ip的方法，但是可以通过另一个指令<code>jmp</code>来达到修改的目的</p>
+<p>若想同时修改cs和ip的值，使用<code>jmp 段地址:偏移地址</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmp 2AE3:3 执行后 cs=2AE3H, IP= 0003H</span><br></pre></td></tr></table></figure>
+<p>若想单独修改ip的值，使用<code>jmp 某一个合法的寄存器</code> ，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov ax , 0003H</span><br><span class="line"></span><br><span class="line">jmp ax 执行前 cs = 2000h ip = 0000h</span><br><span class="line">       执行后 cs = 2000h ip = 0003h</span><br></pre></td></tr></table></figure>
+<p> 执行下面的代码会发现当代码执行到<code>05</code>行的时候按道理应该要执行<code>06</code>行，然而我们改变了ip，所以代码会又会回到<code>03</code>行</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-453b67606721e5dc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15387966459705.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-0b919c852e6a3005.gif?imageMogr2/auto-orient/strip" alt="2018-10-06 12_43_05.gif"></p>
+<h2 id="ds寄存器"><a href="#ds寄存器" class="headerlink" title="ds寄存器"></a>ds寄存器</h2><hr>
+<p>cpu离开了内存是没有用的，那cpu是如何读取内存的数据的呢，ds寄存器就派上用场了，要读取内存，首先的知道物理地址，在8086CPU中，物理地址 = 段地址 X 16 + 偏移地址得到的</p>
+<p>加入我们要读取内存地址为<code>20000H</code>的内存中放的内容,写法如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-aac40325007d60ed.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15387978500515.jpg"></p>
+<p>你可能想说为啥不直接写 mov ds , 2000:0,很遗憾的告诉你不支持，需要通过通用寄存器转一道，ds存放是段地址，<code>[...]</code>存放的是偏移地址，那<code>mov al ,[0]</code> 不是只有偏移地址吗，嗯，执行的时候会自动读取ds的内容</p>
+<p>继续刚才的demo我们把内存为<code>20000</code>的内容改成<code>BB</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-93ee9409ee8d9d9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15387980538315.jpg"></p>
+<p>执行后会发现<code>al</code>为<code>BB</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-9f787cec1f45eee2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15387981081684.jpg"></p>
+<h2 id="ss和sp寄存器"><a href="#ss和sp寄存器" class="headerlink" title="ss和sp寄存器"></a>ss和sp寄存器</h2><hr>
+<p>8086CPU提供了栈来访问内存，有入栈(push)和出栈（pop）指令，可以指定栈的大小，ss指向栈段，sp指向栈顶的指针，栈是非常重要的，8086CPU栈有以下特点：</p>
+<ol>
+<li>遵循先进后出的原则</li>
+<li>push和pop的数据长度以字为单位（2个字节）</li>
+<li>push导致sp = sp - 2</li>
+<li>pop 寄存器   导致sp = sp + 2,并将pop的原素赋值给 寄存器</li>
+</ol>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-820d59b89e388e1f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388693518737.jpg"></p>
+<p>对应的指令如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mov ax ,0123h</span><br><span class="line">push ax</span><br><span class="line"></span><br><span class="line">mov bx,2266h</span><br><span class="line">push bx</span><br><span class="line"></span><br><span class="line">mov cx , 1122h</span><br><span class="line">push cx</span><br><span class="line"></span><br><span class="line">pop ax ; 做了2个事情 1. sp = sp + 2 ； 2. ax = 1122h 也就是将出栈的原素赋值给了ax</span><br><span class="line">pop bx</span><br><span class="line">pop cx</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-befc9cde7920f5fa.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388699177032.jpg"></p>
+<p>点击运行之后看视频</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-e33638015ec81012.gif?imageMogr2/auto-orient/strip" alt="15388963634977.gif"></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><hr>
+<p>至此，已经介绍了9个常用的寄存器了，还剩下5个后面的文章将会一一介绍到的</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/07/2018-10-07-26/" data-id="cjn75mihm000oizbudkdprtm5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/10/07/2018-10-07-25/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          【8086汇编】-- 函数的本质
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/10/06/2018-10-06-24/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">【8086汇编】-- 入门知识</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

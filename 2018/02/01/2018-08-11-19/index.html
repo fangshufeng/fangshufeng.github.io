@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>网络编程必备调试工具 WireShark 、 Cisco Packet Tracer | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="##WireShark如何要想了解网络那块的知识这是一个很好的查看工具下载地址 ，貌似要翻墙，可根据自己电脑的类型下载对应的版本 下面提供一个Tcp三次握手的截图  一些逻辑运算 比如  == || &amp;amp;&amp;amp; and  or &amp;gt; &amp;lt; 都是可以的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络编程必备调试工具 WireShark 、 Cisco Packet Tracer">
+<meta property="og:url" content="http://yoursite.com/2018/02/01/2018-08-11-19/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="##WireShark如何要想了解网络那块的知识这是一个很好的查看工具下载地址 ，貌似要翻墙，可根据自己电脑的类型下载对应的版本 下面提供一个Tcp三次握手的截图  一些逻辑运算 比如  == || &amp;amp;&amp;amp; and  or &amp;gt; &amp;lt; 都是可以的">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-0dbc6c8dd9d1e525.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-d7258fbf995fae28.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-0d84971452a4ce8e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-13e3a5015514424d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-139f4862f22c2234.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-5afd053b663a58e8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-ef109365a3250725.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-2023a2efd7a348dd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-00dacfceabcf4f52.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-ea666f26cca6db7c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-10dc9a22db88aff7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-e366c4a3f6813f4c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-94b8edfc34c8a994.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-a2b78f2c809e4712.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-7494a95f292adb0e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-e94cfb300b33f625.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-d24349e6f37391ed.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-3187cae120f67239.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-c2c6a18651e434b1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-bd479ad507844dfd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-3c2f8213b80c71c5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-07b63cf95664f0b8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-5518af94aa675077.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-f746aa4e4026e02e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-11T15:02:08.114Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络编程必备调试工具 WireShark 、 Cisco Packet Tracer">
+<meta name="twitter:description" content="##WireShark如何要想了解网络那块的知识这是一个很好的查看工具下载地址 ，貌似要翻墙，可根据自己电脑的类型下载对应的版本 下面提供一个Tcp三次握手的截图  一些逻辑运算 比如  == || &amp;amp;&amp;amp; and  or &amp;gt; &amp;lt; 都是可以的">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3279997-0dbc6c8dd9d1e525.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-08-11-19" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/01/2018-08-11-19/" class="article-date">
+  <time datetime="2018-02-01T06:17:29.000Z" itemprop="datePublished">2018-02-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      网络编程必备调试工具 WireShark 、 Cisco Packet Tracer
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##WireShark<br>如何要想了解网络那块的知识这是一个很好的查看工具<br><a href="https://www.wireshark.org/download.html" target="_blank" rel="noopener">下载地址</a> ，貌似要翻墙，可根据自己电脑的类型下载对应的版本</p>
+<p>下面提供一个Tcp三次握手的截图</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-0dbc6c8dd9d1e525.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174541729110.jpg"></p>
+<p><strong>一些逻辑运算 比如  == || &amp;&amp; and  or &gt; &lt; 都是可以的</strong></p>
+<a id="more"></a>
+<h4 id="按照ip过滤"><a href="#按照ip过滤" class="headerlink" title="按照ip过滤"></a>按照ip过滤</h4><ol>
+<li>查看目的地址为192.168.33.10 ： ip.dst == 192.168.33.10</li>
+<li>同理查看源ip地址： ip.src == 192.168.33.10</li>
+<li>ip.dst == 192.168.33.10 || ip.src == 192.168.33.10</li>
+</ol>
+<h4 id="按照端口过滤"><a href="#按照端口过滤" class="headerlink" title="按照端口过滤"></a>按照端口过滤</h4><ol>
+<li>tcp.port == 7768 -&gt;  查看tcp协议  端口号为7768的 </li>
+<li>tcp.port == 7768 || udp.port == 1321</li>
+</ol>
+<p>##Cisco Packet Tracer</p>
+<p>这玩意貌似没有mac版的，Windows下也特别难找，如何你有麻烦给我留言，谢谢，一堆广告，烦死，如果你闲麻烦可以用我这个，<a href="https://pan.baidu.com/s/1c346hkk" target="_blank" rel="noopener">点击下载</a><br><img src="http://upload-images.jianshu.io/upload_images/3279997-d7258fbf995fae28.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174550211009.jpg"> 解压后放到对应的地方，找到截图的文件打开<code>PacketTracer5</code>，当然你也可以自己另行下载</p>
+<p>这个软件的使用需要具备一定的网络协议的了解，建议使用前先看看<code>阮一峰的</code>这两篇文章，不然可能有些难度</p>
+<blockquote>
+<p><a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html" target="_blank" rel="noopener">互联网协议入门（一）</a><br><a href="http://www.ruanyifeng.com/blog/2012/06/internet_protocol_suite_part_ii.html" target="_blank" rel="noopener">互联网协议入门（二）</a></p>
+</blockquote>
+<hr>
+<p>下面是一个路由器组网的截图</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-0d84971452a4ce8e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174554251720.jpg"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-13e3a5015514424d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174555013444.jpg"></p>
+<hr>
+<p><strong>下面分别说说如何搭建网络</strong></p>
+<p>工具基本介绍如下<br><img src="http://upload-images.jianshu.io/upload_images/3279997-139f4862f22c2234.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174561075956.jpg"></p>
+<h3 id="两个pc组网"><a href="#两个pc组网" class="headerlink" title="两个pc组网"></a>两个pc组网</h3><p>步骤</p>
+<p>1 增加2个pc端</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-5afd053b663a58e8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174561966601.jpg">          </p>
+<p>2 配置网络信息</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-ef109365a3250725.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174563247689.jpg"><br><img src="http://upload-images.jianshu.io/upload_images/3279997-2023a2efd7a348dd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174563571952.jpg"></p>
+<p>pc0 : ip :192.168.1.1  子网掩码：255.255.255.0 对应的网段为192.168.1.0<br>pc1 : ip :192.168.1.2  子网掩码：255.255.255.0 对应的网段为192.168.1.0</p>
+<p>因为是同一网段可以直接通信</p>
+<p>点击pc0 ping 192.168.1.2</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-00dacfceabcf4f52.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174565239009.jpg"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-ea666f26cca6db7c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174565437229.jpg"></p>
+<p>表示通信完成</p>
+<p>在点击之前先执行下面的操作</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-10dc9a22db88aff7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174567253385.jpg"></p>
+<p>可以看到具体的协议名称</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-e366c4a3f6813f4c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174567667460.jpg"><br>点击信封可以查看对应的信息，现在你可以开始学习对应的协议了</p>
+<p>点击下图可以执行下一步<br><img src="http://upload-images.jianshu.io/upload_images/3279997-94b8edfc34c8a994.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174568055244.jpg"></p>
+<p>结合这2个工具，在结合书本，相信理解tcp/ip无压力</p>
+<h3 id="2个路由器组网"><a href="#2个路由器组网" class="headerlink" title="2个路由器组网"></a>2个路由器组网</h3><p>怎么拉出控件就不说了，最后是这样的</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-a2b78f2c809e4712.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174637134612.jpg"></p>
+<p>为了不同网段可以通信</p>
+<p>还要对路由器进行<a href="https://baike.baidu.com/item/%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1/100778?fr=aladdin" target="_blank" rel="noopener">静态路由</a>配置</p>
+<blockquote>
+<p>基本的静态路由举例如图所示，由两个路由器R1和R2组成（接口号和IP地址在图中给出），它们分别连接了各自的网络：R1连接了子网192.168.0.0/24，R2连接了子网192.168.2.0/24[1]  。<br>在没有配置静态路由的情况下，这两个子网中的计算机A、B之间是不能通信的。从计算机A发往计算机B的IP包，在到达R1后，R1不知道如何到达计算机B所在的网段192.168.2.0/24（即R1上没有去往192.168.2.0/24的路由表），同样R2也不知道如何到达计算机A所在的网段192.168.0.0/24，因此通信失败。<br>此时就需要管理员在R1和R2上分别配置静态路由来使计算机A、B成功通信。<br>在R1上执行添加静态路由的命令ip route 192.168.2.0 255.255.255.0 192.168.1.1。它的意思是告诉R1，如果有IP包想达到网段192.168.2.0/24，那么请将此IP包发给192.168.1.1（即和R1的2号端口相连的对端）。<br>同时也要在R2上执行添加静态路由的命令ip route 192.168.0.0 255.255.255.0 192.168.1.2。它的意思是告诉R2，如果有IP包想达到网段192.168.0.0/24，那么请将此IP包发给192.168.1.2（即和R2的3号端口相连的对端）。<br>通过上面的两段配置，从计算机A发往计算机B的IP包，能被R1通过2号端口转发给R2，然后R2转发给计算机B。同样地，从计算机B返回给计算机A的IP包，能被R2通过3号端口转发给R1，然后R1转发给计算机A，完成了一个完整的通讯过程。</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-7494a95f292adb0e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174640310909.jpg"></p>
+<p>告诉路由器1 3网段的走向下个路由器 192.168.2.2</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-e94cfb300b33f625.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174638101921.jpg"></p>
+<p>同理 路由器2也要配置</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-d24349e6f37391ed.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174639026800.jpg"></p>
+<hr>
+<h3 id="组件http服务器"><a href="#组件http服务器" class="headerlink" title="组件http服务器"></a>组件http服务器</h3><p>其他的和2个路由器组网配置是一样的<br><img src="http://upload-images.jianshu.io/upload_images/3279997-3187cae120f67239.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174642109194.jpg"></p>
+<p>改为<code>hello world</code><br><img src="http://upload-images.jianshu.io/upload_images/3279997-c2c6a18651e434b1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174642783562.jpg"></p>
+<p>点击第一个pc</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-bd479ad507844dfd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174643271039.jpg"></p>
+<p>浏览器输入192.168.3.2<br><img src="http://upload-images.jianshu.io/upload_images/3279997-3c2f8213b80c71c5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174644997280.jpg"></p>
+<hr>
+<h3 id="组件DNS服务器"><a href="#组件DNS服务器" class="headerlink" title="组件DNS服务器"></a>组件DNS服务器</h3><p>再增加一台域名解析服务器（DNS）做到浏览器访问test.com 就可以访问刚才的192.168.3.3的内容也就是<code>hello world</code></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-07b63cf95664f0b8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174647781746.jpg"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-5518af94aa675077.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174648961413.jpg"></p>
+<p>同样打开pc1可以看到<br><img src="http://upload-images.jianshu.io/upload_images/3279997-f746aa4e4026e02e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15174649577457.jpg"></p>
+<hr>
+<p><strong><em>该文只是带大家入个门，具体每个协议好需要自己好好研究，相信有了这个工具，理解起来会好很多,希望能帮助到大家</em></strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/01/2018-08-11-19/" data-id="cjn75mih6000bizbuok9lyg7s" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/11/2018-08-11-8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          mysql常见操作
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/31/2018-08-11-6/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Linux下常见命令</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

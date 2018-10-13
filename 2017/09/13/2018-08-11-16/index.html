@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>梳理ReactNative中oc到js的数据流动 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="以添加CalendarManager为例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="梳理ReactNative中oc到js的数据流动">
+<meta property="og:url" content="http://yoursite.com/2017/09/13/2018-08-11-16/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="以添加CalendarManager为例">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-47763797c0a31b10.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-447f36f2a1442a40.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-7f11269582b19ee9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-779325b8ae47b29e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-b5a19aa23f5ecf1f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-7ad874b2227b4e87.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-bd53b0911643cf7d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-10-12T14:22:40.281Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="梳理ReactNative中oc到js的数据流动">
+<meta name="twitter:description" content="以添加CalendarManager为例">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3279997-47763797c0a31b10.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-08-11-16" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/13/2018-08-11-16/" class="article-date">
+  <time datetime="2017-09-13T05:54:37.000Z" itemprop="datePublished">2017-09-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      梳理ReactNative中oc到js的数据流动
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以添加<code>CalendarManager</code>为例</p>
+<a id="more"></a>
+<p>.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;React/RCTBridgeModule.h&gt;</span><br><span class="line">#import &lt;React/RCTLog.h&gt;</span><br><span class="line"></span><br><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">@interface CalendarManager : NSObject&lt;RCTBridgeModule&gt;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>.m</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@implementation CalendarManager</span><br><span class="line"></span><br><span class="line">- (instancetype)init &#123;</span><br><span class="line">  if (self = [super init]) &#123;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">  return self;</span><br><span class="line">&#125;</span><br><span class="line">RCT_EXPORT_MODULE();</span><br><span class="line">RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location)</span><br><span class="line">&#123;</span><br><span class="line">  // Date is ready to use!</span><br><span class="line">  NSLog(@&quot;location1-----%@&quot;,location);</span><br><span class="line">&#125;</span><br><span class="line">RCT_EXPORT_METHOD(fangshufeng:(NSString *)name testTwo:(NSString *)location)</span><br><span class="line">&#123;</span><br><span class="line">  // Date is ready to use!</span><br><span class="line">  NSLog(@&quot;location3-----%@&quot;,location);</span><br><span class="line">&#125;</span><br><span class="line">RCT_REMAP_METHOD(fangshufengJsName,</span><br><span class="line">                 addEvent:(NSString *)name testTwo:(NSString *)location hh:(NSString*)jj) &#123;</span><br><span class="line">  NSLog(@&quot;location4-----%@&quot;,location);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>运行xcode,在下面的地方打上断点</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-47763797c0a31b10.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15033061710856.jpg"></p>
+<p>输出<code>configJSON</code>，只保留<code>CalendarManager</code>相关的并且json一下就是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;remoteModuleConfig&quot;: [</span><br><span class="line">        [</span><br><span class="line">            &quot;CalendarManager&quot;,</span><br><span class="line">            null,</span><br><span class="line">            [</span><br><span class="line">                &quot;addEvent&quot;, // 这里对应的就是第一个方法addEvent:(NSString *)name location:(NSString *)location 下面两个分别对应第二第三个</span><br><span class="line">                &quot;fangshufeng&quot;,</span><br><span class="line">                &quot;fangshufengJsName&quot;</span><br><span class="line">            ],</span><br><span class="line">            null,</span><br><span class="line">            null</span><br><span class="line">        ],</span><br><span class="line">        ...</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是在debug环境的情况下传的是完整配置信息，而在release环境下这个配置信息就只有module信息，而其他的方法信息都是通过懒加载的形式得到</p>
+<p>oc通过方法将jsonstring传给js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[_javaScriptExecutor injectJSONText:configJSON</span><br><span class="line">                asGlobalObjectNamed:@&quot;__fbBatchedBridgeConfig&quot;</span><br><span class="line">                           callback:onComplete];</span><br></pre></td></tr></table></figure>
+<p>js如何接收呢</p>
+<p>在<code>NativeModules.js</code>中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const bridgeConfig = global.__fbBatchedBridgeConfig;</span><br></pre></td></tr></table></figure>
+<p>通过一个global的key<code>__fbBatchedBridgeConfig</code>将数据给到js</p>
+<p>由</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let NativeModules : &#123;[moduleName: string]: Object&#125; = &#123;&#125;;</span><br></pre></td></tr></table></figure>
+<p>可以知道<code>NativeModules</code>本身是一个对象</p>
+<p>我们再<code>debugger</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">(bridgeConfig.remoteModuleConfig || []).forEach((config: ModuleConfig, moduleID: number) =&gt; &#123;</span><br><span class="line">    // Initially this config will only contain the module name when running in JSC. The actual</span><br><span class="line">    // configuration of the module will be lazily loaded.</span><br><span class="line">    const info = genModule(config, moduleID);</span><br><span class="line">    debugger;</span><br><span class="line">    if (!info) &#123;</span><br><span class="line">      return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (info.module) &#123;</span><br><span class="line">      NativeModules[info.name] = info.module;</span><br><span class="line">    &#125;</span><br><span class="line">    // If there&apos;s no module config, define a lazy getter</span><br><span class="line">    else &#123;</span><br><span class="line">      defineLazyObjectProperty(NativeModules, info.name, &#123;</span><br><span class="line">        get: () =&gt; loadModule(info.name, moduleID)</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以过滤出<code>CalendarManager</code>如下图所示</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-447f36f2a1442a40.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>具体看看这个方法做的事情可以知道每个item都会经过<code>genModule</code>方法，先来看看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">function genModule(config: ?ModuleConfig, moduleID: number): ?&#123;name: string, module?: Object&#125; &#123;</span><br><span class="line">  if (!config) &#123;</span><br><span class="line">    return null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const [moduleName, constants, methods, promiseMethods, syncMethods] = config;</span><br><span class="line">  invariant(!moduleName.startsWith(&apos;RCT&apos;) &amp;&amp; !moduleName.startsWith(&apos;RK&apos;),</span><br><span class="line">    &apos;Module name prefixes should\&apos;ve been stripped by the native side &apos; +</span><br><span class="line">    &apos;but wasn\&apos;t for &apos; + moduleName);</span><br><span class="line"></span><br><span class="line">  if (!constants &amp;&amp; !methods) &#123;</span><br><span class="line">    // Module contents will be filled in lazily later</span><br><span class="line">    return &#123; name: moduleName &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const module = &#123;&#125;;</span><br><span class="line">  methods &amp;&amp; methods.forEach((methodName, methodID) =&gt; &#123;</span><br><span class="line">    const isPromise = promiseMethods &amp;&amp; arrayContains(promiseMethods, methodID);</span><br><span class="line">    const isSync = syncMethods &amp;&amp; arrayContains(syncMethods, methodID);</span><br><span class="line">    invariant(!isPromise || !isSync, &apos;Cannot have a method that is both async and a sync hook&apos;);</span><br><span class="line">    const methodType = isPromise ? &apos;promise&apos; : isSync ? &apos;sync&apos; : &apos;async&apos;;</span><br><span class="line">    module[methodName] = genMethod(moduleID, methodID, methodType);</span><br><span class="line">  &#125;);</span><br><span class="line">  Object.assign(module, constants);</span><br><span class="line"></span><br><span class="line">  if (__DEV__) &#123;</span><br><span class="line">    BatchedBridge.createDebugLookup(moduleID, moduleName, methods);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return &#123; name: moduleName, module &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个又用到了<code>genMethod</code>方法，好吧先来看看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">function genMethod(moduleID: number, methodID: number, type: MethodType) &#123;</span><br><span class="line">  let fn = null;</span><br><span class="line">  if (type === &apos;promise&apos;) &#123;</span><br><span class="line">    fn = function(...args: Array&lt;any&gt;) &#123;</span><br><span class="line">      return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">        BatchedBridge.enqueueNativeCall(moduleID, methodID, args,</span><br><span class="line">          (data) =&gt; resolve(data),</span><br><span class="line">          (errorData) =&gt; reject(createErrorFromErrorData(errorData)));</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125; else if (type === &apos;sync&apos;) &#123;</span><br><span class="line">    fn = function(...args: Array&lt;any&gt;) &#123;</span><br><span class="line">      return global.nativeCallSyncHook(moduleID, methodID, args);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    fn = function(...args: Array&lt;any&gt;) &#123;</span><br><span class="line">      console.log(&apos;----&apos;, args , &apos;moduleID:--&apos; +  moduleID , &apos;methodID:---&apos; + methodID);</span><br><span class="line">      const lastArg = args.length &gt; 0 ? args[args.length - 1] : null;</span><br><span class="line">      const secondLastArg = args.length &gt; 1 ? args[args.length - 2] : null;</span><br><span class="line">      const hasSuccessCallback = typeof lastArg === &apos;function&apos;;</span><br><span class="line">      const hasErrorCallback = typeof secondLastArg === &apos;function&apos;;</span><br><span class="line">      hasErrorCallback &amp;&amp; invariant(</span><br><span class="line">        hasSuccessCallback,</span><br><span class="line">        &apos;Cannot have a non-function arg after a function arg.&apos;</span><br><span class="line">      );</span><br><span class="line">      const onSuccess = hasSuccessCallback ? lastArg : null;</span><br><span class="line">      const onFail = hasErrorCallback ? secondLastArg : null;</span><br><span class="line">      const callbackCount = hasSuccessCallback + hasErrorCallback;</span><br><span class="line">      args = args.slice(0, args.length - callbackCount);</span><br><span class="line">      BatchedBridge.enqueueNativeCall(moduleID, methodID, args, onFail, onSuccess);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  fn.type = type;</span><br><span class="line">  return fn;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法分为三种，由oc传给js的时候也有体现的这里我们先直接看<code>aync</code>情况的，这里做了三件事情</p>
+<ol>
+<li>定义了一个接收多个参数额方法；</li>
+<li>在参数列表中取出最后的两个作为js的回调；</li>
+<li>最终调用的是原生的方法这里又引出了另一个方法<code>BatchedBridge.enqueueNativeCall</code></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">enqueueNativeCall(moduleID: number, methodID: number, params: Array&lt;any&gt;, onFail: ?Function, onSucc: ?Function) &#123;</span><br><span class="line">    if (onFail || onSucc) &#123;</span><br><span class="line">      if (__DEV__) &#123;</span><br><span class="line">        const callId = this._callbackID &gt;&gt; 1;</span><br><span class="line">        this._debugInfo[callId] = [moduleID, methodID];</span><br><span class="line">        if (callId &gt; DEBUG_INFO_LIMIT) &#123;</span><br><span class="line">          delete this._debugInfo[callId - DEBUG_INFO_LIMIT];</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      onFail &amp;&amp; params.push(this._callbackID);</span><br><span class="line">      /* $FlowFixMe(&gt;=0.38.0 site=react_native_fb,react_native_oss) - Flow error</span><br><span class="line">       * detected during the deployment of v0.38.0. To see the error, remove</span><br><span class="line">       * this comment and run flow */</span><br><span class="line">      this._callbacks[this._callbackID++] = onFail;</span><br><span class="line">      onSucc &amp;&amp; params.push(this._callbackID);</span><br><span class="line">      /* $FlowFixMe(&gt;=0.38.0 site=react_native_fb,react_native_oss) - Flow error</span><br><span class="line">       * detected during the deployment of v0.38.0. To see the error, remove</span><br><span class="line">       * this comment and run flow */</span><br><span class="line">      this._callbacks[this._callbackID++] = onSucc;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (__DEV__) &#123;</span><br><span class="line">      global.nativeTraceBeginAsyncFlow &amp;&amp;</span><br><span class="line">        global.nativeTraceBeginAsyncFlow(TRACE_TAG_REACT_APPS, &apos;native&apos;, this._callID);</span><br><span class="line">    &#125;</span><br><span class="line">    this._callID++;</span><br><span class="line"></span><br><span class="line">    this._queue[MODULE_IDS].push(moduleID);</span><br><span class="line">    this._queue[METHOD_IDS].push(methodID);</span><br><span class="line"></span><br><span class="line">    if (__DEV__) &#123;</span><br><span class="line">      // Any params sent over the bridge should be encodable as JSON</span><br><span class="line">      JSON.stringify(params);</span><br><span class="line"></span><br><span class="line">      // The params object should not be mutated after being queued</span><br><span class="line">      deepFreezeAndThrowOnMutationInDev((params:any));</span><br><span class="line">    &#125;</span><br><span class="line">    this._queue[PARAMS].push(params);</span><br><span class="line"></span><br><span class="line">    const now = new Date().getTime();</span><br><span class="line">    if (global.nativeFlushQueueImmediate &amp;&amp;</span><br><span class="line">        (now - this._lastFlush &gt;= MIN_TIME_BETWEEN_FLUSHES_MS ||</span><br><span class="line">         this._inCall === 0)) &#123;</span><br><span class="line">      var queue = this._queue;</span><br><span class="line">      this._queue = [[], [], [], this._callID];</span><br><span class="line">      this._lastFlush = now;</span><br><span class="line">      global.nativeFlushQueueImmediate(queue);</span><br><span class="line">    &#125;</span><br><span class="line">    Systrace.counterEvent(&apos;pending_js_to_native_queue&apos;, this._queue[0].length);</span><br><span class="line">    if (__DEV__ &amp;&amp; this.__spy &amp;&amp; isFinite(moduleID)) &#123;</span><br><span class="line">      this.__spy(</span><br><span class="line">        &#123; type: TO_NATIVE,</span><br><span class="line">          module: this._remoteModuleTable[moduleID],</span><br><span class="line">          method: this._remoteMethodTable[moduleID][methodID],</span><br><span class="line">          args: params &#125;</span><br><span class="line">      );</span><br><span class="line">    &#125; else if (this.__spy) &#123;</span><br><span class="line">      this.__spy(&#123;type: TO_NATIVE, module: moduleID + &apos;&apos;, method: methodID, args: params&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法一共做了以下几件事情：</p>
+<ol>
+<li>判断如果后面两个参数有回调的话就会为每个回调生成一个唯一的ID这里叫做<code>_callbackID</code>，并将js方法装进一个<code>_callbacks</code>的数组中；</li>
+<li><p>这里有个<code>_queue</code>对象他的结构如下</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">_queue: [Array&lt;number&gt;, Array&lt;number&gt;, Array&lt;any&gt;, number];</span><br><span class="line"></span><br><span class="line">在js中分别以`MODULE_IDS` `METHOD_IDS` 和 `PARAMS`来表示数组的第0、1、2号元素，之所以这样命名是达到为了见名之意的效果</span><br></pre></td></tr></table></figure>
+<p> 完成了第一步的<code>_callbackID</code>的映射，在分别吧对应的模块id<code>moduleID</code>、方法id<code>methodID</code>和参数<code>params</code>分别装进<code>_queue</code>对应的数组中</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this._queue[MODULE_IDS].push(moduleID);</span><br><span class="line">this._queue[METHOD_IDS].push(methodID);</span><br><span class="line">this._queue[PARAMS].push(params);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>回调原生的<code>global.nativeFlushQueueImmediate</code>方法，对应原生的</p>
+</li>
+</ol>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">context[@&quot;nativeFlushQueueImmediate&quot;] = ^(NSArray&lt;NSArray *&gt; *calls)&#123;</span><br><span class="line">  RCTJSCExecutor *strongSelf = weakSelf;</span><br><span class="line">  if (!strongSelf.valid || !calls) &#123;</span><br><span class="line">    return;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  RCT_PROFILE_BEGIN_EVENT(RCTProfileTagAlways, @&quot;nativeFlushQueueImmediate&quot;, nil);</span><br><span class="line">  [strongSelf-&gt;_bridge handleBuffer:calls batchEnded:NO];</span><br><span class="line">  RCT_PROFILE_END_EVENT(RCTProfileTagAlways, @&quot;js_call&quot;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</code></pre><p>值得注意的是这里只是做方法的申明，并没有调用。</p>
+<p>那我们在回到最开始的<code>genModule</code>方法，也就是说经过<code>genModule</code>方法以后以我们的<code>CalendarManager</code>来说的话也就是返回一个下面形式的对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    name:&quot;CalendarManager&quot;,</span><br><span class="line">    &#123;</span><br><span class="line">       addEvent: &#123;</span><br><span class="line">             fn(...)&#123;&#125;,</span><br><span class="line">             type:&quot;async&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        fangshufeng: &#123;</span><br><span class="line">             fn(...)&#123;&#125;,</span><br><span class="line">             type:&quot;async&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        fangshufengJsName: &#123;</span><br><span class="line">             fn(...)&#123;&#125;,</span><br><span class="line">             type:&quot;async&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再回到一开始的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (info.module) &#123;</span><br><span class="line">      NativeModules[info.name] = info.module;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>从而经过一大圈的变换最后得到的结果就是返回一个<code>NativeModules</code>对象，还是以<code>CalendarManager</code>为例，得到的<code>NativeModules</code>的对象如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">CalendarManager: </span><br><span class="line">    &#123;</span><br><span class="line">       addEvent: &#123;</span><br><span class="line">             fn(...)&#123;&#125;,</span><br><span class="line">             type:&quot;async&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        fangshufeng: &#123;</span><br><span class="line">             fn(...)&#123;&#125;,</span><br><span class="line">             type:&quot;async&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        fangshufengJsName: &#123;</span><br><span class="line">             fn(...)&#123;&#125;,</span><br><span class="line">             type:&quot;async&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>我们自定义的<code>CalendarManager</code>作为了<code>NativeModules</code>的一个属性，<code>CalendarManager</code>所对应的方法列表成了<code>CalendarManager</code>属性<br>这里只是用<code>CalendarManager</code>为例子来讲的，实际上最后<code>NativeModules</code>是有很多的类似<code>CalendarManager</code>的属性</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-7f11269582b19ee9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15033248335271.jpg"></p>
+<p>也就是说每一个原生模块都对应<code>NativeModules</code>一个属性</p>
+<p>到这里也就说完了原生创建一个模块到js的演变过程，我们来总结一下，当我们要创建一个原生模块的时候需要做些什么；</p>
+<ol>
+<li>要继承<rctbridgemodule>这个协议；</rctbridgemodule></li>
+<li><p>要在.m中加入RCT_EXPORT_MODULE();还记得之前那个发给js的那个原生模块的jsonString吧这个目的其实是要将当前模块加入配置表中也就是下面的这个方法</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">void RCTRegisterModule(Class moduleClass)</span><br><span class="line">&#123;</span><br><span class="line">  static dispatch_once_t onceToken;</span><br><span class="line">  dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">    RCTModuleClasses = [NSMutableArray new];</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  RCTAssert([moduleClass conformsToProtocol:@protocol(RCTBridgeModule)],</span><br><span class="line">            @&quot;%@ does not conform to the RCTBridgeModule protocol&quot;,</span><br><span class="line">            moduleClass);</span><br><span class="line"></span><br><span class="line">  // Register module</span><br><span class="line">  [RCTModuleClasses addObject:moduleClass];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对于要暴露给js的oc方法需要使用<code>RCT_EXPORT_METHOD</code>这个宏</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code>展开以后就是下面这个样子
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+ (NSArray&lt;NSString *&gt; *)__rct_export__300 &#123; </span><br><span class="line">        return @[@&quot;&quot;, </span><br><span class="line">        @&quot;addEvent:(NSString *)name location:(NSString *)location &quot;]; </span><br><span class="line">        &#125; </span><br><span class="line">- (void)addEvent:(NSString *)name location:(NSString *)location;</span><br></pre></td></tr></table></figure>
+
+到后面要查找方法列表的时候就是通过`__rct_export__`前缀来查找的，查找的方法如下
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">    - (NSArray&lt;id&lt;RCTBridgeMethod&gt;&gt; *)methods</span><br><span class="line">&#123;</span><br><span class="line">  if (!_methods) &#123;</span><br><span class="line">    NSMutableArray&lt;id&lt;RCTBridgeMethod&gt;&gt; *moduleMethods = [NSMutableArray new];</span><br><span class="line"></span><br><span class="line">    if ([_moduleClass instancesRespondToSelector:@selector(methodsToExport)]) &#123;</span><br><span class="line">      [moduleMethods addObjectsFromArray:[self.instance methodsToExport]];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    unsigned int methodCount;</span><br><span class="line">    Class cls = _moduleClass;</span><br><span class="line">    while (cls &amp;&amp; cls != [NSObject class] &amp;&amp; cls != [NSProxy class]) &#123;</span><br><span class="line">      Method *methods = class_copyMethodList(object_getClass(cls), &amp;methodCount);</span><br><span class="line"></span><br><span class="line">      for (unsigned int i = 0; i &lt; methodCount; i++) &#123;</span><br><span class="line">        Method method = methods[i];</span><br><span class="line">        SEL selector = method_getName(method);</span><br><span class="line">        if ([NSStringFromSelector(selector) hasPrefix:@&quot;__rct_export__&quot;]) &#123;</span><br><span class="line">          IMP imp = method_getImplementation(method);</span><br><span class="line">          NSArray&lt;NSString *&gt; *entries =</span><br><span class="line">            ((NSArray&lt;NSString *&gt; *(*)(id, SEL))imp)(_moduleClass, selector);</span><br><span class="line">          id&lt;RCTBridgeMethod&gt; moduleMethod =</span><br><span class="line">            [[RCTModuleMethod alloc] initWithMethodSignature:entries[1]</span><br><span class="line">                                                JSMethodName:entries[0]</span><br><span class="line">                                                 moduleClass:_moduleClass];</span><br><span class="line"></span><br><span class="line">          [moduleMethods addObject:moduleMethod];</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      free(methods);</span><br><span class="line">      cls = class_getSuperclass(cls);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    _methods = [moduleMethods copy];</span><br><span class="line">  &#125;</span><br><span class="line">  return _methods;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+这个方法做了两个事情，一个是查找已`__rct_export__`开头的方法，一个是以`__rct_export__`方法开头的第一个参数为js方法的名称。
+</code></pre><ol start="4">
+<li><p>由3可知以这个宏<code>RCT_EXPORT_METHOD</code>的话默认给js的方法名称是参数的第一位，可以知道都是空的，可是我们最后是需要给js一个方法一个名称的这里oc做了默认处理了</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">    - (NSString *)JSMethodName</span><br><span class="line">&#123;</span><br><span class="line">  NSString *methodName = _JSMethodName;</span><br><span class="line">  if (methodName.length == 0) &#123;</span><br><span class="line">    methodName = _methodSignature;</span><br><span class="line">    NSRange colonRange = [methodName rangeOfString:@&quot;:&quot;];</span><br><span class="line">    if (colonRange.location != NSNotFound) &#123;</span><br><span class="line">      methodName = [methodName substringToIndex:colonRange.location];</span><br><span class="line">    &#125;</span><br><span class="line">    methodName = [methodName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];</span><br><span class="line">    RCTAssert(methodName.length, @&quot;%@ is not a valid JS function name, please&quot;</span><br><span class="line">              &quot; supply an alternative using RCT_REMAP_METHOD()&quot;, _methodSignature);</span><br><span class="line">  &#125;</span><br><span class="line">  return methodName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 也就是如果<code>JSMethodName</code>的长度为空的话就会截取第二个参数的<code>:</code>以前的字符串作为方法，也就是<br> <code>RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location)</code>对应<code>addEvent</code>，<code>RCT_EXPORT_METHOD(fangshufeng:(NSString *)name testTwo:(NSString *)location)</code>对应<code>fangshufeng</code>，那这样的话问题就来了，万一还有个这样的方法<code>RCT_EXPORT_METHOD(fangshufeng:(NSString *)name)</code>按照默认的规则岂不是就和<code>RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location)</code>冲突了吗，rn为了避免这种情况，我们可以使用这个宏<code>RCT_REMAP_METHOD</code>，也就是这种用法</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    RCT_REMAP_METHOD(fangshufengJsName,</span><br><span class="line">                 addEvent:(NSString *)name testTwo:(NSString *)location hh:(NSString*)jj) &#123;</span><br><span class="line">  NSLog(@&quot;location4-----%@&quot;,location);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 这样的话之前那个数组的参数第一个值就有值了对应<code>fangshufengJsName</code></p>
+</li>
+<li><p>在研究js源码的时候我们发现，js对参数的解析是有要注意的地方的，如果原生想要使用js的回调的话只能放在参数的后两位</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location action:(RCTResponseSenderBlock)action)</span><br><span class="line">&#123;</span><br><span class="line">  // Date is ready to use!</span><br><span class="line">  NSLog(@&quot;location1-----%@&quot;,location);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 这样的话就是错的</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">RCT_EXPORT_METHOD(addEvent:(NSString *)name   action:(RCTResponseSenderBlock)action location:(NSString *)location)</span><br><span class="line">&#123;</span><br><span class="line">  // Date is ready to use!</span><br><span class="line">  NSLog(@&quot;location1-----%@&quot;,location);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>接下来将要讲的是当自定义的模块方法被调用时数据是如何流动的。</p>
+<p>首先我们先把<code>CalendarManager</code>用起来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">import  React,&#123;Component&#125; from &apos;react&apos;;</span><br><span class="line">import &#123;</span><br><span class="line">    NativeModules,</span><br><span class="line">    Text,</span><br><span class="line">    TouchableOpacity,</span><br><span class="line">    NativeAppEventEmitter,</span><br><span class="line">    View,</span><br><span class="line">&#125; from &apos;react-native&apos;</span><br><span class="line"></span><br><span class="line">import  FadeInView from &apos;./FadeInView&apos;</span><br><span class="line"></span><br><span class="line">let CalendarManager = NativeModules.CalendarManager;</span><br><span class="line"></span><br><span class="line">export  default  class TestAnimal extends  Component &#123;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;TouchableOpacity</span><br><span class="line">                 onPress=&#123;() =&gt; &#123;CalendarManager.fangshufeng(&apos;name&apos;,&apos;ggg&apos;)&#125;&#125;</span><br><span class="line">            &gt;</span><br><span class="line">            &lt;FadeInView style=&#123;&#123;width: 250, height: 50, backgroundColor: &apos;powderblue&apos;&#125;&#125;</span><br><span class="line"></span><br><span class="line">            &gt;</span><br><span class="line">                &lt;Text style=&#123;&#123;fontSize: 28, textAlign: &apos;center&apos;, margin: 10&#125;&#125;&gt;Fading in&lt;/Text&gt;</span><br><span class="line">            &lt;/FadeInView&gt;</span><br><span class="line">            &lt;/TouchableOpacity&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行的结果</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-779325b8ae47b29e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15033660664537.jpg"></p>
+<p>点击<code>fading in</code>也就是调用<code>fangshufeng</code>方法，之前我们说过<code>enqueueNativeCall</code>方法只是做方法申明，这个时候就是调用之前定义的方法，在我的这个工程里面可以debug到，<code>fangshufeng</code>这个方法的<code>moduleID</code>是<code>1</code>，<code>methodID</code>是<code>1</code></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-b5a19aa23f5ecf1f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15033664429808.jpg"></p>
+<p>然后debug到<code>enqueueNativeCall</code>中</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-7ad874b2227b4e87.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15033665264435.jpg"></p>
+<p>可以看到最终传给oc的<code>queue</code>是什么</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3279997-bd53b0911643cf7d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15033665894650.jpg"></p>
+<p>如果只看<code>CalendarManager</code>的话当你点击<code>Fading in</code>的时候传给oc的queue就是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[1],[1],[[&apos;name&apos;,&apos;ggg&apos;]]]</span><br></pre></td></tr></table></figure>
+<p>然后通过<code>nativeFlushQueueImmediate</code>方法给到oc,会进到下面的这个方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">- (void)handleBuffer:(NSArray *)buffer</span><br><span class="line">&#123;</span><br><span class="line">  NSArray *requestsArray = [RCTConvert NSArray:buffer];</span><br><span class="line"></span><br><span class="line">  NSArray&lt;NSNumber *&gt; *moduleIDs = [RCTConvert NSNumberArray:requestsArray[RCTBridgeFieldRequestModuleIDs]];</span><br><span class="line">  NSArray&lt;NSNumber *&gt; *methodIDs = [RCTConvert NSNumberArray:requestsArray[RCTBridgeFieldMethodIDs]];</span><br><span class="line">  NSArray&lt;NSArray *&gt; *paramsArrays = [RCTConvert NSArrayArray:requestsArray[RCTBridgeFieldParams]];</span><br><span class="line"></span><br><span class="line">  int64_t callID = -1;</span><br><span class="line"></span><br><span class="line">  if (requestsArray.count &gt; 3) &#123;</span><br><span class="line">    callID = [requestsArray[RCTBridgeFieldCallID] longLongValue];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    // 1</span><br><span class="line">  NSMapTable *buckets = [[NSMapTable alloc] initWithKeyOptions:NSPointerFunctionsStrongMemory</span><br><span class="line">                                                  valueOptions:NSPointerFunctionsStrongMemory</span><br><span class="line">                                                      capacity:_moduleDataByName.count];</span><br><span class="line"></span><br><span class="line">    //2</span><br><span class="line">  [moduleIDs enumerateObjectsUsingBlock:^(NSNumber *moduleID, NSUInteger i, __unused BOOL *stop) &#123;</span><br><span class="line">    RCTModuleData *moduleData = self-&gt;_moduleDataByID[moduleID.integerValue];</span><br><span class="line">    dispatch_queue_t queue = moduleData.methodQueue;</span><br><span class="line">    NSMutableOrderedSet&lt;NSNumber *&gt; *set = [buckets objectForKey:queue];</span><br><span class="line">    if (!set) &#123;</span><br><span class="line">      set = [NSMutableOrderedSet new];</span><br><span class="line">      [buckets setObject:set forKey:queue];</span><br><span class="line">    &#125;</span><br><span class="line">    [set addObject:@(i)];</span><br><span class="line">  &#125;];</span><br><span class="line"></span><br><span class="line">    //3</span><br><span class="line">  for (dispatch_queue_t queue in buckets) &#123;</span><br><span class="line">    dispatch_block_t block = ^&#123;</span><br><span class="line">      NSOrderedSet *calls = [buckets objectForKey:queue];</span><br><span class="line">      @autoreleasepool &#123;</span><br><span class="line">        for (NSNumber *indexObj in calls) &#123;</span><br><span class="line">          NSUInteger index = indexObj.unsignedIntegerValue;</span><br><span class="line">          [self callNativeModule:[moduleIDs[index] integerValue]</span><br><span class="line">                          method:[methodIDs[index] integerValue]</span><br><span class="line">                          params:paramsArrays[index]];</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">        [self dispatchBlock:block queue:queue];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  _flowID = callID;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在需要的解释的地方做了个标记</p>
+<ol>
+<li>由于下面要用到<code>object-&gt;object</code> 所以这里使用<code>map</code>也就是<code>NSMapTable</code>来保存数据；</li>
+<li><p>这个地方可能有点绕，如果对数据结构不清楚的话比较难以理解，还是以<code>CalendarManager</code>为例子，先来假设其他的数据如下所示：<br> 假设js传给oc的queue是这个样子的</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    [38,19,41,41,1], // 最后一个1表示`CalendarManager`模块</span><br><span class="line">    [19,1,4,3,1], // 最后一个1表示addEvent: location: 方法</span><br><span class="line">    [[...],[...],[...],[...],[&apos;name&apos;,&apos;ggg&apos;]] //[&apos;name&apos;,&apos;ggg&apos;]表示方面方法的入参</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code>我们通过断点来跟踪一下数据
+
+`modules`
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;__NSArrayI 0x7b048e30&gt;(</span><br><span class="line">38,</span><br><span class="line">19,</span><br><span class="line">41,</span><br><span class="line">41,</span><br><span class="line">1</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+
+`buckets`
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">po buckets</span><br><span class="line">NSMapTable &#123;</span><br><span class="line">[10] &lt;OS_dispatch_queue: com.facebook.react.CalendarManagerQueue[0x7b652310]&gt; -&gt; &#123;(</span><br><span class="line">    4</span><br><span class="line">)&#125;</span><br><span class="line">[46] &lt;OS_dispatch_queue: com.facebook.react.ShadowQueue[0x7b19cb90]&gt; -&gt; &#123;(</span><br><span class="line">    0,</span><br><span class="line">    2,</span><br><span class="line">    3</span><br><span class="line">)&#125;</span><br><span class="line">[47] &lt;null&gt; -&gt; &#123;(</span><br><span class="line">    1</span><br><span class="line">)&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">po methodIDs</span><br><span class="line">&lt;__NSArrayI 0x7b048da0&gt;(</span><br><span class="line">19,</span><br><span class="line">1,</span><br><span class="line">4,</span><br><span class="line">3,</span><br><span class="line">1</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">po paramsArrays</span><br><span class="line">&lt;__NSArrayI 0x7ee5f7c0&gt;(</span><br><span class="line">&lt;__NSArray0 0x7a648bd0&gt;(</span><br><span class="line"></span><br><span class="line">)</span><br><span class="line">,</span><br><span class="line">&lt;__NSSingleObjectArrayI 0x7b04c8d0&gt;(</span><br><span class="line">47</span><br><span class="line">)</span><br><span class="line">,</span><br><span class="line">&lt;__NSSingleObjectArrayI 0x7b04daf0&gt;(</span><br><span class="line">3</span><br><span class="line">)</span><br><span class="line">,</span><br><span class="line">&lt;__NSArrayI 0x7ee55570&gt;(</span><br><span class="line">4,</span><br><span class="line">3,</span><br><span class="line">&#123;</span><br><span class="line">    frames =     (</span><br><span class="line">        0,</span><br><span class="line">        &quot;0.008888888888888889&quot;,</span><br><span class="line">        &quot;0.03555555555555556&quot;,</span><br><span class="line">        &quot;0.08000000000000002&quot;,</span><br><span class="line">        &quot;0.1422222222222222&quot;,</span><br><span class="line">        &quot;0.2222222222222223&quot;,</span><br><span class="line">        &quot;0.3200000000000001&quot;,</span><br><span class="line">        &quot;0.4355555555555557&quot;,</span><br><span class="line">        &quot;0.5644444444444444&quot;,</span><br><span class="line">        &quot;0.6799999999999999&quot;,</span><br><span class="line">        &quot;0.7777777777777777&quot;,</span><br><span class="line">        &quot;0.8577777777777778&quot;,</span><br><span class="line">        &quot;0.9199999999999999&quot;,</span><br><span class="line">        &quot;0.9644444444444443&quot;,</span><br><span class="line">        &quot;0.9911111111111111&quot;,</span><br><span class="line">        1,</span><br><span class="line">        1</span><br><span class="line">    );</span><br><span class="line">    iterations = 1;</span><br><span class="line">    toValue = 1;</span><br><span class="line">    type = frames;</span><br><span class="line">&#125;,</span><br><span class="line">13</span><br><span class="line">)</span><br><span class="line">,</span><br><span class="line">&lt;__NSArrayI 0x7b2630e0&gt;(</span><br><span class="line">name,</span><br><span class="line">ggg</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+做的事情就是：
+
+遍历模块的数组 -&gt;  在`_moduleDataByID`取出`moduleData` -&gt; 以`moduleData`中的串行队列作为key set作为value,而set中装着的对应的索引，由于module、method、Params都是索引值是一一对应的，这个索引值即是当前module在modules数组的索引值，也是method、Params的索引值。
+</code></pre><ol start="3">
+<li><p>上面已经给出了bucket的具体内容，循环后也就是调用下面的方法</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[self callNativeModule:[moduleIDs[index] integerValue]</span><br><span class="line">                          method:[methodIDs[index] integerValue]</span><br><span class="line">                          params:paramsArrays[index]];</span><br><span class="line"></span><br><span class="line">// 具体就是</span><br><span class="line">[self callNativeModule:1 //可以知道这个1就是`CalendarManager`</span><br><span class="line">                method:1 // 这个1就是表示addEvent: location: 方法</span><br><span class="line">                params:[&apos;name&apos;,&apos;ggg&apos;] //表示方面方法的入参</span><br><span class="line">                ];</span><br><span class="line"></span><br><span class="line">//具体上面怎么解析的下面会做分析</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>oc拿到数据得到模块名称、方法名称、参数，然后执行</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/13/2018-08-11-16/" data-id="cjn75mih40009izbu0y4yboge" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/11/22/2018-08-11-14/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          oc中为什么很少用try catch
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/09/2018-08-11-15/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">React-Native - FlexBox布局</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

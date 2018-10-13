@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>OC-KVC调用和赋值原理 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本文主要介绍kvo是如何查找变量然后赋值，以及通过key取出值的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OC-KVC调用和赋值原理">
+<meta property="og:url" content="http://yoursite.com/2018/08/11/2018-08-11-12/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="本文主要介绍kvo是如何查找变量然后赋值，以及通过key取出值的">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-1b7e06e03f87e90a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-534cc2d387f18131.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-2ac1909abcc0ec84.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-3aa88e6f1e164596.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-10-12T14:19:07.484Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OC-KVC调用和赋值原理">
+<meta name="twitter:description" content="本文主要介绍kvo是如何查找变量然后赋值，以及通过key取出值的">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-1b7e06e03f87e90a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-08-11-12" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/11/2018-08-11-12/" class="article-date">
+  <time datetime="2018-08-11T15:37:03.000Z" itemprop="datePublished">2018-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OC-KVC调用和赋值原理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文主要介绍kvo是如何查找变量然后赋值，以及通过key取出值的</p>
+<a id="more"></a>
+<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><p><code>Animal</code>类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// .h</span><br><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line">@interface Animal : NSObject</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//.m</span><br><span class="line">#import &quot;Animal.h&quot;</span><br><span class="line">@implementation Animal</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p><code>main.m</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line">#import &quot;Animal.h&quot;</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        Animal *animal = [[Animal alloc] init];</span><br><span class="line"></span><br><span class="line">        [animal setValue:@12 forKey:@&quot;age&quot;];</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="setValue-forkey"><a href="#setValue-forkey" class="headerlink" title="setValue:forkey:"></a>setValue:forkey:</h4><p>这个时候运行上面的代码会报下面的错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Terminating app due to uncaught exception &apos;NSUnknownKeyException&apos;, reason: &apos;[&lt;Animal 0x10052f6b0&gt; setValue:forUndefinedKey:]: this class is not key value coding-compliant for the key age.&apos;</span><br></pre></td></tr></table></figure>
+<p>下面对<code>Animal</code>代码进行改造</p>
+<p><code>Animal.m</code>改造1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)setAge:(int)age &#123;</span><br><span class="line">    NSLog(@&quot;setAge---%d&quot;,age);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序正常运行并打印</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setAge---12</span><br></pre></td></tr></table></figure>
+<p><code>Animal.m</code>改造2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//- (void)setAge:(int)age &#123;</span><br><span class="line">//    NSLog(@&quot;setAge---%d&quot;,age);</span><br><span class="line">//</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">- (void)_setAge:(int)age &#123;</span><br><span class="line">    NSLog(@&quot;_setAge---%d&quot;,age);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序正常输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_setAge---12</span><br></pre></td></tr></table></figure>
+<p><code>Animal.m</code>改造3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (void)setAge:(int)age &#123;</span><br><span class="line">    NSLog(@&quot;setAge---%d&quot;,age);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)_setAge:(int)age &#123;</span><br><span class="line">    NSLog(@&quot;_setAge---%d&quot;,age);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序正常输出并且只输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setAge---12</span><br></pre></td></tr></table></figure>
+<p><strong>首先得出下面的结论</strong></p>
+<ul>
+<li><code>setValue:forkey:</code>会调用调用<code>-set&lt;Key&gt;:</code>方法；</li>
+<li>当-set<key>:不存在的时候回调用-_set<key>:方法.</key></key></li>
+</ul>
+<hr>
+<p><code>Animal.m</code>改造4</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;Animal.h&quot;</span><br><span class="line"></span><br><span class="line">@interface Animal ()</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    int _age;</span><br><span class="line">    int _isAge;</span><br><span class="line">    int age;</span><br><span class="line">    int isAge;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Animal</span><br><span class="line"></span><br><span class="line">//- (void)setAge:(int)age &#123;</span><br><span class="line">//    NSLog(@&quot;setAge---%d&quot;,age);</span><br><span class="line">//</span><br><span class="line">//&#125;</span><br><span class="line">//</span><br><span class="line">//- (void)_setAge:(int)age &#123;</span><br><span class="line">//    NSLog(@&quot;_setAge---%d&quot;,age);</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>先打个断点，然后看下面控制台的值的情况<br><img src="https://upload-images.jianshu.io/upload_images/3279997-1b7e06e03f87e90a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15337987372295.jpg"></p>
+<p>这个时候是赋值给了<code>_age</code></p>
+<p><code>Animal.m</code>改造5</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;Animal.h&quot;</span><br><span class="line"></span><br><span class="line">@interface Animal ()</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">   // int _age;</span><br><span class="line">    int _isAge;</span><br><span class="line">    int age;</span><br><span class="line">    int isAge;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Animal</span><br><span class="line"></span><br><span class="line">//- (void)setAge:(int)age &#123;</span><br><span class="line">//    NSLog(@&quot;setAge---%d&quot;,age);</span><br><span class="line">//</span><br><span class="line">//&#125;</span><br><span class="line">//</span><br><span class="line">//- (void)_setAge:(int)age &#123;</span><br><span class="line">//    NSLog(@&quot;_setAge---%d&quot;,age);</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>这次注释掉<code>_age</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-534cc2d387f18131.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15337988439482.jpg"></p>
+<p>这次给了<code>_isAge</code></p>
+<p>同理分别注释下其他的2个</p>
+<p><strong>得出第二个结论</strong></p>
+<ul>
+<li>当<code>-set&lt;Key&gt;:</code> 和<code>-_set&lt;Key&gt;:</code>方法都没实现时<code>kvc</code>会按照<code>_&lt;key&gt;</code> -&gt; <code>_is&lt;Key&gt;</code> -&gt; <code>&lt;key&gt;</code> -&gt; <code>is&lt;Key&gt;</code>进行赋值</li>
+</ul>
+<hr>
+<p><code>Animal.m</code>改造6</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;Animal.h&quot;</span><br><span class="line"></span><br><span class="line">@interface Animal ()</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    int _age;</span><br><span class="line">    int _isAge;</span><br><span class="line">    int age;</span><br><span class="line">    int isAge;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Animal</span><br><span class="line"></span><br><span class="line">//- (void)setAge:(int)age &#123;</span><br><span class="line">//    NSLog(@&quot;setAge---%d&quot;,age);</span><br><span class="line">//</span><br><span class="line">//&#125;</span><br><span class="line">//</span><br><span class="line">//- (void)_setAge:(int)age &#123;</span><br><span class="line">//    NSLog(@&quot;_setAge---%d&quot;,age);</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">+ (BOOL)accessInstanceVariablesDirectly &#123;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>运行程序发现奔溃了</p>
+<p><code>accessInstanceVariablesDirectly</code>表示当没有set方法的时候要不要继续查找成员变量，默认是需要</p>
+<p><strong>得出kvc赋值最终的结论</strong><br>用一张图来表示，图上是以具体的属性名称来表示的</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-2ac1909abcc0ec84.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15337960989497.jpg"></p>
+<h4 id="valueForKey"><a href="#valueForKey" class="headerlink" title="valueForKey:"></a>valueForKey:</h4><p>改造代码<br><code>Animal</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// .h</span><br><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line">@interface Animal : NSObject</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//.m</span><br><span class="line">#import &quot;Animal.h&quot;</span><br><span class="line">@implementation Animal</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p><code>main.m</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line">#import &quot;Animal.h&quot;</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        Animal *animal = [[Animal alloc] init];</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;%@&quot;,[animal valueForKey:@&quot;name&quot;]);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行程序发现崩溃了</p>
+<p>下面改造<code>Animal.m</code>代码</p>
+<p><code>Animal</code>改造1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (int)getName &#123;</span><br><span class="line">    return 12;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">12</span><br></pre></td></tr></table></figure>
+<p><code>Animal</code>改造2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//- (int)getName &#123;</span><br><span class="line">//    return 12;</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">- (int)name &#123;</span><br><span class="line">    return 13;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">13</span><br></pre></td></tr></table></figure>
+<p><code>Animal</code>改造3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//- (int)getName &#123;</span><br><span class="line">//    return 12;</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">//- (int)name &#123;</span><br><span class="line">//    return 13;</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">- (int)isName &#123;</span><br><span class="line">    return 14;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">14</span><br></pre></td></tr></table></figure>
+<p><code>Animal</code>改造4</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//- (int)getName &#123;</span><br><span class="line">//    return 12;</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">//- (int)name &#123;</span><br><span class="line">//    return 13;</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">//- (int)isName &#123;</span><br><span class="line">//    return 14;</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">- (int)_getName &#123;</span><br><span class="line">    return 15;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">15</span><br></pre></td></tr></table></figure>
+<p><code>Animal</code>改造5</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//- (int)getName &#123;</span><br><span class="line">//    return 12;</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">//- (int)name &#123;</span><br><span class="line">//    return 13;</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">//- (int)isName &#123;</span><br><span class="line">//    return 14;</span><br><span class="line">//&#125;</span><br><span class="line">//</span><br><span class="line">//- (int)_getName &#123;</span><br><span class="line">//    return 15;</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">- (int)_name &#123;</span><br><span class="line">    return 16;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">16</span><br></pre></td></tr></table></figure>
+<p><strong>同样先得出下面的结论</strong></p>
+<ul>
+<li>valueforkey:方法调用方法的顺序是<code>get&lt;Key&gt;</code> -&gt; <code>&lt;key&gt;</code> -&gt; <code>is&lt;Key&gt;</code> -&gt; <code>_get&lt;Key&gt;</code> -&gt; <code>_&lt;key&gt;</code></li>
+</ul>
+<hr>
+<p><code>Animal</code>改造6</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">//.h</span><br><span class="line">@interface Animal : NSObject</span><br><span class="line">&#123;</span><br><span class="line">    @public</span><br><span class="line">    NSString *_name;</span><br><span class="line">    NSString *_isName;</span><br><span class="line">    NSString *name;</span><br><span class="line">    NSString *isName;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">//.m</span><br><span class="line"></span><br><span class="line">@implementation Animal</span><br><span class="line">//- (int)getName &#123;</span><br><span class="line">//    return 12;</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">//- (int)name &#123;</span><br><span class="line">//    return 13;</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">//- (int)isName &#123;</span><br><span class="line">//    return 14;</span><br><span class="line">//&#125;</span><br><span class="line">//</span><br><span class="line">//- (int)_getName &#123;</span><br><span class="line">//    return 15;</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">//- (int)_name &#123;</span><br><span class="line">//    return 16;</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p><code>main.m</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line">#import &quot;Animal.h&quot;</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        Animal *animal = [[Animal alloc] init];</span><br><span class="line">        animal-&gt;_name  = @&quot;a&quot;;</span><br><span class="line">        animal-&gt;_isName  = @&quot;b&quot;;</span><br><span class="line">        animal-&gt;name  = @&quot;c&quot;;</span><br><span class="line">        animal-&gt;isName  = @&quot;d&quot;;</span><br><span class="line">        NSLog(@&quot;%@&quot;,[animal valueForKey:@&quot;name&quot;]);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行程序发现输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a</span><br></pre></td></tr></table></figure>
+<p>分别注释以下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@interface Animal : NSObject</span><br><span class="line">&#123;</span><br><span class="line">    @public</span><br><span class="line">//    NSString *_name;</span><br><span class="line">    NSString *_isName;</span><br><span class="line">    NSString *name;</span><br><span class="line">    NSString *isName;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">        Animal *animal = [[Animal alloc] init];</span><br><span class="line">//        animal-&gt;_name  = @&quot;a&quot;;</span><br><span class="line">        animal-&gt;_isName  = @&quot;b&quot;;</span><br><span class="line">        animal-&gt;name  = @&quot;c&quot;;</span><br><span class="line">        animal-&gt;isName  = @&quot;d&quot;;</span><br><span class="line">        NSLog(@&quot;%@&quot;,[animal valueForKey:@&quot;name&quot;]);</span><br></pre></td></tr></table></figure>
+<p>发现输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b</span><br></pre></td></tr></table></figure>
+<p>注释后面的会发现分别输出<code>c</code>,<code>d</code></p>
+<p>得出以下结论</p>
+<ul>
+<li>当通过方法找不到时，会按照<code>_&lt;key&gt;</code> -&gt; <code>_&lt;isKey&gt;</code> -&gt; <code>&lt;key&gt;</code> -&gt; <code>is&lt;Key&gt;</code>的顺序查找赋值</li>
+</ul>
+<p>同样当我们将</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ (BOOL)accessInstanceVariablesDirectly &#123;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>就不会往下查找成员变量了，总结后就是下面的这张图</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-3aa88e6f1e164596.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15337973443126.jpg"></p>
+<h4 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h4><p>不会是取值还是赋值，<code>kvc</code>都是先通过方法操作，发现没有对应的方法的时候，会根据<code>accessInstanceVariablesDirectly</code>方法决定是否进行找到对应的成员变量进行操作</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/11/2018-08-11-12/" data-id="cjn75migs0002izbucixjyu46" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/12/2018-08-12-20/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          OC--分类
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/08/2018-08-11-5/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">OC--KVO实现原理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>OC--方法缓存 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="有过一些oc基础的开发对oc的消息机制应该都是不陌生的，调用某个对象的方法其实就是给对象发送一条消息，然后接收的对象根据接收到的方法，查找自己的方法列表，然后调用的过程。那oc是如何查找方法的？，是每一次都是去遍历自己的方法列表吗，那这样岂不是效率很低？，如何才能提高查找效率呢？我相信你也有这样的疑惑的，本篇将带来苹果的底层是如何实现的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OC--方法缓存">
+<meta property="og:url" content="http://yoursite.com/2018/09/04/2018-09-16-23/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="有过一些oc基础的开发对oc的消息机制应该都是不陌生的，调用某个对象的方法其实就是给对象发送一条消息，然后接收的对象根据接收到的方法，查找自己的方法列表，然后调用的过程。那oc是如何查找方法的？，是每一次都是去遍历自己的方法列表吗，那这样岂不是效率很低？，如何才能提高查找效率呢？我相信你也有这样的疑惑的，本篇将带来苹果的底层是如何实现的。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-c3a859200bd23a19.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-2e1c9fadf2836a47.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-138ab38559db51bf.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-2f03e281fad6f329.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-9dce29bc54b3e560.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-e7845566b0a2cba3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-16T13:53:37.495Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OC--方法缓存">
+<meta name="twitter:description" content="有过一些oc基础的开发对oc的消息机制应该都是不陌生的，调用某个对象的方法其实就是给对象发送一条消息，然后接收的对象根据接收到的方法，查找自己的方法列表，然后调用的过程。那oc是如何查找方法的？，是每一次都是去遍历自己的方法列表吗，那这样岂不是效率很低？，如何才能提高查找效率呢？我相信你也有这样的疑惑的，本篇将带来苹果的底层是如何实现的。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-c3a859200bd23a19.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-09-16-23" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/04/2018-09-16-23/" class="article-date">
+  <time datetime="2018-09-04T09:12:38.000Z" itemprop="datePublished">2018-09-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OC--方法缓存
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>有过一些oc基础的开发对oc的消息机制应该都是不陌生的，调用某个对象的方法其实就是给对象发送一条消息，然后接收的对象根据接收到的方法，查找自己的方法列表，然后调用的过程。那oc是如何查找方法的？，是每一次都是去遍历自己的方法列表吗，那这样岂不是效率很低？，如何才能提高查找效率呢？我相信你也有这样的疑惑的，本篇将带来苹果的底层是如何实现的。</p>
+<a id="more"></a>
+<h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><p><strong>开始之前你需要先知道以下几点</strong></p>
+<p>####1. 什么是SEL</p>
+<p>先看下下面的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NSLog(@&quot;----%p--%p---%p--%p&quot;,@selector(kk),@selector(kk),@selector(kk),@selector(kk));</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;----%ld--%ld---%ld--%ld&quot;,(unsigned long)@selector(kk),(unsigned long)@selector(kk),(unsigned long)@selector(kk),(unsigned long)@selector(kk));</span><br></pre></td></tr></table></figure>
+<p>发现输出的结果都是一样的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">----0x100000f5f--0x100000f5f---0x100000f5f--0x100000f5f</span><br><span class="line">----4294971231--4294971231---4294971231--4294971231</span><br></pre></td></tr></table></figure>
+<p>好像这样也不能说明SEL到底是什么，这个问题先放在这里，看完整个文章你就会明白到底是什么了。到目前为止，我们可以看出的是，同一个方法的SEL是一样的，转成（unsigned long）也是一样的，目前知道这么多已经足够了</p>
+<p>####2. 对象方法是放在类对象中的，类方法是放在元类对象中的。</p>
+<p>不清楚的可以看下我的这篇<a href="https://www.jianshu.com/p/14b096d6a233" target="_blank" rel="noopener">介绍</a></p>
+<p>####3. 对象的内存结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct objc_class : objc_object &#123;</span><br><span class="line">    void *isa; // 由于isa不是本文所讲的范围，这里直接写成这种形式，类似oc中的id</span><br><span class="line">    Class superclass;</span><br><span class="line">    cache_t cache;             // 本文的重点是这个属性</span><br><span class="line">    class_data_bits_t bits;    // class_rw_t * plus custom rr/alloc flags</span><br><span class="line">        ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>####4. 最好有些c++语法的基本认识，推荐这篇<a href="http://www.dotcpp.com/course/cpp/200001.html" target="_blank" rel="noopener">文章入门</a></p>
+<p>####5. 关于runtime源码，可以<a href="https://github.com/RetVal/objc-runtime" target="_blank" rel="noopener">点击下载</a>，可以直接运行</p>
+<h2 id="演示代码"><a href="#演示代码" class="headerlink" title="演示代码"></a>演示代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//Person.h</span><br><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line">@interface Person : NSObject</span><br><span class="line"></span><br><span class="line">- (void)test1;</span><br><span class="line"></span><br><span class="line">- (void)test2;</span><br><span class="line"></span><br><span class="line">//Person.m</span><br><span class="line">- (void)test1 &#123;</span><br><span class="line">    NSLog(@&quot;--%s&quot;,__func__);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)test2 &#123;</span><br><span class="line">    NSLog(@&quot;--%s&quot;,__func__);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>由于我的mac是beta版本,源码跑不起来，但是不影响查看代码，下面struct相关的代码是我把runtime代码和本文相关的部分复制了一份下来，方便查看信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">#if __LP64__</span><br><span class="line">typedef uint32_t mask_t;  // x86_64 &amp; arm64 asm are less efficient with 16-bits</span><br><span class="line">#else</span><br><span class="line">typedef uint16_t mask_t;</span><br><span class="line">#endif</span><br><span class="line">typedef uintptr_t cache_key_t;</span><br><span class="line"></span><br><span class="line">struct bucket_t &#123;</span><br><span class="line">    cache_key_t _key;</span><br><span class="line">    IMP _imp;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct cache_t &#123;</span><br><span class="line">    struct bucket_t *_buckets;</span><br><span class="line">    mask_t _mask;</span><br><span class="line">    mask_t _occupied;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct class_data_bits_t &#123;</span><br><span class="line">    </span><br><span class="line">    uintptr_t bits;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct my_objc_object &#123;</span><br><span class="line">    void * isa;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct my_objc_class: my_objc_object  &#123;</span><br><span class="line">    void * isa;</span><br><span class="line">    Class superclass;</span><br><span class="line">    cache_t cache;             // formerly cache pointer and vtable</span><br><span class="line">    class_data_bits_t bits;    // class_rw_t * plus custom rr/alloc flags</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>苹果对于方法的缓存方式是通过<a href="https://baike.baidu.com/item/%E5%93%88%E5%B8%8C%E8%A1%A8/5981869?fromtitle=%E6%95%A3%E5%88%97%E8%A1%A8&amp;fromid=10027933&amp;fr=aladdin" target="_blank" rel="noopener">散列表</a>实现的，所谓散列表就是通过一个函数，计算出某个元素应该放在哪个位置，或者从哪个位置取出的存储方式，从而提高查找速度。举个例子，现有一个长度为10的数组<code>arr</code>，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSMutableArray *arr = [NSMutableArray arrayWithCapacity:10];</span><br></pre></td></tr></table></figure>
+<p>现在分别有<code>1</code>、<code>20</code>、<code>3</code>、<code>9</code>四个数字需要存放到数组中,这4个数字该放在哪个位置呢，我们定义一个函数，来计算4个数字应该存放的位置,这里我们简单的将数字的除以10的余数作为索引</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int indexWithEle(int ele) &#123;</span><br><span class="line">    return ele % 10;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>计算的余数分别是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">0</span><br><span class="line">3</span><br><span class="line">9</span><br></pre></td></tr></table></figure>
+<p>分别放到对应的位置那么<code>arr</code>数组的元素分布如图</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-c3a859200bd23a19.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15360433915836.jpg"></p>
+<p>比如我们要<code>9</code>，那也是通过<code>indexWithEle</code>函数计算出索引为<code>9</code>那么直接arr[9]直接就拿到元素了，就不用遍历数组了</p>
+<p>苹果对于方法的缓存也是差不多的，一些小的差异后面会说到，方法的缓存信息都是放在<code>cache</code>中的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">struct objc_class : objc_object &#123;</span><br><span class="line">    // Class ISA;</span><br><span class="line">    Class superclass;</span><br><span class="line">    cache_t cache;             // formerly cache pointer and vtable</span><br><span class="line">    class_data_bits_t bits;    // class_rw_t * plus custom rr/alloc flags</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>cache_t</code>的结构如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">struct bucket_t &#123;</span><br><span class="line">    cache_key_t _key;</span><br><span class="line">    IMP _imp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct cache_t &#123;</span><br><span class="line">    struct bucket_t *_buckets;</span><br><span class="line">    mask_t _mask;</span><br><span class="line">    mask_t _occupied;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>_buckets</code>是存放的方法的信息；</li>
+<li><code>_mask</code>就相当于上面例子中的<code>10</code>，这里取得是<code>_buckets</code>的长度<code>-1</code></li>
+<li><code>_occupied</code>表示<code>_buckets</code>拥有的元素的个数</li>
+</ol>
+<p><code>cache_t</code>结构如图</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-2e1c9fadf2836a47.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15360441734433.jpg"></p>
+<p>刚才说到实现散列表缓存的话需要：</p>
+<ol>
+<li>一个计算索引的函数;</li>
+<li>一个集合</li>
+</ol>
+<p>苹果计算索引的函数是将函数的<code>SEL</code>的数值<code>&amp;</code>上<code>_mask</code>的结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static inline mask_t cache_hash(cache_key_t key, mask_t mask) </span><br><span class="line">&#123;</span><br><span class="line">    return (mask_t)(key &amp; mask);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>cache_key_t</code>其实就是<code>unsigned long</code>上面讲到一个<code>SEL</code>的数值是一样的<code>mask</code>是<code>_buckets</code>长度减1。</p>
+<p>要知道一点就是c = a&amp;b ，那么c应该是&lt;= b的，所以<code>mask</code>是<code>_buckets</code>的长度减1，之前我们还有一个细节没考虑到那就是万一&amp;出来的索引值已经有了怎么处理，苹果的<code>__arm64__</code>实现是直接将索引-1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">bucket_t * cache_t::find(cache_key_t k, id receiver)</span><br><span class="line">&#123;</span><br><span class="line">    assert(k != 0);</span><br><span class="line"></span><br><span class="line">    bucket_t *b = buckets();</span><br><span class="line">    mask_t m = mask();</span><br><span class="line">    mask_t begin = cache_hash(k, m);</span><br><span class="line">    mask_t i = begin;</span><br><span class="line">    do &#123;</span><br><span class="line">        if (b[i].key() == 0  ||  b[i].key() == k) &#123;</span><br><span class="line">            return &amp;b[I];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; while ((i = cache_next(i, m)) != begin);</span><br><span class="line"></span><br><span class="line">    // hack</span><br><span class="line">    Class cls = (Class)((uintptr_t)this - offsetof(objc_class, cache));</span><br><span class="line">    cache_t::bad_cache(receiver, (SEL)k, cls);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果索引相同则直接-1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#elif __arm64__</span><br><span class="line">// objc_msgSend has lots of registers available.</span><br><span class="line">// Cache scan decrements. No end marker needed.</span><br><span class="line">#define CACHE_END_MARKER 0</span><br><span class="line">static inline mask_t cache_next(mask_t i, mask_t mask) &#123;</span><br><span class="line">    return i ? i-1 : mask;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>函数已经有了那么集合呢看下面的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">static void cache_fill_nolock(Class cls, SEL sel, IMP imp, id receiver)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    cache_t *cache = getCache(cls);</span><br><span class="line">    cache_key_t key = getKey(sel);</span><br><span class="line"></span><br><span class="line">    mask_t newOccupied = cache-&gt;occupied() + 1;</span><br><span class="line">    mask_t capacity = cache-&gt;capacity();</span><br><span class="line">    if (cache-&gt;isConstantEmptyCache()) &#123;// 如果是空的则初始化一个`INIT_CACHE_SIZE`大小的数组也就是1&lt;&lt;2 == 4</span><br><span class="line">        cache-&gt;reallocate(capacity, capacity ?: INIT_CACHE_SIZE); </span><br><span class="line">    &#125;</span><br><span class="line">    else if (newOccupied &lt;= capacity / 4 * 3) &#123; // 当使用的元素个数超过总数的3/4的时候则会扩容</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        // Cache is too full. Expand it.</span><br><span class="line">        cache-&gt;expand();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   </span><br><span class="line">    bucket_t *bucket = cache-&gt;find(key, receiver);</span><br><span class="line">    if (bucket-&gt;key() == 0) cache-&gt;incrementOccupied();</span><br><span class="line">    bucket-&gt;set(key, imp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在数组也有了，还有一个问题，比如一开始初始化的数组大小是4，当元素大于4的时候如何处理呢，苹果的处理是当元素的个数达到总数的3/4的时候就会扩容了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">void cache_t::expand()</span><br><span class="line">&#123;</span><br><span class="line">    cacheUpdateLock.assertLocked();</span><br><span class="line">    </span><br><span class="line">    uint32_t oldCapacity = capacity();</span><br><span class="line">    uint32_t newCapacity = oldCapacity ? oldCapacity*2 : INIT_CACHE_SIZE;</span><br><span class="line"></span><br><span class="line">    if ((uint32_t)(mask_t)newCapacity != newCapacity) &#123;</span><br><span class="line">        // mask overflow - can&apos;t grow further</span><br><span class="line">        // fixme this wastes one bit of mask</span><br><span class="line">        newCapacity = oldCapacity;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    reallocate(oldCapacity, newCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也就是按照<code>4</code>、<code>8</code>、<code>16</code>…扩张下去，那么现在所有的东西都齐全了，以上说的这些都是理论，下面将会通过例子来一一验证正确性</p>
+<p>将代码修改如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-138ab38559db51bf.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15360504512073.jpg"></p>
+<p>我们来看看<code>p</code>的<code>test2</code>方法是放在哪里的，图中红色标出的地方，由于对象的方法是放在类对象中的，红色部分要写类对象，<code>[p class]</code> 、 <code>[Person class]</code> 、<code>objc_getClass(p)</code>都是可以的。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-2f03e281fad6f329.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15360506603796.jpg"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(lldb) p (unsigned long)@selector(test2) // test2的数值</span><br><span class="line">(unsigned long) $0 = 4294971225</span><br><span class="line">(lldb) p 4294971225 &amp; 3 // 计算出test2对应的索引  也就是mask的值</span><br><span class="line">(long) $1 = 1  // 结果为1</span><br><span class="line">(lldb) p objP-&gt;cache._buckets[1] // 我们取出1的值</span><br><span class="line">(bucket_t) $2 = &#123;</span><br><span class="line">  _key = 4294971225</span><br><span class="line">  _imp = 0x0000000100000d80 (Isa`-[Person test2] at Person.m:17)</span><br></pre></td></tr></table></figure>
+<p>上面我们通过自己计算得到了<code>test2</code>位于<code>_buckets</code>的第一个位置，也确实正确取出来了，有个地方需要注意一下，这里我们正好没有重复的索引，所以正好对了，当有重复的时候可能要-1或者–1 … 了</p>
+<p>再修改代码如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-9dce29bc54b3e560.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15360509867557.jpg"></p>
+<p>具体</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-e7845566b0a2cba3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15360510002579.jpg"></p>
+<p>发现此时的<code>_mask</code>为7了，<code>_occupied</code>为<code>1</code>了，当</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">p objP-&gt;cache._buckets[1]</span><br><span class="line">(bucket_t) $1 = &#123;</span><br><span class="line">  _key = 140734070273825</span><br><span class="line">  _imp = 0x00007fff622014b7 (libobjc.A.dylib`-[NSObject class])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>说明此时的缓存只有<code>[p class]</code>了,这也正好验证了当超过3/4时会扩容,到62行的时候缓存的方法有<code>init</code>、<code>test2</code>、<code>test1</code>,此时达到总数<code>4</code>的3/4<code>3</code>所以扩容为<code>4</code>* 2 = <code>8</code></p>
+<p>好了到这里也就明白了方法缓存的过程了，对于什么是<code>SEL</code>，相信也有认识了，其实就是一个编号，用来计算最终方法的存放位置的他的value就是函数的地址</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/09/04/2018-09-16-23/" data-id="cjn75mihj000kizbun5ocqgrl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/10/06/2018-10-06-24/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          【8086汇编】-- 入门知识
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/25/2018-09-16-22/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">OC--Block--(二)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

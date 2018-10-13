@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>oc中为什么很少用try catch | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="作为一位ios开发一般都很少用到try catch，因为一般不小心可能会造成一些内存泄露，先来看个例子">
+<meta property="og:type" content="article">
+<meta property="og:title" content="oc中为什么很少用try catch">
+<meta property="og:url" content="http://yoursite.com/2017/11/22/2018-08-11-14/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="作为一位ios开发一般都很少用到try catch，因为一般不小心可能会造成一些内存泄露，先来看个例子">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-b0d30b3b9d2b49c2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-11T14:57:34.752Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="oc中为什么很少用try catch">
+<meta name="twitter:description" content="作为一位ios开发一般都很少用到try catch，因为一般不小心可能会造成一些内存泄露，先来看个例子">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-b0d30b3b9d2b49c2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-08-11-14" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/22/2018-08-11-14/" class="article-date">
+  <time datetime="2017-11-22T14:05:39.000Z" itemprop="datePublished">2017-11-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      oc中为什么很少用try catch
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>作为一位ios开发一般都很少用到try catch，因为一般不小心可能会造成一些内存泄露，先来看个例子</p>
+<a id="more"></a>
+<p>先创建几个测试类<br><code>TestExceptions.h</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">@interface TestExceptions : NSObject</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p><code>TestExceptions.m</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;TestExceptions.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation TestExceptions</span><br><span class="line"></span><br><span class="line">- (void)dealloc &#123;</span><br><span class="line">    NSLog(@&quot;TestExceptions---dealloc&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>先看看非ARC环境下</p>
+<p><code>ViewController.m</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@try &#123;</span><br><span class="line">   TestExceptions * exception = [[TestExceptions alloc] init];</span><br><span class="line">     //主动异常</span><br><span class="line">     @throw  [[NSException alloc] initWithName:@&quot;主动异常&quot; reason:@&quot;这是错误原因&quot; userInfo:nil];</span><br><span class="line">     [exception release];</span><br><span class="line"> &#125;</span><br><span class="line"> @catch (NSException *e) &#123;</span><br><span class="line">     NSLog(@&quot;%@&quot;,e);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>咋一看可能没什么问题，但仔细一看会发现<code>TestExceptions</code>对象并没有释放,因为<code>@throw  [[NSException alloc] initWithName:@&quot;主动异常&quot; reason:@&quot;这是错误原因&quot; userInfo:nil];</code>中断了<code>[exception release];</code>执行导致不能正常释放，当然你可能会像下面这样修改代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">TestExceptions * exception = nil;</span><br><span class="line"> @try &#123;</span><br><span class="line">     exception  = [[TestExceptions alloc] init];</span><br><span class="line">     </span><br><span class="line">     @throw  [[NSException alloc] initWithName:@&quot;主动异常&quot; reason:@&quot;这是错误原因&quot; userInfo:nil];</span><br><span class="line"> &#125;</span><br><span class="line"> @catch (NSException *e) &#123;</span><br><span class="line">     NSLog(@&quot;%@&quot;,e);</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> @finally &#123;</span><br><span class="line">      [exception release];</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>这样确实是释放了，但是由于<code>@finally</code>会用到<code>exception</code>对象所以还要放到外面，如果try里面有很多对象的时候会很繁琐</p>
+<p>再来看看<code>ARC</code>下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@try &#123;</span><br><span class="line">    TestExceptions * exceptionption  = [[TestExceptions alloc] init];</span><br><span class="line">    </span><br><span class="line">    @throw  [[NSException alloc] initWithName:@&quot;主动异常&quot; reason:@&quot;这是错误原因&quot; userInfo:nil];</span><br><span class="line">&#125;</span><br><span class="line">@catch (NSException *e) &#123;</span><br><span class="line">    NSLog(@&quot;%@&quot;,e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于arc下没有<code>release</code>方法，导致对象更加没法释放了，本以为arc会自动处理这种情况，然而事实并没有，我们可以手动将<code>ViewController.m</code>文件改为<code>-fobjc-arc-exceptions</code>则会出处理该种情况</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-b0d30b3b9d2b49c2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15231751172151.jpg"></p>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TestExceptions---dealloc</span><br></pre></td></tr></table></figure>
+<p>还有一种当文件处于objective-c++模式的时候也就是.mm格式时，arc会默认打开<code>-fobjc-arc-exceptions</code>，所以我们也可以像下面这样修改</p>
+<p>修改<code>ViewController.m</code>为<code>ViewController.mm</code>发现也是正常释放了</p>
+<p><strong>可以发现</strong></p>
+<p>使用try catch还是有不少问题的，所以苹果推荐使用NSError模式处理异常,再改造一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    NSError *err = nil;</span><br><span class="line">    [self testTemoExcep:&amp;err];</span><br><span class="line">    if (err) &#123;</span><br><span class="line">        NSLog(@&quot;%@&quot;,err);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (void)testTemoExcep:(NSError **)error &#123;</span><br><span class="line">    TestExceptions * exceptionption  = [[TestExceptions alloc] init];</span><br><span class="line">    </span><br><span class="line">    *error = [NSError errorWithDomain:@&quot;异常&quot; code:500 userInfo:nil];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/22/2018-08-11-14/" data-id="cjn75mih00006izbu64je6ahv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/31/2018-08-11-6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Linux下常见命令
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/09/13/2018-08-11-16/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">梳理ReactNative中oc到js的数据流动</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

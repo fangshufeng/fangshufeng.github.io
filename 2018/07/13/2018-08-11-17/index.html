@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>通过命令行控制模拟器--simctl | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="要想实现命令行控制模拟器需要用的到命令是simctl: Simulators Control 看这命令的意思像是这两个单词的缩写，搭载xcrun命令，可以通过这个命令实现以下功能  创建、删除、开启 模拟器 添加图片到模拟器 安装、卸载、打开、关闭APP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过命令行控制模拟器--simctl">
+<meta property="og:url" content="http://yoursite.com/2018/07/13/2018-08-11-17/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="要想实现命令行控制模拟器需要用的到命令是simctl: Simulators Control 看这命令的意思像是这两个单词的缩写，搭载xcrun命令，可以通过这个命令实现以下功能  创建、删除、开启 模拟器 添加图片到模拟器 安装、卸载、打开、关闭APP">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-a7ab94ee35a70c5b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-a40a69869e89329c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/240">
+<meta property="og:updated_time" content="2018-10-12T14:20:13.786Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="通过命令行控制模拟器--simctl">
+<meta name="twitter:description" content="要想实现命令行控制模拟器需要用的到命令是simctl: Simulators Control 看这命令的意思像是这两个单词的缩写，搭载xcrun命令，可以通过这个命令实现以下功能  创建、删除、开启 模拟器 添加图片到模拟器 安装、卸载、打开、关闭APP">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-a7ab94ee35a70c5b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/240">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-08-11-17" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/13/2018-08-11-17/" class="article-date">
+  <time datetime="2018-07-13T15:09:00.000Z" itemprop="datePublished">2018-07-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      通过命令行控制模拟器--simctl
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>要想实现命令行控制模拟器需要用的到命令是<code>simctl</code>: <code>Simulators Control</code> 看这命令的意思像是这两个单词的缩写，搭载<code>xcrun</code>命令，可以通过这个命令实现以下功能</p>
+<ol>
+<li>创建、删除、开启 模拟器</li>
+<li>添加图片到模拟器</li>
+<li>安装、卸载、打开、关闭APP</li>
+</ol>
+<a id="more"></a>
+<h3 id="帮助命令"><a href="#帮助命令" class="headerlink" title="帮助命令"></a>帮助命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcrun simctl --help</span><br></pre></td></tr></table></figure>
+<h3 id="查看当前有哪些模拟器"><a href="#查看当前有哪些模拟器" class="headerlink" title="查看当前有哪些模拟器"></a>查看当前有哪些模拟器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcrun simctl list</span><br></pre></td></tr></table></figure>
+<p>截取部分日志如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">== Device Types ==</span><br><span class="line">iPhone 4s (com.apple.CoreSimulator.SimDeviceType.iPhone-4s)</span><br><span class="line">iPhone 5 (com.apple.CoreSimulator.SimDeviceType.iPhone-5)</span><br><span class="line"></span><br><span class="line">== Runtimes ==</span><br><span class="line">iOS 8.1 (8.1 - 12B411) - com.apple.CoreSimulator.SimRuntime.iOS-8-1</span><br><span class="line">iOS 9.0 (9.0 - 13A344) - com.apple.CoreSimulator.SimRuntime.iOS-9-0</span><br><span class="line">iOS 10.0 (10.0 - 14A345) - com.apple.CoreSimulator.SimRuntime.iOS-10-0</span><br><span class="line">iOS 11.4 (11.4 - 15F79) - com.apple.CoreSimulator.SimRuntime.iOS-11-4</span><br><span class="line"></span><br><span class="line">== Devices ==</span><br><span class="line">-- iOS 8.1 --</span><br><span class="line">    iPhone 4s (134D6998-BB21-4E41-BF30-F2475B71518C) (Shutdown)</span><br><span class="line">    iPhone 5 (C284C3E1-6297-452C-AADF-2AFA0D3D9931) (Shutdown)</span><br><span class="line">    iPhone 5s (1417E9B3-FA40-42D3-BF04-F7DD469DDA7E) (Shutdown)</span><br><span class="line">    iPhone 6 (A8BA264E-115F-4B64-85FF-63E1C9B8E4CC) (Shutdown)</span><br><span class="line">    </span><br><span class="line">-- iOS 10.0 --</span><br><span class="line">iPhone 5 (6B088A91-F77C-4FA6-A6DA-0E4722B11DE5) (Shutdown)</span><br><span class="line">iPhone 5s (38D06629-1F4B-46A2-A986-CBE28503E63F) (Shutdown)</span><br><span class="line">iPhone 6 (598F3D6F-5439-4216-808D-D14857B6B68B) (Shutdown)</span><br><span class="line">iPhone 6 Plus (B79E33B8-0944-4509-8DAA-15D00C3FF8E1) (Shutdown)</span><br><span class="line">iPhone 6s (26A06303-C684-46F1-AF9B-9ECEB737B2AA) (Booted)</span><br><span class="line"></span><br><span class="line">-- iOS 11.4 --</span><br><span class="line">iPhone 5s (8B31401D-41BE-40F9-8ED1-F17C93C87F8A) (Shutdown)</span><br><span class="line">iPhone 6 (12D46DEB-71A0-4009-A83D-C96A4AACBD3D) (Shutdown)</span><br></pre></td></tr></table></figure>
+<p>搭载查找命令<code>grep</code>可以查看正在使用的模拟器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ xcrun simctl list | grep Booted</span><br><span class="line">    iPhone 6s (26A06303-C684-46F1-AF9B-9ECEB737B2AA) (Booted)</span><br></pre></td></tr></table></figure>
+<h3 id="添加一个模拟器"><a href="#添加一个模拟器" class="headerlink" title="添加一个模拟器"></a>添加一个模拟器</h3><p>设备名称、设备类型、设备的操作系统、可以定位出一个设备信息，比如我们要增加一个名为<code>DemoDevice</code>、<code>iPhone 7</code>、<code>iOS 11.4</code>命令如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ xcrun simctl create DemoDevice com.apple.CoreSimulator.SimDeviceType.iPhone-7  com.apple.CoreSimulator.SimRuntime.iOS-11-4</span><br><span class="line">4F5A92A2-8241-4A8E-8A22-2E5A87FECCC0</span><br></pre></td></tr></table></figure>
+<p>创建成果的话会返回设备的id这里是<code>4F5A92A2-8241-4A8E-8A22-2E5A87FECCC0</code></p>
+<p><code>list</code>下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-- iOS 11.4 --</span><br><span class="line">    iPhone 5s (8B31401D-41BE-40F9-8ED1-F17C93C87F8A) (Shutdown)</span><br><span class="line">    iPhone 6 (12D46DEB-71A0-4009-A83D-C96A4AACBD3D) (Shutdown)</span><br><span class="line">    iPhone 6 Plus (40F90FF9-D7F8-4D44-85BB-F69B97909CC3) (Shutdown)</span><br><span class="line">    iPhone 6s (61DFD682-9E00-4120-9AAF-132D6F2A2DCD) (Shutdown)</span><br><span class="line">    iPhone 6s Plus (648433A5-2CDE-4982-BF00-7F70EA20739F) (Shutdown)</span><br><span class="line">    DemoDevice (4F5A92A2-8241-4A8E-8A22-2E5A87FECCC0) (Shutdown)</span><br></pre></td></tr></table></figure>
+<p>也可以通过grep搜索一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ xcrun simctl list | grep  4F5A92A2-8241-4A8E-8A22-2E5A87FECCC0</span><br><span class="line">    DemoDevice (4F5A92A2-8241-4A8E-8A22-2E5A87FECCC0) (Shutdown)</span><br><span class="line">➜  ~</span><br></pre></td></tr></table></figure>
+<h3 id="开启一个模拟器"><a href="#开启一个模拟器" class="headerlink" title="开启一个模拟器"></a>开启一个模拟器</h3><p>以刚才那个自己创建的为例子吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ xcrun simctl boot 4F5A92A2-8241-4A8E-8A22-2E5A87FECCC0</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-a7ab94ee35a70c5b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/240" alt="15313910142713.jpg"></p>
+<h3 id="写个图片到刚才的模拟器中"><a href="#写个图片到刚才的模拟器中" class="headerlink" title="写个图片到刚才的模拟器中"></a>写个图片到刚才的模拟器中</h3><p>桌面准备一张图片<a href="mailto:`google@2x.png" target="_blank" rel="noopener">`google@2x.png</a>`</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ xcrun simctl addmedia 4F5A92A2-8241-4A8E-8A22-2E5A87FECCC0 ~/Desktop/google@2x.png</span><br></pre></td></tr></table></figure>
+<p>打开相册会发现多了一张图片，就不截图了</p>
+<h3 id="重置模拟器"><a href="#重置模拟器" class="headerlink" title="重置模拟器"></a>重置模拟器</h3><p>重置模拟器的命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ xcrun simctl erase 4F5A92A2-8241-4A8E-8A22-2E5A87FECCC0</span><br></pre></td></tr></table></figure>
+<p>如果你的模拟器已经开启的情况下可能会报下面的错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">An error was encountered processing the command (domain=com.apple.CoreSimulator.SimError, code=164):</span><br><span class="line">Unable to erase contents and settings in current state: Booted</span><br></pre></td></tr></table></figure>
+<p>提示你的模拟器当前的状态是booted的，所有要先关掉模拟器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ xcrun simctl shutdown 4F5A92A2-8241-4A8E-8A22-2E5A87FECCC0</span><br></pre></td></tr></table></figure>
+<p>再执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ xcrun simctl erase 4F5A92A2-8241-4A8E-8A22-2E5A87FECCC0</span><br></pre></td></tr></table></figure></p>
+<p>会发现之前的所有的修改都没了</p>
+<p>如果发现设备卡住了，可以关掉再重新<code>boot</code>下</p>
+<h3 id="通过DerivedData来安装app"><a href="#通过DerivedData来安装app" class="headerlink" title="通过DerivedData来安装app"></a>通过DerivedData来安装app</h3><p>（1） 在桌面下新建一个名为<code>TestSimctl</code>的工程</p>
+<p>（2）cd到<code>TestSimctl</code>目录下通过<code>build</code>命令来得到<code>DerivedData</code>路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcodebuild  build -scheme &apos;TestSimctl&apos; CODE_SIGN_IDENTITY=&quot;&quot; CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator11.4</span><br></pre></td></tr></table></figure>
+<p>会得到<code>~/Library/Developer/Xcode/DerivedData/TestSimctl-heyedthdtyuorceyxhlduzjcoqol/Build/Products/Debug-iphonesimulator/TestSimctl.app</code><br>每个人的机器路径会有些不一样复制一下就好了</p>
+<p>（2）通过刚才的<code>DerivedData</code>来安装TestSimctl应用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcrun simctl install booted ~/Library/Developer/Xcode/DerivedData/TestSimctl-heyedthdtyuorceyxhlduzjcoqol/Build/Products/Debug-iphoneos/TestSimctl.app</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-a40a69869e89329c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/240" alt="15314471990147.jpg"></p>
+<p>（3）通过bundleid来卸载刚才那个app，我这里是<code>com.TestSimctl</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcrun simctl uninstall booted com.TestSimctl</span><br></pre></td></tr></table></figure>
+<p>发现哪个app不见了</p>
+<p>（4）通过bundleid来启动刚才app, 先保证已经安装了app</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcrun simctl launch booted com.TestSimctl</span><br></pre></td></tr></table></figure>
+<p>会发现已经启动起来了</p>
+<p>（4）通过bundleid来关闭已经打开的app</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcrun simctl terminate  booted com.TestSimctl</span><br></pre></td></tr></table></figure>
+<h3 id="截图功能"><a href="#截图功能" class="headerlink" title="截图功能"></a>截图功能</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  TestSimctl git:(master) ✗ xcrun simctl io booted screenshot test.png</span><br><span class="line">Detected file type &apos;PNG&apos; from extension</span><br><span class="line">Wrote screenshot to: test.png</span><br></pre></td></tr></table></figure>
+<p>会发现当前目录下多了一张照片</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">└── test.png</span><br></pre></td></tr></table></figure>
+<h3 id="日志功能"><a href="#日志功能" class="headerlink" title="日志功能"></a>日志功能</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcrun simctl spawn booted log stream --predicate &apos;processImagePath endswith &quot;TestSimctl&quot;&apos;</span><br></pre></td></tr></table></figure>
+<p>改造下<code>viewcontroller</code>代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event &#123;</span><br><span class="line">    NSLog(@&quot;touchesBegan&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重新build后可以发现终端可以看到日志了</p>
+<h3 id="删除模拟器"><a href="#删除模拟器" class="headerlink" title="删除模拟器"></a>删除模拟器</h3><p>先shutdown</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcrun simctl shutdown 4F5A92A2-8241-4A8E-8A22-2E5A87FECCC0</span><br></pre></td></tr></table></figure>
+<p>再删除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcrun simctl delete 4F5A92A2-8241-4A8E-8A22-2E5A87FECCC0</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/07/13/2018-08-11-17/" data-id="cjn75mih30008izbuequ7cf6e" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/07/29/2018-08-11-11/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          OC-对象的内存分配
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/23/2018-08-11-7/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">思考：多次使用method_exchangeImplementations同一个方法会是怎样的结果，以及分类的加载顺序又是什么呢？</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

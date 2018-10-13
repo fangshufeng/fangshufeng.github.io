@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>如何实现一个自己的for...in...操作呢 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="如何实现一个自己的for...in...操作呢">
+<meta property="og:url" content="http://yoursite.com/2017/06/25/2018-08-11-3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3279997-59defae7d37729ed.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-11T14:54:18.257Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何实现一个自己的for...in...操作呢">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3279997-59defae7d37729ed.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-08-11-3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/25/2018-08-11-3/" class="article-date">
+  <time datetime="2017-06-25T10:52:07.000Z" itemprop="datePublished">2017-06-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      如何实现一个自己的for...in...操作呢
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://upload-images.jianshu.io/upload_images/3279997-59defae7d37729ed.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<a id="more"></a>
+<p>需求：对于一个自定义类如何也可以想和<code>NSArray</code>和<code>NSDictionary</code>一样可以直接遍历？</p>
+<p>本篇目录：</p>
+<ol>
+<li>解析系统for…in…的实现原理；</li>
+<li>自己实现一个for…in…的类;</li>
+<li>简单解释一下<code>objc_enumerationMutation</code>是如何抛出异常的。</li>
+</ol>
+<h3 id="1-解析系统for…in…的实现原理"><a href="#1-解析系统for…in…的实现原理" class="headerlink" title="1. 解析系统for…in…的实现原理"></a>1. 解析系统for…in…的实现原理</h3><p>我们来看看苹果在2.0推出来的Fast Enumeration。<br><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Collections/Articles/Enumerators.html#//apple_ref/doc/uid/20000135-SW1" target="_blank" rel="noopener">引用苹果官方文档的一段总结</a></p>
+<blockquote>
+<p>The enumeration is more efficient than using NSEnumerator directly<br>The syntax is concise.<br>The enumerator raises an exception if you modify the collection while enumerating.<br>You can perform multiple enumerations concurrently.</p>
+</blockquote>
+<p>翻译过来就是</p>
+<ul>
+<li>它比之前的<code>NSEnumerator</code>更高效</li>
+<li>语法更简洁</li>
+<li>如果这个集合在遍历的过程中修改了，会抛出异常</li>
+<li>可以同时执行对个枚举</li>
+</ul>
+<p><code>Fast Enumeration</code>是一个协议</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@protocol NSFastEnumeration</span><br><span class="line"></span><br><span class="line">- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state </span><br><span class="line">                                  objects:(id __unsafe_unretained _Nullable [_Nonnull])buffer </span><br><span class="line">                                    count:(NSUInteger)len;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+</code></pre><p>这个方法的作用是根据具体数据个数返回一定数量的数组供调用者使用的，为什么是一定数量的数组呢，比如说数据源是有5个数据[@”1”,@”2”,@”3”,@”4”,@”5”],若调用者想要2个一组，那么需要3组才能完成；前面提到的一组，其实就是C语言的数组，而这个方法就是用来确定返回一个怎样的数组，方法的返回值就是对应数组的长度。</p>
+<p>这个协议方法传3个参数分别是：</p>
+<ol>
+<li><p><code>state</code>，它是个结构体；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">       unsigned long state;</span><br><span class="line">       id __unsafe_unretained _Nullable * _Nullable itemsPtr;</span><br><span class="line">       unsigned long * _Nullable mutationsPtr;</span><br><span class="line">       unsigned long extra[5];</span><br><span class="line">   &#125; NSFastEnumerationState;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>state</code>这个参数在for…in…的方法内部是没有使用的，是留给调用者备用的，用来记录一些状态；</li>
+<li><code>itemsPtr</code>就是C数组的指针，它和方法的返回共同构成了C语言数组；</li>
+<li><code>mutationsPtr</code>这个字段是用来记录在遍历的过程中，被遍历的对象有没有被改变，从而可以抛出异常；</li>
+<li><code>extra</code>这个和<code>state</code>字段一样，在for…in…的方法内部是没有使用的也是没有使用的，留给调用者使用的。</li>
+</ul>
+</li>
+<li><p><code>buffer</code>它是一个缓冲区，其实是一个C数组，因为在内存中不是所有的对象都是内存连续的，针对那些内存不连续，方法提供一个内存区域，调用者把数组都放到这个缓冲区，他的长度由len决定；</p>
+</li>
+<li><code>len</code>上面已经提到就是定义<code>buffer</code>长度的。</li>
+</ol>
+<p> 为何我会这样解释这些属性呢，我们来看看for…in…的C++实现，就可以一一验证上面的说法了</p>
+<p> 先写一个demo</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">int main(int argc, char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        </span><br><span class="line">        NSMutableArray *arry = [NSMutableArray arrayWithObjects:@&quot;1&quot;,@&quot;2&quot;,@&quot;3&quot;, nil];</span><br><span class="line">        for (NSString *str  in arry) &#123;</span><br><span class="line">            NSLog(@&quot;dddd---%@&quot;,str);</span><br><span class="line">        &#125;</span><br><span class="line">        return 0;</span><br><span class="line">        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -rewrite-objc main.m</span><br></pre></td></tr></table></figure>
+<p>可以得到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">int main(int argc, char * argv[]) &#123;</span><br><span class="line">    /* @autoreleasepool */ &#123; __AtAutoreleasePool __autoreleasepool; </span><br><span class="line"></span><br><span class="line">        NSMutableArray *arry = ((NSMutableArray *(*)(id, SEL, ObjectType, ...))(void *)objc_msgSend)((id)objc_getClass(&quot;NSMutableArray&quot;), sel_registerName(&quot;arrayWithObjects:&quot;), (id)(NSString *)&amp;__NSConstantStringImpl__var_folders_g3_yzsthm0x1xs8k_ycscbf93hr0000gn_T_main_6d9606_mi_0, (NSString *)&amp;__NSConstantStringImpl__var_folders_g3_yzsthm0x1xs8k_ycscbf93hr0000gn_T_main_6d9606_mi_1, (NSString *)&amp;__NSConstantStringImpl__var_folders_g3_yzsthm0x1xs8k_ycscbf93hr0000gn_T_main_6d9606_mi_2, __null);</span><br><span class="line">        &#123;</span><br><span class="line">	NSString * str;</span><br><span class="line">	</span><br><span class="line">	// 这个就是传出去的State</span><br><span class="line">	struct __objcFastEnumerationState enumState = &#123; 0 &#125;;</span><br><span class="line">	</span><br><span class="line">	//这个就是buffer，可以看出是初始化了一个16长度的数组</span><br><span class="line">	id __rw_items[16];</span><br><span class="line">	</span><br><span class="line">	//这个表示调用哪个对象的&quot;countByEnumeratingWithState:objects:count:&quot;方法</span><br><span class="line">	id l_collection = (id) arry;</span><br><span class="line">	</span><br><span class="line">	//limit就是countByEnumeratingWithState:objects:count:返回值</span><br><span class="line">	_WIN_NSUInteger limit =</span><br><span class="line">		((_WIN_NSUInteger (*) (id, SEL, struct __objcFastEnumerationState *, id *, _WIN_NSUInteger))(void *)objc_msgSend)</span><br><span class="line">		((id)l_collection,</span><br><span class="line">		sel_registerName(&quot;countByEnumeratingWithState:objects:count:&quot;),</span><br><span class="line">		&amp;enumState, (id *)__rw_items, (_WIN_NSUInteger)16);</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">	if (limit) &#123;</span><br><span class="line">	</span><br><span class="line">	// 这里面有两个do...while...循环</span><br><span class="line">	// 外层循环用来获取一共需要的数组的个数，并获取对应数组的长度</span><br><span class="line">	// 内部循环是遍历获取对应数组的元素进行下一步操作</span><br><span class="line">	</span><br><span class="line">	        //startMutations就是用来监控遍历的过程中遍历对象有没有改变</span><br><span class="line">	       unsigned long startMutations = *enumState.mutationsPtr;</span><br><span class="line">        	do &#123;</span><br><span class="line">        		      unsigned long counter = 0;</span><br><span class="line">        		do &#123;</span><br><span class="line">        		</span><br><span class="line">        		//如果遍历对象发生了改变就会调用`objc_enumerationMutation`来抛出异常</span><br><span class="line">        			if (startMutations != *enumState.mutationsPtr)</span><br><span class="line">        				objc_enumerationMutation(l_collection);</span><br><span class="line">        				</span><br><span class="line">        			// 取出对应的元素，这是高效快速的关键</span><br><span class="line">        			str = (NSString *)enumState.itemsPtr[counter++]; </span><br><span class="line">        			&#123;</span><br><span class="line">                    NSLog((NSString *)&amp;__NSConstantStringImpl__var_folders_g3_yzsthm0x1xs8k_ycscbf93hr0000gn_T_main_6d9606_mi_3,str);</span><br><span class="line">                &#125;;</span><br><span class="line">                // 结束这次循环，进行下一次</span><br><span class="line">        	__continue_label_1: ;</span><br><span class="line">        		&#125; while (counter &lt; limit);</span><br><span class="line">        	&#125; </span><br><span class="line">        	</span><br><span class="line">      while ((limit = ((_WIN_NSUInteger (*) (id, SEL, struct __objcFastEnumerationState *, id *, _WIN_NSUInteger))(void *)objc_msgSend)</span><br><span class="line">        		((id)l_collection,</span><br><span class="line">        		sel_registerName(&quot;countByEnumeratingWithState:objects:count:&quot;),</span><br><span class="line">        		&amp;enumState, (id *)__rw_items, (_WIN_NSUInteger)16)));</span><br><span class="line">        	str = ((NSString *)0);</span><br><span class="line">        	__break_label_1: ;</span><br><span class="line">	&#125;else</span><br><span class="line">		str = ((NSString *)0);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">        return 0;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 对于上面的源码进行了一些必要的注释帮助大家理解，整个方法下来，并没有看到<code>state</code>和<code>extra</code>字段，这也验证了之前的说法。</p>
+<h3 id="2-自己实现一个for…in…的类"><a href="#2-自己实现一个for…in…的类" class="headerlink" title="2. 自己实现一个for…in…的类"></a>2. 自己实现一个for…in…的类</h3><p>这里参照<a href="https://developer.apple.com/library/content/samplecode/FastEnumerationSample/Introduction/Intro.html#//apple_ref/doc/uid/DTS40009411" target="_blank" rel="noopener">苹果的官方demo</a>写了一个简单的例子<br>对于<code>countByEnumeratingWithState:objects:count:</code>我们有两种方法来实现</p>
+<ol>
+<li>对于在内存中连续的结合来说可以直接返回这段内存的首地址；</li>
+<li>对于不连续的来说，这个时候就要使用<code>buffer</code>了，接下来分别给出两种方式</li>
+</ol>
+<p>.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">@interface MyFastIterator : NSObject&lt;NSFastEnumeration&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>.m</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;MyFastIterator.h&quot;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#import &lt;objc/message.h&gt;</span><br><span class="line"></span><br><span class="line">@interface MyFastIterator ()</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) NSArray *myArray;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, assign) long tagSi;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation MyFastIterator</span><br><span class="line">&#123;</span><br><span class="line">    std::vector&lt;NSNumber *&gt; _list;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)init &#123;</span><br><span class="line">    if (self = [super init]) &#123;</span><br><span class="line">        for (NSUInteger i = 0; i &lt; 17; i++) &#123;</span><br><span class="line">            _list.push_back(@(i));</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        self.myArray = @[@&quot;1&quot;,@&quot;2&quot;,@&quot;3&quot;,@&quot;4&quot;,@&quot;5&quot;,@&quot;6&quot;,</span><br><span class="line">                         @&quot;1&quot;,@&quot;2&quot;,@&quot;3&quot;,@&quot;4&quot;,@&quot;5&quot;,@&quot;6&quot;,</span><br><span class="line">                         @&quot;1&quot;,@&quot;2&quot;,@&quot;3&quot;,@&quot;4&quot;,@&quot;5&quot;,</span><br><span class="line">                         ];</span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>countByEnumeratingWithState:objects:count:</code>实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#define USE_BUFF 1</span><br><span class="line"></span><br><span class="line">- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id  _Nullable __unsafe_unretained [])buffer count:(NSUInteger)len &#123;</span><br><span class="line"> NSUInteger count = 0;</span><br><span class="line">    </span><br><span class="line">    unsigned long countOfItemsAlreadyEnumerated = state-&gt;state;</span><br><span class="line">    </span><br><span class="line">    if (countOfItemsAlreadyEnumerated == 0 ) &#123;// 等于0说明是第一次调用可以初始化一些数据</span><br><span class="line">        NSLog(@&quot;countByEnumeratingWithState&quot;);</span><br><span class="line">        // 上面已经说到，mutationsPtr是用来记录遍历的过程中被遍历的对象有没有被修改的</span><br><span class="line">        // 由于我们这里是NSArray是不可变的，所以无需追踪他的改变</span><br><span class="line">        // 从而这里取 的是 &amp;state-&gt;extra[0];</span><br><span class="line">        state-&gt;mutationsPtr = &amp;state-&gt;extra[0];</span><br><span class="line">    &#125;</span><br><span class="line">#if USE_BUFF</span><br><span class="line">    if (countOfItemsAlreadyEnumerated &lt; self.myArray.count) &#123;</span><br><span class="line">        state-&gt;itemsPtr = buffer;</span><br><span class="line">        </span><br><span class="line">        while (countOfItemsAlreadyEnumerated &lt; self.myArray.count &amp;&amp; count &lt; len)&#123;</span><br><span class="line">//            NSLog(@&quot;--%d&quot;,count);</span><br><span class="line">            buffer[count] = self.myArray[countOfItemsAlreadyEnumerated];</span><br><span class="line">            countOfItemsAlreadyEnumerated++;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        count = 0;</span><br><span class="line">    &#125;</span><br><span class="line">#else</span><br><span class="line">    </span><br><span class="line">    if (countOfItemsAlreadyEnumerated &lt; _list.size()) &#123;</span><br><span class="line">        </span><br><span class="line">        // 直接将 state-&gt;itemsPtr 指向内部的 C 数组指针，因为它的内存地址是连续的</span><br><span class="line">        __unsafe_unretained const id * const_array = _list.data();</span><br><span class="line">        </span><br><span class="line">        state-&gt;itemsPtr = (__typeof__(state-&gt;itemsPtr))const_array;</span><br><span class="line">        </span><br><span class="line">        // 因为我们一次性返回了 _list 中的所有元素</span><br><span class="line">        // 所以，countOfItemsAlreadyEnumerated 和 count 的值均为 _list 中的元素个数</span><br><span class="line">        </span><br><span class="line">        //  这里使用的是官方demo的写法</span><br><span class="line">        countOfItemsAlreadyEnumerated = _list.size();</span><br><span class="line">        count = _list.size();</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        count = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">#endif</span><br><span class="line">    </span><br><span class="line">    state-&gt;state = countOfItemsAlreadyEnumerated;</span><br><span class="line">    return count;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>外面调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (void)testMyFastIterator &#123;</span><br><span class="line">    MyFastIterator *fast = [[ MyFastIterator alloc] init];</span><br><span class="line">    for (NSNumber *num in fast) &#123;</span><br><span class="line">        NSLog(@&quot;testMyFastIterator---%@&quot;,num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实还有一种简单的写法，直接返回要遍历的对象的方法，前提是遍历的对象实现了<code>countByEnumeratingWithState</code>方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id  _Nullable __unsafe_unretained [])buffer count:(NSUInteger)len &#123;</span><br><span class="line">    </span><br><span class="line">   return [self.myArray countByEnumeratingWithState:state objects:buffer count:len];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-简单解释一下objc-enumerationMutation是如何抛出异常的。"><a href="#3-简单解释一下objc-enumerationMutation是如何抛出异常的。" class="headerlink" title="3. 简单解释一下objc_enumerationMutation是如何抛出异常的。"></a>3. 简单解释一下<code>objc_enumerationMutation</code>是如何抛出异常的。</h3><p><code>objc_enumerationMutation</code>方法是如何抛出异常的呢，打开objc4-646的源码中可以看到具体实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">static void (*enumerationMutationHandler)(id);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void objc_enumerationMutation(id object) &#123;</span><br><span class="line">    if (enumerationMutationHandler == nil) &#123;</span><br><span class="line">        _objc_fatal(&quot;mutation detected during &apos;for(... in ...)&apos;  enumeration of object %p.&quot;, (void*)object);</span><br><span class="line">    &#125;</span><br><span class="line">    (*enumerationMutationHandler)(object);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void objc_setEnumerationMutationHandler(void (*handler)(id)) &#123;</span><br><span class="line">    enumerationMutationHandler = handler;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>阅读源码可以得出看出：</p>
+<ol>
+<li><code>objc_setEnumerationMutationHandler</code>方法接收一个函数指针，保存在内部定义的之前声明好的函数<code>static void (*enumerationMutationHandler)(id);</code>；</li>
+<li><code>objc_enumerationMutation</code>被调用的时候，如果调用者没有实现<code>objc_setEnumerationMutationHandler</code>的话，此时函数指针<code>enumerationMutationHandler</code>为nil，就会执行<code>_objc_fatal(&quot;mutation detected during &#39;for(... in ...)&#39;  enumeration of object %p.&quot;, (void*)object);</code>，否则就会通过<code>*enumerationMutationHandler</code>拿到函数并把<code>object</code>传递出去。</li>
+</ol>
+<p>我们来看一个demo</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//先初始化一个函数</span><br><span class="line">void voidVoidTest(id objt) &#123;</span><br><span class="line">    NSLog(@&quot;%@挂啦&quot;,objt);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)testMutation &#123;</span><br><span class="line">    void (*funcVoidVoid)() = &amp;voidVoidTest;</span><br><span class="line">    objc_setEnumerationMutationHandler(funcVoidVoid);</span><br><span class="line">    NSString *str = @&quot;test&quot;;</span><br><span class="line">    objc_enumerationMutation(str);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test挂啦</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/06/25/2018-08-11-3/" data-id="cjn75mih7000cizbumd8dwjnh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/09/2018-08-11-15/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          React-Native - FlexBox布局
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/26/2018-08-11-4/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">谈谈isa</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

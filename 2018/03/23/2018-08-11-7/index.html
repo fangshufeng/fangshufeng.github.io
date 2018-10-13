@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>思考：多次使用method_exchangeImplementations同一个方法会是怎样的结果，以及分类的加载顺序又是什么呢？ | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="先看第一个问题：分类的加载顺序举例UIViewController3个分类分别为UIViewController+AUIViewController+BUIViewController+C .A 1234567+ (void)load &amp;#123;    static dispatch_once_t onceToken;    dispatch_once(&amp;amp;onceToken, ^&amp;#12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="思考：多次使用method_exchangeImplementations同一个方法会是怎样的结果，以及分类的加载顺序又是什么呢？">
+<meta property="og:url" content="http://yoursite.com/2018/03/23/2018-08-11-7/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="先看第一个问题：分类的加载顺序举例UIViewController3个分类分别为UIViewController+AUIViewController+BUIViewController+C .A 1234567+ (void)load &amp;#123;    static dispatch_once_t onceToken;    dispatch_once(&amp;amp;onceToken, ^&amp;#12">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-54008ba988f414e1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-c978c3915cde52c6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-ed5dab1ee019a2a4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-eadd7834e6a66a41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-ebf4bf738141fbac.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-8174f4cc45bf21b5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-cfb959d903251484.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-acced5a9aafbd6b9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-bda088bf1da2b719.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-11T15:06:20.496Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="思考：多次使用method_exchangeImplementations同一个方法会是怎样的结果，以及分类的加载顺序又是什么呢？">
+<meta name="twitter:description" content="先看第一个问题：分类的加载顺序举例UIViewController3个分类分别为UIViewController+AUIViewController+BUIViewController+C .A 1234567+ (void)load &amp;#123;    static dispatch_once_t onceToken;    dispatch_once(&amp;amp;onceToken, ^&amp;#12">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-54008ba988f414e1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-08-11-7" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/23/2018-08-11-7/" class="article-date">
+  <time datetime="2018-03-23T06:34:53.000Z" itemprop="datePublished">2018-03-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      思考：多次使用method_exchangeImplementations同一个方法会是怎样的结果，以及分类的加载顺序又是什么呢？
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="先看第一个问题：分类的加载顺序"><a href="#先看第一个问题：分类的加载顺序" class="headerlink" title="先看第一个问题：分类的加载顺序"></a>先看第一个问题：分类的加载顺序</h3><p>举例<code>UIViewController</code>3个分类分别为<br><code>UIViewController+A</code><br><code>UIViewController+B</code><br><code>UIViewController+C</code></p>
+<p><code>.A</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        </span><br><span class="line">        NSLog(@&quot;----A---&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>.B</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        </span><br><span class="line">        NSLog(@&quot;----B---&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>.C</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        </span><br><span class="line">        NSLog(@&quot;----C---&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2018-03-23 11:06:10.975429+0800 ExchangeImp[4802:195579] ----C---</span><br><span class="line">2018-03-23 11:06:10.976176+0800 ExchangeImp[4802:195579] ----A---</span><br><span class="line">2018-03-23 11:06:10.976392+0800 ExchangeImp[4802:195579] ----B---</span><br></pre></td></tr></table></figure>
+<p>这个顺序是怎么来的的呢，就不卖关子了，本文的重点是第二个问题<br><a id="more"></a><br><img src="https://upload-images.jianshu.io/upload_images/3279997-54008ba988f414e1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15217744745721.jpg"></p>
+<p>其实是这里的顺序，其实压栈的顺序，上面的顺序是C,B,A</p>
+<p>我们修改下让以B,A,C输出</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-c978c3915cde52c6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15217745766821.jpg"></p>
+<p>运行输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2018-03-23 11:09:23.697753+0800 ExchangeImp[4881:201198] ----B---</span><br><span class="line">2018-03-23 11:09:23.698441+0800 ExchangeImp[4881:201198] ----A---</span><br><span class="line">2018-03-23 11:09:23.698639+0800 ExchangeImp[4881:201198] ----C---</span><br></pre></td></tr></table></figure>
+<h3 id="第二个问题：多次使用method-exchangeImplementations同一个方法会是怎样的结果"><a href="#第二个问题：多次使用method-exchangeImplementations同一个方法会是怎样的结果" class="headerlink" title="第二个问题：多次使用method_exchangeImplementations同一个方法会是怎样的结果"></a>第二个问题：多次使用method_exchangeImplementations同一个方法会是怎样的结果</h3><p><code>method_exchangeImplementations</code>关于该方法的使用请自行学习，不是本文的重点</p>
+<p>这里我们同时对系统的<code>presentViewController:animated:completion:</code>举例</p>
+<p>代码结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── ExchangeImp</span><br><span class="line">│   ├── AppDelegate.h</span><br><span class="line">│   ├── AppDelegate.m</span><br><span class="line">│   ├── TestViewController.h</span><br><span class="line">│   ├── TestViewController.m</span><br><span class="line">│   ├── UIViewController+A.h</span><br><span class="line">│   ├── UIViewController+A.m</span><br><span class="line">│   ├── UIViewController+B.h</span><br><span class="line">│   ├── UIViewController+B.m</span><br><span class="line">│   ├── UIViewController+C.h</span><br><span class="line">│   ├── UIViewController+C.m</span><br><span class="line">│   ├── ViewController.h</span><br><span class="line">│   ├── ViewController.m</span><br><span class="line">│   └── main.m</span><br><span class="line">└── ExchangeImpUITests</span><br><span class="line">    ├── ExchangeImpUITests.m</span><br><span class="line">    └── Info.plist</span><br></pre></td></tr></table></figure>
+<p><code>A.m</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">//  UIViewController+A.m</span><br><span class="line">//  ExchangeImp</span><br><span class="line">//</span><br><span class="line">//  Created by fangshufeng on 2018/3/23.</span><br><span class="line">//  Copyright © 2018年 fangshufeng. All rights reserved.</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line">#import &quot;UIViewController+A.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">@implementation UIViewController (A)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        NSLog(@&quot;---A-被加载了--&quot;);  </span><br><span class="line">        Class class = [self class];</span><br><span class="line">        </span><br><span class="line">        SEL originalSelector = @selector(presentViewController:animated:completion:);</span><br><span class="line">        SEL swizzledSelector = @selector(aAlertPresentViewController:animated:completion:);</span><br><span class="line">        </span><br><span class="line">        Method originalMethod = class_getInstanceMethod(class, originalSelector);</span><br><span class="line">        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);</span><br><span class="line">        method_exchangeImplementations(originalMethod, swizzledMethod);</span><br><span class="line">        </span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)aAlertPresentViewController:(UIViewController *)viewControllerToPresent</span><br><span class="line">                           animated:(BOOL)flag</span><br><span class="line">                         completion:(void (^)(void))completion &#123;</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;---A-被执行了--&quot;)</span><br><span class="line">    </span><br><span class="line">    [self aAlertPresentViewController:viewControllerToPresent</span><br><span class="line">                             animated:flag</span><br><span class="line">                           completion:completion];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p><code>B.m</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">//  UIViewController+B.m</span><br><span class="line">//  ExchangeImp</span><br><span class="line">//</span><br><span class="line">//  Created by fangshufeng on 2018/3/23.</span><br><span class="line">//  Copyright © 2018年 fangshufeng. All rights reserved.</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line">#import &quot;UIViewController+B.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">@implementation UIViewController (B)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        NSLog(@&quot;---B-被加载了--&quot;);</span><br><span class="line">        Class class = [self class];</span><br><span class="line">        </span><br><span class="line">        SEL originalSelector = @selector(presentViewController:animated:completion:);</span><br><span class="line">        SEL swizzledSelector = @selector(bAlertPresentViewController:animated:completion:);</span><br><span class="line">        </span><br><span class="line">        Method originalMethod = class_getInstanceMethod(class, originalSelector);</span><br><span class="line">        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);</span><br><span class="line">        method_exchangeImplementations(originalMethod, swizzledMethod);</span><br><span class="line">        </span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)bAlertPresentViewController:(UIViewController *)viewControllerToPresent</span><br><span class="line">                           animated:(BOOL)flag</span><br><span class="line">                         completion:(void (^)(void))completion &#123;</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;---B-被执行了--&quot;);</span><br><span class="line">    [self bAlertPresentViewController:viewControllerToPresent</span><br><span class="line">                             animated:flag</span><br><span class="line">                           completion:completion];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p><code>C.m</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">//  UIViewController+C.m</span><br><span class="line">//  ExchangeImp</span><br><span class="line">//</span><br><span class="line">//  Created by fangshufeng on 2018/3/23.</span><br><span class="line">//  Copyright © 2018年 fangshufeng. All rights reserved.</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line">#import &quot;UIViewController+C.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">@implementation UIViewController (C)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        NSLog(@&quot;---C-被加载了--&quot;);</span><br><span class="line">        Class class = [self class];</span><br><span class="line">        </span><br><span class="line">        SEL originalSelector = @selector(presentViewController:animated:completion:);</span><br><span class="line">        SEL swizzledSelector = @selector(cAlertPresentViewController:animated:completion:);</span><br><span class="line">        </span><br><span class="line">        Method originalMethod = class_getInstanceMethod(class, originalSelector);</span><br><span class="line">        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);</span><br><span class="line">        method_exchangeImplementations(originalMethod, swizzledMethod);</span><br><span class="line">        </span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)cAlertPresentViewController:(UIViewController *)viewControllerToPresent</span><br><span class="line">                           animated:(BOOL)flag</span><br><span class="line">                         completion:(void (^)(void))completion &#123;</span><br><span class="line">    NSLog(@&quot;---C-被执行了--&quot;);</span><br><span class="line">    [self cAlertPresentViewController:viewControllerToPresent</span><br><span class="line">                             animated:flag</span><br><span class="line">                           completion:completion];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p><code>ViewController.m</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">//  ViewController.m</span><br><span class="line">//  ExchangeImp</span><br><span class="line">//</span><br><span class="line">//  Created by fangshufeng on 2018/3/23.</span><br><span class="line">//  Copyright © 2018年 fangshufeng. All rights reserved.</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#import &quot;TestViewController.h&quot;</span><br><span class="line"></span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event &#123;</span><br><span class="line">    TestViewController *vc = [[TestViewController alloc] init];</span><br><span class="line">    [self presentViewController:vc animated:YES completion:nil];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>在<code>build-Phase</code>中的<code>compile source</code>中顺序如下<br><img src="https://upload-images.jianshu.io/upload_images/3279997-ed5dab1ee019a2a4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15217831021195.jpg"></p>
+<p>运行点击后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">2018-03-23 11:25:04.816560+0800 ExchangeImp[5364:228651] ---B-被加载了--</span><br><span class="line">2018-03-23 11:25:04.817206+0800 ExchangeImp[5364:228651] ---A-被加载了--</span><br><span class="line">2018-03-23 11:25:04.817407+0800 ExchangeImp[5364:228651] ---C-被加载了--</span><br><span class="line"></span><br><span class="line">2018-03-23 11:25:09.314340+0800 ExchangeImp[5364:228651] ---C-被执行了--</span><br><span class="line">2018-03-23 11:25:09.314502+0800 ExchangeImp[5364:228651] ---A-被执行了--</span><br><span class="line">2018-03-23 11:25:09.314619+0800 ExchangeImp[5364:228651] ---B-被执行了--</span><br></pre></td></tr></table></figure>
+<p>发现2个现象：</p>
+<ol>
+<li>所有的分类方法都被执行了；</li>
+<li>正好和加载的顺序相反</li>
+</ol>
+<p>下面具体解释下这2个现象<br>在分类A、B、C执行之前2个方法是这样的指向的</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-eadd7834e6a66a41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15217770799332.jpg"></p>
+<p>在经历分类<code>B</code>以后，变成下面这样</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-ebf4bf738141fbac.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15217771048030.jpg"></p>
+<p>所以在如果没有<code>A</code>和<code>C</code>的话，那么在执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event &#123;</span><br><span class="line">    TestViewController *vc = [[TestViewController alloc] init];</span><br><span class="line">    [self presentViewController:vc animated:YES completion:nil];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用顺序为：<br><code>presentViewController:animated:completion:</code> -&gt; <code>NSLog(@&quot;---B-被执行了--&quot;);</code> -&gt; <code>bAlertPresentViewController:animated:completion:)</code></p>
+<p>所以输出顺序应该是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">---B-被执行了--</span><br></pre></td></tr></table></figure>
+<p>然后弹出vc</p>
+<p>回到正题，那么在执行分类<code>A</code>之前的样子，A方法和<code>presentViewController:animated:completion:</code>指向就是下图<br><img src="https://upload-images.jianshu.io/upload_images/3279997-8174f4cc45bf21b5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15217773012806.jpg"></p>
+<p>在执行分类A以后，指向如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-cfb959d903251484.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15217773565704.jpg"></p>
+<p>所以如果没有分类<code>C</code>的话这时候的输出应该为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">---A-被执行了--</span><br><span class="line">---B-被执行了--</span><br></pre></td></tr></table></figure>
+<p>继续分析，在分类<code>c</code>执行之前，各个指向为下图</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-acced5a9aafbd6b9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15217774989252.jpg"></p>
+<p>执行以后如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-bda088bf1da2b719.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15217775721780.jpg"></p>
+<p>则执行顺序就很清楚了，到这里也就解释了为何一开始是的输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2018-03-23 11:25:04.816560+0800 ExchangeImp[5364:228651] ---B-被加载了--</span><br><span class="line">2018-03-23 11:25:04.817206+0800 ExchangeImp[5364:228651] ---A-被加载了--</span><br><span class="line">2018-03-23 11:25:04.817407+0800 ExchangeImp[5364:228651] ---C-被加载了--</span><br><span class="line">2018-03-23 11:25:09.314340+0800 ExchangeImp[5364:228651] ---C-被执行了--</span><br><span class="line">2018-03-23 11:25:09.314502+0800 ExchangeImp[5364:228651] ---A-被执行了--</span><br><span class="line">2018-03-23 11:25:09.314619+0800 ExchangeImp[5364:228651] ---B-被执行了--</span><br></pre></td></tr></table></figure>
+<p>接下来通过logo打印证实上面的观点<br>改造下之前的代码以<code>B.m</code>为例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">//  UIViewController+B.m</span><br><span class="line">//  ExchangeImp</span><br><span class="line">//</span><br><span class="line">//  Created by fangshufeng on 2018/3/23.</span><br><span class="line">//  Copyright © 2018年 fangshufeng. All rights reserved.</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line">#import &quot;UIViewController+B.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">@implementation UIViewController (B)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        NSLog(@&quot;---B-被加载了--&quot;);</span><br><span class="line">        Class class = [self class];</span><br><span class="line">        </span><br><span class="line">        SEL originalSelector = @selector(presentViewController:animated:completion:);</span><br><span class="line">        SEL swizzledSelector = @selector(bAlertPresentViewController:animated:completion:);</span><br><span class="line">        </span><br><span class="line">        Method originalMethod = class_getInstanceMethod(class, originalSelector);</span><br><span class="line">        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);</span><br><span class="line">        </span><br><span class="line">        NSLog(@&quot;B-begin---%p-----%p&quot;,method_getImplementation(originalMethod),method_getImplementation(swizzledMethod));</span><br><span class="line">        method_exchangeImplementations(originalMethod, swizzledMethod);</span><br><span class="line">        </span><br><span class="line">        NSLog(@&quot;B-after---%p-----%p&quot;,method_getImplementation(originalMethod),method_getImplementation(swizzledMethod));</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)bAlertPresentViewController:(UIViewController *)viewControllerToPresent</span><br><span class="line">                           animated:(BOOL)flag</span><br><span class="line">                         completion:(void (^)(void))completion &#123;</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;---B-被执行了--&quot;);</span><br><span class="line">    [self bAlertPresentViewController:viewControllerToPresent</span><br><span class="line">                             animated:flag</span><br><span class="line">                           completion:completion];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>执行以后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ExchangeImp[6709:319693] ---B-被加载了--</span><br><span class="line">ExchangeImp[6709:319693] B-begin---0x10cedabc8-----0x10b6241d0</span><br><span class="line">ExchangeImp[6709:319693] B-after---0x10b6241d0-----0x10cedabc8</span><br><span class="line"></span><br><span class="line">ExchangeImp[6709:319693] ---A-被加载了--</span><br><span class="line">ExchangeImp[6709:319693] A-begin---0x10b6241d0-----0x10b624450</span><br><span class="line">ExchangeImp[6709:319693] A-after---0x10b624450-----0x10b6241d0</span><br><span class="line"></span><br><span class="line">ExchangeImp[6709:319693] ---C-被加载了--</span><br><span class="line">ExchangeImp[6709:319693] C-begin---0x10b624450-----0x10b6246d0</span><br><span class="line">ExchangeImp[6709:319693] C-after---0x10b6246d0-----0x10b624450</span><br></pre></td></tr></table></figure>
+<p>主要看下<code>originalMethod</code>的地址</p>
+<p>A的开始bengin的开始也即是<code>originalMethod</code>指向为<code>0x10b6241d0</code>，正是在<code>B</code>B-after中交换后的<code>0x10b6241d0</code></p>
+<p>可以看到每次交换的开始都是上次交换的结果</p>
+<p><strong>结论</strong></p>
+<p>多次对某个方法进行<code>method_exchangeImplementations</code>所有交换的都会执行到，执行顺序可以自己在<code>build-phase</code>中修改</p>
+<p><a href="https://gitee.com/he_he/iOSDemoProject" target="_blank" rel="noopener">项目地址</a><br>（完）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/23/2018-08-11-7/" data-id="cjn75mihb000gizbuts7kyra9" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/07/13/2018-08-11-17/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          通过命令行控制模拟器--simctl
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/11/2018-08-11-8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">mysql常见操作</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

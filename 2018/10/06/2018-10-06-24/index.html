@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>【8086汇编】-- 入门知识 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="为什么要学习汇编 我们平时写的高级语言经过编译后都会到汇编最终到机器语言，它可以直接操作硬件，对性能高的一些程序采用汇编的方式，比如逆向工程，破解软件的时候都会和汇编打交道，当然对我来说是因为在看runtime源码的过程中，关于_objc_msgSend等等一些代码的时候也是汇编实现的，都告诉我是时候学习汇编了，这里并没有直接从arm汇编而是从8086汇编入门，理由很简单，简单，本系列文章是帮助大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【8086汇编】-- 入门知识">
+<meta property="og:url" content="http://yoursite.com/2018/10/06/2018-10-06-24/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="为什么要学习汇编 我们平时写的高级语言经过编译后都会到汇编最终到机器语言，它可以直接操作硬件，对性能高的一些程序采用汇编的方式，比如逆向工程，破解软件的时候都会和汇编打交道，当然对我来说是因为在看runtime源码的过程中，关于_objc_msgSend等等一些代码的时候也是汇编实现的，都告诉我是时候学习汇编了，这里并没有直接从arm汇编而是从8086汇编入门，理由很简单，简单，本系列文章是帮助大">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-27adacbc267f4cfa.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/540">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-2e909a02ed06778b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-353d8ed1644ddc54.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-737244435ff3b407.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-4ca5ad625b9264e0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-bdb19d7ffd772e2a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-9b99b029990ec8f0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-d32fa98478e85ed9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-b4bc0185b6bf888d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-d1d80cc562bafcd2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-10-12T14:18:35.148Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【8086汇编】-- 入门知识">
+<meta name="twitter:description" content="为什么要学习汇编 我们平时写的高级语言经过编译后都会到汇编最终到机器语言，它可以直接操作硬件，对性能高的一些程序采用汇编的方式，比如逆向工程，破解软件的时候都会和汇编打交道，当然对我来说是因为在看runtime源码的过程中，关于_objc_msgSend等等一些代码的时候也是汇编实现的，都告诉我是时候学习汇编了，这里并没有直接从arm汇编而是从8086汇编入门，理由很简单，简单，本系列文章是帮助大">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-27adacbc267f4cfa.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/540">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-10-06-24" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/06/2018-10-06-24/" class="article-date">
+  <time datetime="2018-10-06T11:41:46.000Z" itemprop="datePublished">2018-10-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【8086汇编】-- 入门知识
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="为什么要学习汇编"><a href="#为什么要学习汇编" class="headerlink" title="为什么要学习汇编"></a>为什么要学习汇编</h2><hr>
+<p>我们平时写的高级语言经过编译后都会到汇编最终到机器语言，它可以直接操作硬件，对性能高的一些程序采用汇编的方式，比如逆向工程，破解软件的时候都会和汇编打交道，当然对我来说是因为在看runtime源码的过程中，关于<code>_objc_msgSend</code>等等一些代码的时候也是汇编实现的，都告诉我是时候学习汇编了，这里并没有直接从<code>arm</code>汇编而是从<code>8086</code>汇编入门，理由很简单，<code>简单</code>，本系列文章是帮助大家汇编入门，更多的细节靠我几篇博客岂能说的清楚，还需要自己大量补课。</p>
+<a id="more"></a>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><hr>
+<p>先搞清楚下面几个概念</p>
+<ul>
+<li><strong>【1】cpu</strong></li>
+</ul>
+<p>cpu是个调度中心，它协调电脑的各个部件合作，就是是人类的大脑，大概分为<code>寄存器</code>、<code>运算器</code>、<code>控制器</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-27adacbc267f4cfa.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/540" alt="15386220855323.jpg"></p>
+<ul>
+<li><p><strong>【2】存储器</strong></p>
+<p>cpu所需要执行的指令和数据都存在存储器中，也就是平时所说的内存。内存的作用仅次于<code>CPU</code>磁盘不同于内存。刚刚说到<code>指令</code>和<code>数据</code>这个对于内存和磁盘在本质上没有区别，都是二进制的<code>0</code>和<code>1</code>，只是不同的时候对于数据的不同响应而已。内存被划分为一个个的单元，每个单元是一个字节，而一个字节是有8个二进制位构成的。磁盘中的数据以及程序如果读取不到内存就无法被cpu使用,所以知道<code>CPU</code>如何和<code>内存</code>沟通的非常重要。</p>
+</li>
+<li><p><strong>【3】总线</strong></p>
+</li>
+</ul>
+<p><code>CPU</code>和<code>内存</code>是通过总线来联系的，<code>CPU</code>有很多管脚，每根管脚都和线相连。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-2e909a02ed06778b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15386229447178.jpg"></p>
+<p>总线在逻辑上被分为<code>地址总线</code>、<code>数据总线</code>、<code>控制总线</code></p>
+<p>下图展示了一个具有10根地址总线的cpu向内存发送地址为11时的10根总线的二进制数据情况其实就是<code>00000 01011</code>，这些<code>0</code>和<code>1</code>就是对于的线的低电平和高电平</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-353d8ed1644ddc54.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15386230896643.jpg"></p>
+<p><strong>线的根数成为线的<code>宽度</code>，比如上图有10根地址总线，那么地址总线的宽度为<code>10</code></strong></p>
+<p>地址总线的宽度决定了CPU的寻址能力，这个很好理解，比如<code>8086</code>CPU地址总线的宽度为<code>20</code>那么它的寻址范围为0~ 2^20 - 1，我们称它的寻址能力为，1M</p>
+<p>同理，8086的数据总线的宽度为<code>16</code></p>
+<ul>
+<li>它的宽度决定了CPU的单次数据传送量，也就是数据传送速度</li>
+<li>8086的数据总线宽度是16，所以单次最大传递2个字节的数据</li>
+</ul>
+<p>下面两个图分别展示了<code>8</code>和<code>16</code>位数据总线的传输次数和速度</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-737244435ff3b407.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15386244678975.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-4ca5ad625b9264e0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15386244927357.jpg"></p>
+<ul>
+<li><strong>【4】8086CPU的寻址方式-&gt;段地址:偏移地址</strong></li>
+</ul>
+<p>大家不要被这个吓到，这个只是<code>8086</code>CPU用来解决CPU的位数和地址总线的不同的一种手段,<code>8086</code>CPU位数是16位的，而地址总线的宽度是20位的，如果CPU直接通过16位寻址，那么就会造成4位的内存浪费，也就是2^20 = 1M的内存实际使用的是2^16 = 64KB,<code>8086</code>为了能够充分利用这个内存采用的方式是通过两个16位的地址来合成20位的地址，<code>物理地址 = 段地址 X 16 + 偏移地址</code> 。</p>
+<p>例如：8086CPU要访问地址为123C8H的内存单元，此时，CPU内部的加法器工作过程如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-bdb19d7ffd772e2a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15386251514713.jpg"></p>
+<p>我们更应该关注是解决该问题的手段，以便以后碰到类似的情况能够举一反三。</p>
+<ul>
+<li><strong>【5】寄存器</strong></li>
+</ul>
+<p>寄存器是CPU的组成结构，为什么要单独说呢，是因为学习汇编它太重要了，感觉学习汇编就是学习寄存器</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-9b99b029990ec8f0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15386255686134.jpg"></p>
+<p>不同的CPU寄存器是不一样的，8086CPU的寄存器都是16位的（2个字节），主寄存器一般存放一些基本数据，成为通用寄存器，以<code>ax</code>为例，16位又分为高8位和的8位分别为<code>ah</code>和<code>al</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-d32fa98478e85ed9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15386258897451.jpg"></p>
+<p>下篇将带来寄存器专题，这里不做过多介绍</p>
+<ul>
+<li><strong>【6】常用的单位</strong></li>
+</ul>
+<p>由于8086CPU是16位的，对于它只是2个单位，分别为字节（byte）和 字（word）</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-b4bc0185b6bf888d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15386264449948.jpg"></p>
+<h2 id="练习工具"><a href="#练习工具" class="headerlink" title="练习工具"></a>练习工具</h2><hr>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-d1d80cc562bafcd2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15386265388880.jpg"></p>
+<p>这里是采用的Windows下的<code>emu8086</code>，后面大部分的demo都是通过这个来实现的</p>
+<p>声明：</p>
+<p>本文很多的图片来自王爽的《汇编语言》</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/06/2018-10-06-24/" data-id="cjn75mihm000nizbu5ipwo3e6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/10/07/2018-10-07-26/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          【8086汇编】-- 常用寄存器
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/04/2018-09-16-23/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">OC--方法缓存</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-25/">【8086汇编】-- 函数的本质</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/07/2018-10-07-26/">【8086汇编】-- 常用寄存器</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/06/2018-10-06-24/">【8086汇编】-- 入门知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/2018-09-16-23/">OC--方法缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/2018-09-16-22/">OC--Block--(二)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
