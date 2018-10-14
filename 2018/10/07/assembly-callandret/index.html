@@ -6,15 +6,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | I&#39;m FangLaoDa</title>
+  <title>assembly-callandret | I&#39;m FangLaoDa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="I&#39;m FangLaoDa">
-<meta property="og:url" content="http://yoursite.com/archives/page/2/index.html">
+  <meta name="description" content="在高级语言开发中会把一些功能封装成方法然后调用，下面我们来用汇编实现一个打印hello world的方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="assembly-callandret">
+<meta property="og:url" content="http://yoursite.com/2018/10/07/assembly-callandret/index.html">
 <meta property="og:site_name" content="I&#39;m FangLaoDa">
+<meta property="og:description" content="在高级语言开发中会把一些功能封装成方法然后调用，下面我们来用汇编实现一个打印hello world的方法">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-87175bd4507997b3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-506ba2888bfb3c09.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-b4a8f06cafe156e9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-63802b89d889a2f6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-35e3d2c01960d92c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-51bfea23f3592986.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-51afc637980bee1a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-43e9d290e8ea021d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-cec64959deae50c2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-10-14T00:07:15.573Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="I&#39;m FangLaoDa">
+<meta name="twitter:title" content="assembly-callandret">
+<meta name="twitter:description" content="在高级语言开发中会把一些功能封装成方法然后调用，下面我们来用汇编实现一个打印hello world的方法">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-87175bd4507997b3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="I&#39;m FangLaoDa" type="application/atom+xml">
   
@@ -156,415 +170,198 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-assembly-callandret" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      assembly-callandret
+    </h1>
+  
+
+        
+        <a href="/2018/10/07/assembly-callandret/" class="archive-article-date">
+  	<time datetime="2018-10-07T07:20:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-07</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在高级语言开发中会把一些功能封装成方法然后调用，下面我们来用汇编实现一个打印<code>hello world</code>的方法</p>
+<a id="more"></a>
+<p>先实现打印的功能</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code    ds:data   ;assume是伪指令 作用是申明本程序中cs为code ds为data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">data segment                ;segment .... ends 定义一个段</span><br><span class="line"></span><br><span class="line">   string db &apos;Hello World!$&apos;  </span><br><span class="line">    </span><br><span class="line">data ends</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">code segment </span><br><span class="line">    </span><br><span class="line">start:                      ;start 伪指令地址的标号</span><br><span class="line"></span><br><span class="line">      </span><br><span class="line">      mov ax, data</span><br><span class="line">      mov ds, ax</span><br><span class="line">          </span><br><span class="line">       ;ds + dx 才能给打印函数传参</span><br><span class="line">      mov dx,offset string</span><br><span class="line">      </span><br><span class="line">      ;当ah == 9h 的时候 调用系统的print函数 </span><br><span class="line">      mov ah,9h  </span><br><span class="line">      int 21h    </span><br><span class="line">       </span><br><span class="line">      ;当ah == 4ch 的时候 调用系统的退出函数</span><br><span class="line">      mov ax, 4c00h</span><br><span class="line">      int 21h</span><br><span class="line"></span><br><span class="line">      </span><br><span class="line">code ends</span><br><span class="line"></span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+<p>发现是正常输出的</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-87175bd4507997b3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15373275595442.jpg"></p>
+<p>如果想把打印封装成一个函数，在汇编里面通过<code>call</code>和<code>ret</code>指令配合使用的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code    ds:data    ss:stack</span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">stack segment</span><br><span class="line">       db 10 dup(0) ;申请10个字节，并且默认都是0 </span><br><span class="line">stack ends       </span><br><span class="line"></span><br><span class="line">data segment</span><br><span class="line"></span><br><span class="line">   string db &apos;Hello World!$&apos;  </span><br><span class="line">    </span><br><span class="line">data ends</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">code segment </span><br><span class="line">    </span><br><span class="line">start:</span><br><span class="line">      </span><br><span class="line">      mov ax, data</span><br><span class="line">      mov ds, ax </span><br><span class="line">      </span><br><span class="line">      mov ax , stack</span><br><span class="line">      mov ss ,ax</span><br><span class="line">      mov sp , 10h</span><br><span class="line">      </span><br><span class="line">      call printFunc    </span><br><span class="line">                      </span><br><span class="line">      mov ax , 1122h                </span><br><span class="line">      ;当ah == 4ch 的时候 调用系统的退出函数</span><br><span class="line">      mov ax, 4c00h</span><br><span class="line">      int 21h</span><br><span class="line"></span><br><span class="line">printFunc: ; printFunc为伪指令，值为下面一行的地址</span><br><span class="line">      </span><br><span class="line">      ;ds + dx 才能给打印函数传参</span><br><span class="line">      mov dx,offset string</span><br><span class="line">      </span><br><span class="line">      ;当ah == 9h 的时候 调用系统的print函数 </span><br><span class="line">      mov ah,9h  </span><br><span class="line">      int 21h    </span><br><span class="line">             </span><br><span class="line">       ret      </span><br><span class="line">      </span><br><span class="line">code ends</span><br><span class="line"></span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+<p>通过<code>call</code>和<code>ret</code>指令就可以实现一个方法调用了，相信你已经发现了下面的代码增加了一个<code>stack</code>段，这就涉及到<code>call</code>和<code>ret</code>指令的本质了</p>
+<p>##<code>call</code>和<code>ret</code>指令的本质</p>
+<p><code>call</code>指令，相当于 </p>
+<blockquote>
+<ol>
+<li>push IP // 具体应该说是call下面一行的ip</li>
+<li>jmp 标号处</li>
+</ol>
+</blockquote>
+<p><code>ret</code>指令，相当于</p>
+<blockquote>
+<p>pop IP</p>
+</blockquote>
+<h3 id="call指令"><a href="#call指令" class="headerlink" title="call指令"></a>call指令</h3><p>我们来查看程序执行过程来证明下</p>
+<p>点击下图执行代码</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-506ba2888bfb3c09.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15373376970904.jpg"></p>
+<p>先来看看<code>call</code>代码的下一行的对应的cs:ip是多少，看下图</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-b4a8f06cafe156e9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15373385706754.jpg"></p>
+<p>标号<code>printFunc</code>的cs:ip如图<br><img src="https://upload-images.jianshu.io/upload_images/3279997-63802b89d889a2f6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15373387353222.jpg"></p>
+<p>由上图可以知道<code>30</code>那行代码的cs:ip为<code>0712:0010</code>，看下此时栈的内容</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-35e3d2c01960d92c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15373382064902.jpg"></p>
+<p>由于代码还没到那行，此时的栈为空栈所以此时的<code>sp</code>为<code>000A</code>，当代码执行到<code>call printFunc</code>时，之前说到<code>call</code>指令，那么过了28行代码应该有入栈操作</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-51bfea23f3592986.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15373384702103.jpg"></p>
+<p>我们发现了2个事情：</p>
+<ol>
+<li>确实将<code>30</code>行的ip == 0010 入栈了；</li>
+<li>代码通过cs:ip即 0712：0018 确实到了标号处</li>
+</ol>
+<p>从而验证了<code>call</code>指令的正确性</p>
+<h3 id="ret指令"><a href="#ret指令" class="headerlink" title="ret指令"></a>ret指令</h3><p>还是上面的代码当执行到<code>ret</code>指令时</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-51afc637980bee1a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15373390067711.jpg"></p>
+<p>此时的cs:ip为0712:001F,安照对<code>ret</code>指令的描述，那么此时应该是出栈操作并赋值给ip，我们过掉44行，发现代码执行到该行，如图</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-43e9d290e8ea021d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15373391951998.jpg"></p>
+<p>和我们猜想的一样，再看看此时栈中的情况</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-cec64959deae50c2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15373392362966.jpg"></p>
+<p>发现栈定的指针已经+2了，这也符合我们的逾期，至此，已经证明了<code>ret</code>指令的结论</p>
+<h2 id="自己实现函数调用"><a href="#自己实现函数调用" class="headerlink" title="自己实现函数调用"></a>自己实现函数调用</h2><p>既然我们清楚了<code>call</code>和<code>ret</code>的本质，我们是可以不使用这2个指令也可以实现函数调用和返回的修改代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code    ds:data    ss:stack</span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">stack segment</span><br><span class="line">       db 10 dup(0)</span><br><span class="line">stack ends       </span><br><span class="line"></span><br><span class="line">data segment</span><br><span class="line"></span><br><span class="line">   string db &apos;Hello World!$&apos;  </span><br><span class="line">    </span><br><span class="line">data ends</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">code segment </span><br><span class="line">    </span><br><span class="line">start:</span><br><span class="line">      </span><br><span class="line">      mov ax, data</span><br><span class="line">      mov ds, ax </span><br><span class="line">      </span><br><span class="line">      mov ax , stack</span><br><span class="line">      mov ss ,ax</span><br><span class="line">      </span><br><span class="line">      mov sp , 10</span><br><span class="line">      </span><br><span class="line">      ;call printFunc</span><br><span class="line">      push    0011h</span><br><span class="line">      jmp    printFunc</span><br><span class="line">                      </span><br><span class="line">      mov ax , 1122h                </span><br><span class="line">      ;当ah == 4ch 的时候 调用系统的退出函数</span><br><span class="line">      mov ax, 4c00h</span><br><span class="line">      int 21h</span><br><span class="line"></span><br><span class="line">printFunc: ; printFunc为伪指令，值为下面一行的地址</span><br><span class="line">      </span><br><span class="line">      ;ds + dx 才能给打印函数传参</span><br><span class="line">      mov dx,offset string</span><br><span class="line">      </span><br><span class="line">      ;当ah == 9h 的时候统的print函数  调用系</span><br><span class="line">      mov ah,9h  </span><br><span class="line">      int 21h    </span><br><span class="line">             </span><br><span class="line">       ;ret</span><br><span class="line">       pop ax</span><br><span class="line">       jmp ax      </span><br><span class="line">      </span><br><span class="line">code ends</span><br><span class="line"></span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+<p>我将<code>call printFunc</code>换成了 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> push    0011h // 0011h是 mov ax , 1122h 的ip</span><br><span class="line">jmp    printFunc</span><br></pre></td></tr></table></figure>
+<p><code>ret</code>换成了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pop ax</span><br><span class="line">jmp ax</span><br></pre></td></tr></table></figure>
+<p>同样实现了函数调用和返回</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/161539425082_.pic.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/02/oc-method/" class="archive-article-date">
-  	<time datetime="2018-08-02T15:23:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/02/oc-method/">OC--如何获取变量和方法的信息</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/02/oc-obj/" class="archive-article-date">
-  	<time datetime="2018-08-02T07:12:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/02/oc-obj/">OC--实例对象、类对象和元类对象是如何分工的</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/29/oc-alloc/" class="archive-article-date">
-  	<time datetime="2018-07-29T15:10:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/29/oc-alloc/">OC-对象的内存分配</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/13/simctl/" class="archive-article-date">
-  	<time datetime="2018-07-13T15:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/13/simctl/">通过命令行控制模拟器--simctl</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/23/method_exchangeImplementations/" class="archive-article-date">
-  	<time datetime="2018-03-23T06:34:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/23/method_exchangeImplementations/">思考：多次使用method_exchangeImplementations同一个方法会是怎样的结果，以及分类的加载顺序又是什么呢？</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/11/mysql/" class="archive-article-date">
-  	<time datetime="2018-03-11T15:03:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/11/mysql/">mysql常见操作</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">其他</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/01/Cisco/" class="archive-article-date">
-  	<time datetime="2018-02-01T06:17:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/01/Cisco/">网络编程必备调试工具 WireShark 、 Cisco Packet Tracer</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Cisco</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
       
-        </div></section>
+
       
+
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/31/Linux/" class="archive-article-date">
-  	<time datetime="2017-12-31T03:44:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/31/Linux/">Linux下常见命令</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">其他</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/22/try-catch/" class="archive-article-date">
-  	<time datetime="2017-11-22T14:05:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-22</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2018/10/07/assembly-register/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          【8086汇编】-- 常用寄存器
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/10/06/assembly-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【8086汇编】-- 入门知识</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/22/try-catch/">oc中为什么很少用try catch</a>
-    </h1>
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="assembly-callandret" data-title="assembly-callandret" data-url="http://yoursite.com/2018/10/07/assembly-callandret/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"litten-hexo"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/13/rn-js/" class="archive-article-date">
-  	<time datetime="2017-09-13T05:54:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/13/rn-js/">梳理ReactNative中oc到js的数据流动</a>
-    </h1>
+  <div id="SOHUCS" sid="assembly-callandret" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cytRFSRAb",
+        conf: "59dacaee2fd53ca02e446e451d38bffc"
+    });
+</script>
+</script>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">React-Native</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/3/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -588,8 +385,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
