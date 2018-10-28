@@ -6,15 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: React-Native | I&#39;m FangLaoDa</title>
+  <title>【iOS逆向（一）】-越狱环境搭建 | I&#39;m FangLaoDa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="I&#39;m FangLaoDa">
-<meta property="og:url" content="http://yoursite.com/tags/React-Native/index.html">
+  <meta name="description" content="本篇会记录整个逆向的过程中使用到的工具和插件，会持续修改">
+<meta name="keywords" content="iOS逆向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【iOS逆向（一）】-越狱环境搭建">
+<meta property="og:url" content="http://yoursite.com/2018/10/28/【iOS逆向（一）】-越狱环境搭建/index.html">
 <meta property="og:site_name" content="I&#39;m FangLaoDa">
+<meta property="og:description" content="本篇会记录整个逆向的过程中使用到的工具和插件，会持续修改">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-51d47cfa2b72aa16.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-1628cdda80bbdc3c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000">
+<meta property="og:updated_time" content="2018-10-28T14:35:38.137Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="I&#39;m FangLaoDa">
+<meta name="twitter:title" content="【iOS逆向（一）】-越狱环境搭建">
+<meta name="twitter:description" content="本篇会记录整个逆向的过程中使用到的工具和插件，会持续修改">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-51d47cfa2b72aa16.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500">
   
     <link rel="alternative" href="/atom.xml" title="I&#39;m FangLaoDa" type="application/atom+xml">
   
@@ -168,98 +176,186 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-【iOS逆向（一）】-越狱环境搭建" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/13/rn-js/" class="archive-article-date">
-  	<time datetime="2017-09-13T05:54:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-13</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/13/rn-js/">梳理ReactNative中oc到js的数据流动</a>
+    <h1 class="article-title" itemprop="name">
+      【iOS逆向（一）】-越狱环境搭建
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/10/28/【iOS逆向（一）】-越狱环境搭建/" class="archive-article-date">
+  	<time datetime="2018-10-28T14:30:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本篇会记录整个逆向的过程中使用到的工具和插件，会持续修改</p>
+<a id="more"></a>
+<h2 id="一、越狱设备"><a href="#一、越狱设备" class="headerlink" title="一、越狱设备"></a>一、越狱设备</h2><ol>
+<li>一台已经完美越狱的iPhone手机，我的设备是<code>iPhone6plus</code> (iOS 9.1)，想查看那些设备可以完美越狱<a href="http://jailbreak.25pp.com/ios/" target="_blank" rel="noopener">戳这个 </a></li>
+<li>一台MacBook</li>
+</ol>
+<h2 id="二、常用软件"><a href="#二、常用软件" class="headerlink" title="二、常用软件"></a>二、常用软件</h2><h4 id="iPhone上"><a href="#iPhone上" class="headerlink" title="iPhone上"></a>iPhone上</h4><ol>
+<li>Apple File Conduit “2”（可以访问整个文件系统）</li>
+<li>iFile （可以在手机上查看文件）</li>
+<li>PP助手 （安装软件用的）</li>
+<li>OpenSSH （远程连接使用的）</li>
+<li>Vi IMproved （让手机支持 vim）</li>
+</ol>
+<p><code>iFile</code>截图如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-51d47cfa2b72aa16.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500" alt="15407167705373.jpg"></p>
+<h4 id="Mac上"><a href="#Mac上" class="headerlink" title="Mac上"></a>Mac上</h4><ol>
+<li>iFunBox （可以在Mac上访问手机的目录，类似手机上的iFile）</li>
+<li>PP助手</li>
+</ol>
+<p><code>iFunBox</code>如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-1628cdda80bbdc3c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="15407167979219.jpg"></p>
+<h2 id="三、常见安装问题"><a href="#三、常见安装问题" class="headerlink" title="三、常见安装问题"></a>三、常见安装问题</h2><p>先明白下面2个东西</p>
+<ol>
+<li>通过Cydia安装的安装包是<code>deb</code>格式的，一般是装插件的</li>
+<li>通过PP助手安装的安装包是<code>ipa</code>格式的，一般是装app的</li>
+</ol>
+<p>要是在<code>Cydia</code>上安装插件失败，可以在网上找对应的<code>deb</code>格式的文件放到目录<code>/var/root/Media/Cydia/AutoInstall</code>下,然后重启手机即可</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/161539425082_.pic.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">React-Native</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">iOS逆向</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/09/rn/" class="archive-article-date">
-  	<time datetime="2017-07-09T14:01:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-09</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2018/10/28/【iOS逆向（二）】-操控iPhone/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          【iOS逆向（二）】- 操控iPhone
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/10/07/assembly-function/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【8086汇编】-- 函数的本质</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/09/rn/">React-Native - FlexBox布局</a>
-    </h1>
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="【iOS逆向（一）】-越狱环境搭建" data-title="【iOS逆向（一）】-越狱环境搭建" data-url="http://yoursite.com/2018/10/28/【iOS逆向（一）】-越狱环境搭建/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"litten-hexo"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">React-Native</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
+  <div id="SOHUCS" sid="【iOS逆向（一）】-越狱环境搭建" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cytRFSRAb",
+        conf: "59dacaee2fd53ca02e446e451d38bffc"
+    });
+</script>
+</script>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -282,9 +378,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
