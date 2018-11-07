@@ -6,38 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>【8086汇编】-- 函数的本质 | I&#39;m FangLaoDa</title>
+  <title>【iOS逆向】- Cycript | I&#39;m FangLaoDa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="作为开发相信对函数的调用都会很感兴趣吧">
-<meta name="keywords" content="汇编">
+  <meta name="description" content="简介 Cycript allows developers to explore and modify running applications on either iOS or Mac OS X using a hybrid of Objective-C++ and JavaScript syntax through an interactive console that features syn">
+<meta name="keywords" content="iOS逆向">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【8086汇编】-- 函数的本质">
-<meta property="og:url" content="http://yoursite.com/2018/10/07/assembly-function/index.html">
+<meta property="og:title" content="【iOS逆向】- Cycript">
+<meta property="og:url" content="http://yoursite.com/2018/11/07/【iOS逆向】-Cycript/index.html">
 <meta property="og:site_name" content="I&#39;m FangLaoDa">
-<meta property="og:description" content="作为开发相信对函数的调用都会很感兴趣吧">
+<meta property="og:description" content="简介 Cycript allows developers to explore and modify running applications on either iOS or Mac OS X using a hybrid of Objective-C++ and JavaScript syntax through an interactive console that features syn">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-612b21d5b5acf961.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-1d93a39f48c36b95.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-1e8a91c1db38038c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-a8a58d90d72fefe9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-73a210d41ae3dde2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-b5c1c243b27ef5f1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-abc9b3e9d8ce4587.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-d5aeee6896a7394f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-5db0d30a91f52ecc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-3cd339506c5d7d6c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-e5354047b077550e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-4d0bc4abdefe2ff6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-c0b84e97bd9fa365.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-f564e1962b2ab447.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-ab968cbd4fcccfc8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-b4f86db8856165c7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-976e4421c6c833c9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-10-13T14:12:10.742Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-7be33e7dc2757c11.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-91311f55433f5140.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-a71554bdbdc3e1ed.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-b451f3bba135467a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-01285e6f8f0df23f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-7ed3baead1f7ceaa.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-1a671bf516347fde.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-254c14f09f10e9c8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-e1a796a66befdda2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-11-07T13:54:01.938Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【8086汇编】-- 函数的本质">
-<meta name="twitter:description" content="作为开发相信对函数的调用都会很感兴趣吧">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-612b21d5b5acf961.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="【iOS逆向】- Cycript">
+<meta name="twitter:description" content="简介 Cycript allows developers to explore and modify running applications on either iOS or Mac OS X using a hybrid of Objective-C++ and JavaScript syntax through an interactive console that features syn">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-7be33e7dc2757c11.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="I&#39;m FangLaoDa" type="application/atom+xml">
   
@@ -191,131 +183,63 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-assembly-function" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-【iOS逆向】-Cycript" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      【8086汇编】-- 函数的本质
+      【iOS逆向】- Cycript
     </h1>
   
 
         
-        <a href="/2018/10/07/assembly-function/" class="archive-article-date">
-  	<time datetime="2018-10-07T07:43:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-07</time>
+        <a href="/2018/11/07/【iOS逆向】-Cycript/" class="archive-article-date">
+  	<time datetime="2018-11-07T13:52:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-07</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>作为开发相信对函数的调用都会很感兴趣吧</p>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote>
+<p>Cycript allows developers to explore and modify running applications on either iOS or Mac OS X using a hybrid of Objective-C++ and JavaScript syntax through an interactive console that features syntax highlighting and tab completion.<br>(It also runs standalone on Android and Linux and provides access to Java, but without injection.)</p>
+</blockquote>
+<p>该语言可以用来动态调试我们的程序，查看内存中的状态，<a href="http://www.cycript.org/" target="_blank" rel="noopener">官网地址</a>，点开手机的<code>Cydia</code>可以看到这个插件</p>
 <a id="more"></a>
-<p>下面通过汇编的角度来分析下</p>
-<h2 id="一、函数的入参和返回值"><a href="#一、函数的入参和返回值" class="headerlink" title="一、函数的入参和返回值"></a>一、函数的入参和返回值</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code    ss:stack       ds:data</span><br><span class="line"></span><br><span class="line">stack segment</span><br><span class="line">        </span><br><span class="line">      db 20 dup(0)  </span><br><span class="line">stack ends</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">data segment </span><br><span class="line">     result2 db 0h</span><br><span class="line">     result db 0h</span><br><span class="line">data ends    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">         </span><br><span class="line">start: </span><br><span class="line"></span><br><span class="line">     mov ax,data</span><br><span class="line">     mov ds,ax</span><br><span class="line">            </span><br><span class="line">     mov ax,stack       </span><br><span class="line">     mov ss , ax      </span><br><span class="line">     mov sp, 20</span><br><span class="line">      </span><br><span class="line">     </span><br><span class="line">     ;第一种      </span><br><span class="line">     ;mov ax , 1111h  </span><br><span class="line">     ;mov bx, 2222h</span><br><span class="line">     ;call sum</span><br><span class="line">     </span><br><span class="line">     ;第二种  </span><br><span class="line">     ;call sum2</span><br><span class="line">     </span><br><span class="line">     ;第三种 通过poo两次来维持栈平衡</span><br><span class="line">      ;push  1111h</span><br><span class="line">      ;push  2222h</span><br><span class="line">      ;call sum3 </span><br><span class="line">      ;pop si</span><br><span class="line">      ;pop si </span><br><span class="line">                </span><br><span class="line">      ;第四种  通过移动sp指针来维持栈平衡</span><br><span class="line">      ;push  1111h</span><br><span class="line">      ;push  2222h</span><br><span class="line">      ;call sum3</span><br><span class="line">      ;add sp,4 </span><br><span class="line">        </span><br><span class="line">      ;第五种  通过移动sp指针来维持栈平衡  </span><br><span class="line">      push  1111h</span><br><span class="line">      push  2222h</span><br><span class="line">      call sum4</span><br><span class="line">      </span><br><span class="line">     mov ax, 4c00h</span><br><span class="line">     int 21h </span><br><span class="line">     </span><br><span class="line"> ;通过寄存器 存储值 速度快   </span><br><span class="line"> ; 入参放到bx,cx， 返回值在ax上</span><br><span class="line">sum:</span><br><span class="line">    mov cx , bx</span><br><span class="line">    add ax ,cx</span><br><span class="line">    </span><br><span class="line">    ret   </span><br><span class="line"></span><br><span class="line">;将入参存到ds段中 缺点：全局共享</span><br><span class="line">sum2:</span><br><span class="line"></span><br><span class="line">    mov offset result,22h</span><br><span class="line">    </span><br><span class="line">    ret     </span><br><span class="line">        </span><br><span class="line">;将入参放到栈中</span><br><span class="line">sum3:</span><br><span class="line">    </span><br><span class="line">    mov bp,sp ;  由于无法直接修改sp的值 这里利用bp寄存器暂时保存下sp的值</span><br><span class="line">    mov ax,  ss:[bp + 2]</span><br><span class="line">    add ax,  ss:[bp + 4]</span><br><span class="line">    </span><br><span class="line">    ret     ;外平栈  需要调用者主动回收栈空间</span><br><span class="line"></span><br><span class="line">;将入参放到栈中</span><br><span class="line">sum4:</span><br><span class="line">    </span><br><span class="line">    mov bp,sp ;</span><br><span class="line">    mov ax,  ss:[bp + 2]</span><br><span class="line">    add ax,  ss:[bp + 4]</span><br><span class="line">    </span><br><span class="line">    ret  4   ;内平栈        </span><br><span class="line">         </span><br><span class="line">code ends     </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
-<p>上面展示了一个函数入参的方式有哪些，一般的cpu都是少量参数通过寄存器传参，当参数大于一定个数的时候就会采用栈传递参数,各个cpu不一样。可以通过函数调用协议来制定参数传递的方式的，分别有<code>__stdcall</code>、<code>__cdecl</code>、<code>__fastcall</code>,下面通过<code>win32</code>来看看各个关键字有什么不同</p>
-<h3 id="cdecl"><a href="#cdecl" class="headerlink" title="__cdecl"></a>__cdecl</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int __cdecl sum2(int a, int b) &#123;</span><br><span class="line">	return a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char* argv[])</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	sum2(1,2);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行查看汇编如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">main函数汇编截取</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">0040D4E8   push        2</span><br><span class="line">0040D4EA   push        1</span><br><span class="line">0040D4EC   call        @ILT+50(sum2) (00401037)</span><br><span class="line">0040D4F1   add         esp,8</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sum2函数汇编</span><br><span class="line"></span><br><span class="line">00401050   push        ebp</span><br><span class="line">00401051   mov         ebp,esp</span><br><span class="line">00401053   sub         esp,40h</span><br><span class="line">00401056   push        ebx</span><br><span class="line">00401057   push        esi</span><br><span class="line">00401058   push        edi</span><br><span class="line">00401059   lea         edi,[ebp-40h]</span><br><span class="line">0040105C   mov         ecx,10h</span><br><span class="line">00401061   mov         eax,0CCCCCCCCh</span><br><span class="line">00401066   rep stos    dword ptr [edi]</span><br><span class="line"></span><br><span class="line">//先关注下面2行代码</span><br><span class="line">00401068   mov         eax,dword ptr [ebp+8]</span><br><span class="line">0040106B   add         eax,dword ptr [ebp+0Ch]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">0040106E   pop         edi</span><br><span class="line">0040106F   pop         esi</span><br><span class="line">00401070   pop         ebx</span><br><span class="line">00401071   mov         esp,ebp</span><br><span class="line">00401073   pop         ebp</span><br><span class="line">00401074   ret</span><br></pre></td></tr></table></figure>
-<p>可以看出<code>__cdecl</code>参数的传递方式是通过栈传递，参数入栈的方式是从右到左一次传递，并且是外平栈，也是默认的方式</p>
-<h3 id="stdcall"><a href="#stdcall" class="headerlink" title="__stdcall"></a>__stdcall</h3><p>修改代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">int __stdcall sum2(int a, int b) &#123;</span><br><span class="line">	return a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char* argv[])</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	sum2(1,2);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>汇编代码如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">main函数</span><br><span class="line"></span><br><span class="line">0040D4E8   push        2</span><br><span class="line">0040D4EA   push        1</span><br><span class="line">0040D4EC   call        @ILT+55(sum2) (0040103c) // 此时调用者已经没有回收栈了</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sum2:</span><br><span class="line">00401050   push        ebp</span><br><span class="line">00401051   mov         ebp,esp</span><br><span class="line">00401053   sub         esp,40h</span><br><span class="line">00401056   push        ebx</span><br><span class="line">00401057   push        esi</span><br><span class="line">00401058   push        edi</span><br><span class="line">00401059   lea         edi,[ebp-40h]</span><br><span class="line">0040105C   mov         ecx,10h</span><br><span class="line">00401061   mov         eax,0CCCCCCCCh</span><br><span class="line">00401066   rep stos    dword ptr [edi]</span><br><span class="line">00401068   mov         eax,dword ptr [ebp+8]</span><br><span class="line">0040106B   add         eax,dword ptr [ebp+0Ch]</span><br><span class="line">0040106E   pop         edi</span><br><span class="line">0040106F   pop         esi</span><br><span class="line">00401070   pop         ebx</span><br><span class="line">00401071   mov         esp,ebp</span><br><span class="line">00401073   pop         ebp</span><br><span class="line"></span><br><span class="line">// 和__cdecl不同之处</span><br><span class="line">00401074   ret         8</span><br></pre></td></tr></table></figure>
-<p>可以得出<code>__stdcall</code>从右到左入栈，是内平栈</p>
-<p>###__fastcall</p>
-<p>再修改代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int __fastcall sum2(int a, int b) &#123;</span><br><span class="line">	return a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char* argv[])</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	sum2(1,2);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>此时汇编</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">main</span><br><span class="line"></span><br><span class="line">0040D4E8   mov         edx,2</span><br><span class="line">0040D4ED   mov         ecx,1</span><br><span class="line">0040D4F2   call        @ILT+60(sum2) (00401041)</span><br><span class="line"></span><br><span class="line">sum2:</span><br><span class="line">00401050   push        ebp</span><br><span class="line">00401051   mov         ebp,esp</span><br><span class="line">00401053   sub         esp,48h</span><br><span class="line">00401056   push        ebx</span><br><span class="line">00401057   push        esi</span><br><span class="line">00401058   push        edi</span><br><span class="line">00401059   push        ecx</span><br><span class="line">0040105A   lea         edi,[ebp-48h]</span><br><span class="line">0040105D   mov         ecx,12h</span><br><span class="line">00401062   mov         eax,0CCCCCCCCh</span><br><span class="line">00401067   rep stos    dword ptr [edi]</span><br><span class="line">00401069   pop         ecx</span><br><span class="line"></span><br><span class="line">//分别读取参数</span><br><span class="line">0040106A   mov         dword ptr [ebp-8],edx</span><br><span class="line">0040106D   mov         dword ptr [ebp-4],ecx</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">00401070   mov         eax,dword ptr [ebp-4]</span><br><span class="line">00401073   add         eax,dword ptr [ebp-8]</span><br><span class="line">00401076   pop         edi</span><br><span class="line">00401077   pop         esi</span><br><span class="line">00401078   pop         ebx</span><br><span class="line">00401079   mov         esp,ebp</span><br><span class="line">0040107B   pop         ebp</span><br><span class="line">0040107C   ret</span><br></pre></td></tr></table></figure>
-<p>可以看出<code>__fastcall</code>参数是放在寄存器中的</p>
-<p>再修改下代码增加2个参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int __fastcall sum2(int a, int b,int c,int e) &#123;</span><br><span class="line">	return a + b + c + e;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char* argv[])</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	sum2(1,2,3,4);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>汇编如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">main</span><br><span class="line"></span><br><span class="line">0040D4E8   push        4</span><br><span class="line">0040D4EA   push        3</span><br><span class="line">0040D4EC   mov         edx,2</span><br><span class="line">0040D4F1   mov         ecx,1</span><br><span class="line">0040D4F6   call        @ILT+70(sum2) (0040104b)</span><br><span class="line"></span><br><span class="line">sum2:</span><br><span class="line">00401050   push        ebp</span><br><span class="line">00401051   mov         ebp,esp</span><br><span class="line">00401053   sub         esp,48h</span><br><span class="line">00401056   push        ebx</span><br><span class="line">00401057   push        esi</span><br><span class="line">00401058   push        edi</span><br><span class="line">00401059   push        ecx</span><br><span class="line">0040105A   lea         edi,[ebp-48h]</span><br><span class="line">0040105D   mov         ecx,12h</span><br><span class="line">00401062   mov         eax,0CCCCCCCCh</span><br><span class="line">00401067   rep stos    dword ptr [edi]</span><br><span class="line">00401069   pop         ecx</span><br><span class="line">0040106A   mov         dword ptr [ebp-8],edx</span><br><span class="line">0040106D   mov         dword ptr [ebp-4],ecx</span><br><span class="line">00401070   mov         eax,dword ptr [ebp-4]</span><br><span class="line">00401073   add         eax,dword ptr [ebp-8]</span><br><span class="line">00401076   add         eax,dword ptr [ebp+8]</span><br><span class="line">00401079   add         eax,dword ptr [ebp+0Ch]</span><br><span class="line">0040107C   pop         edi</span><br><span class="line">0040107D   pop         esi</span><br><span class="line">0040107E   pop         ebx</span><br><span class="line">0040107F   mov         esp,ebp</span><br><span class="line">00401081   pop         ebp</span><br><span class="line">00401082   ret         8</span><br></pre></td></tr></table></figure>
-<p>可以看出<code>__fastcall</code>当参数个数大于2时，参数会从右到左入栈，并且是内平栈</p>
-<p>综上在win32上可以得出以下结论</p>
-<table>
-<thead>
-<tr>
-<th>概要</th>
-<th>__cdecl</th>
-<th>__stdcall</th>
-<th>__fastcall</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>参数传递方式</td>
-<td>从右到左</td>
-<td>从右到左</td>
-<td>左边开始的两个不大于4字节（DWORD）的参数分别放在ECX和EDX寄存器，其余的参数自右向左压栈传送</td>
-</tr>
-<tr>
-<td>栈清理方式</td>
-<td>外平栈</td>
-<td>内平栈</td>
-<td>大于2个参数内平栈</td>
-</tr>
-<tr>
-<td>场合</td>
-<td>C/C++</td>
-<td>WinApi</td>
-<td>性能要求高的场合</td>
-</tr>
-</tbody>
-</table>
-<h2 id="二、函数栈帧"><a href="#二、函数栈帧" class="headerlink" title="二、函数栈帧"></a>二、函数栈帧</h2><p>所谓函数栈帧就是从进入函数，到出函数，内存的变化，也叫函数的执行环境，调用函数要保持堆栈平衡，所谓堆栈平衡就是当你调用函数开始，到调用函数结束，你的内存应该是没有变化的，从哪开始还是要回到那里，其实上面有些程序就已经贴出了完整的堆栈平衡的代码了，下面例子说明</p>
-<ol>
-<li>申请一个大小为20个字节的栈空间</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">assume cs:code ds:data   ss:stack</span><br><span class="line"></span><br><span class="line">stack segment</span><br><span class="line">       </span><br><span class="line">       db 20 dup (3)</span><br><span class="line">       </span><br><span class="line">stack ends    </span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line"></span><br><span class="line">start:</span><br><span class="line">   </span><br><span class="line">  mov ax,stack</span><br><span class="line">  mov ss , ax</span><br><span class="line">  mov sp,20</span><br><span class="line">    </span><br><span class="line">  mov ax , 4c00h</span><br><span class="line">  int 21h</span><br><span class="line">  </span><br><span class="line">sum:</span><br><span class="line">    ret  </span><br><span class="line">    </span><br><span class="line">code ends</span><br><span class="line"></span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
-<p>内存中的表现如下由于此时是空栈所以此时的sp指向<code>0x07114</code></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-612b21d5b5acf961.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388855487540.jpg"></p>
-<p>也就是下面的这个图</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-1d93a39f48c36b95.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388856524514.jpg"></p>
-<p>sum函数的作用是计算<code>a</code>和<code>b</code>的和，我们采用栈的方式传参数</p>
-<p>增加下面代码</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-1e8a91c1db38038c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388854800030.jpg"></p>
-<p>当程序执行到21行的时候内存如下</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-a8a58d90d72fefe9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388857827393.jpg"></p>
-<p>此时的sp如下</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-73a210d41ae3dde2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388861386780.jpg"></p>
-<p>当执行到21行的时候也就是ret，相当于pop ip 等价于jmp 0011,所以发送2件事情</p>
-<ol>
-<li>出栈0011</li>
-<li>jmp ip</li>
-</ol>
-<p>所以程序执行到当时调用函数的下一行此时的sp为<code>0x07110</code></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-b5c1c243b27ef5f1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388863912044.jpg"></p>
-<p>我们发现一个问题，当你的sum函数调用完成后<code>0x07113~0x07110</code>这段内存一直没有释放，当再有数据push进来sp又会-2这样内存会越来越少，所以我们写的函数是有问题的，为了解决这个问题，我们增加下面的代码</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-abc9b3e9d8ce4587.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388865888171.jpg"></p>
-<p>由于我们push参数导致栈sp减少了4个字节那么我们调用完函数主动回到sp之前的位置，这样堆栈就平衡了。</p>
-<p>到这里我们还没有使用我们传入的参数，接下来接着开发代码使用传入的2个参数,按照刚才的理解只要将ss:sp的地址+2就可以了，很自然的想到是下面的写法</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-d5aeee6896a7394f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388873275425.jpg"></p>
-<p>运行之后发现貌似不对，直接这样写是不可以的，这个时候需要借助一个新的寄存器<code>bp</code>来暂时保存sp的值</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-5db0d30a91f52ecc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388874528384.jpg"></p>
-<p>运行之后发现确实保存到<code>ax</code>、<code>bx</code>中了</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-3cd339506c5d7d6c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388875227906.jpg"></p>
-<p>接下来我们实现<code>a</code>+ <code>b</code>了</p>
-<p>增加代码，将计算的结果放到ax中</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-e5354047b077550e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388876034083.jpg"></p>
-<p>最后计算的结果为<code>4466</code></p>
-<p>现在我们的需求变了，当我们sum函数要变成下面的样子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int sum(int a,int b) &#123;</span><br><span class="line">    int  c = 4;</span><br><span class="line">    int  d = 5;</span><br><span class="line">    int  e = c + d;</span><br><span class="line">    return a + b + e; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也就是函数的内部多了2个局部变量，此时又该如何实现呢，做法是先给函数的局部变量申请一定的空间，比如我们这里申请10个字节的长度<br><img src="https://upload-images.jianshu.io/upload_images/3279997-4d0bc4abdefe2ff6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388886678280.jpg"></p>
-<p>这样就实现了，但是还有问题，我们一开始将sp-10了，那函数调用完毕，应该要恢复,由于bp保存着sp一开始的值所以</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-c0b84e97bd9fa365.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388887848866.jpg"></p>
-<p>其实上面的程序还是有些瑕疵的，那就是bp，目前我们是只有一个函数，假如sum函数内部还要掉用其他的函数，那么bp就会指向新函数内部的sp，当新函数调用完成的时候返回到sum函数中，当执行到mov sp, bp的时候那么就会又到了新函数的内部了，那就乱套了，为了解决这个问题，方案如下，就是每次进入一个函数之前先保存旧值，调用完成后恢复</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-f564e1962b2ab447.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388894774363.jpg"></p>
-<p>到这里距离我们完整的函数越来越近了，下面再来优化下，当初我们为局部变量申请的空间，我们会填充一些有意义的东西在win32里面填充的是<code>CCCC</code></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-ab968cbd4fcccfc8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388897733142.jpg"></p>
-<p>还有最后一个地方，当函数内部有用到需要用到的寄存器的时候也要先保护再恢复，套路都是一样的</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-b4f86db8856165c7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388899344631.jpg"></p>
-<p>至此整个一个完整的函数调用就完成了，我们将bp和sp之间的部分叫做某个函数的栈帧，网上关于函数栈帧的图片都大同小异，选了一张来自《深入理解计算机系统》</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-976e4421c6c833c9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15388960276057.jpg"></p>
+<h2 id="常见用法"><a href="#常见用法" class="headerlink" title="常见用法"></a>常见用法</h2><h3 id="开启-关闭调试"><a href="#开启-关闭调试" class="headerlink" title="开启/关闭调试"></a>开启/关闭调试</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cycript -p 进程名称</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">cycript -p 进程ID</span><br></pre></td></tr></table></figure>
+<p>比如我们想调试我们的桌面程序<code>SpringBoard</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-7be33e7dc2757c11.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15415960608710.jpg"></p>
+<p>退出: 键盘<code>Ctrl + D</code></p>
+<h3 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h3><p>(1). UIApp / [UIApplication sharedApplication]</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-91311f55433f5140.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15415964138396.jpg"></p>
+<p><code>UIApp</code>和<code>[UIApplication sharedApplication]</code>是等价的</p>
+<p>(2). 获取keyWindow 和 rootViewController</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-a71554bdbdc3e1ed.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15415965250824.jpg"></p>
+<p>(3). 通过地址获取对象</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#对象的地址</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-b451f3bba135467a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15415966170483.jpg"></p>
+<p>(4). 获取已经加载的所有类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ObjectiveC .classes</span><br></pre></td></tr></table></figure>
+<p>内容太长不截图了</p>
+<p>(5).获取对象的所有成员变量</p>
+<p>语法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* 对象</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-01285e6f8f0df23f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15415973015883.jpg"></p>
+<p>(6). 获取当前view中某个类型的子类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">choose(类型)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-7ed3baead1f7ceaa.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15415975280306.jpg"></p>
+<p>(7). 获取当前展示的界面的所有view的子控件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">view.recursiveDescription().toString()</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-1a671bf516347fde.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15415976387392.jpg"></p>
+<p>每次都敲这些东西很麻烦，你可以定义方法，写到文件.cy结尾放到手机的<code>/usr/lib/cycript0.9</code>下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-254c14f09f10e9c8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15415977934401.jpg"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">//根控制器</span><br><span class="line">LDRootVC = () =&gt; UIApp.keyWindow.rootViewController;</span><br><span class="line"></span><br><span class="line">LDKeyWindow = () =&gt; UIApp.keyWindow;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">LDBundleId = [NSBundle mainBundle].bundleIdentifier;</span><br><span class="line"></span><br><span class="line">// 沙盒目录</span><br><span class="line">LDDocumentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 沙盒目录</span><br><span class="line">LDCachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];</span><br><span class="line"></span><br><span class="line">// 获取当前展示的viewController</span><br><span class="line">LDCurrentViewController = _ =&gt; _innerCurrentVC(LDRootVC());</span><br><span class="line"></span><br><span class="line">const _innerCurrentVC = (fromViewController) =&gt;  &#123;</span><br><span class="line"></span><br><span class="line">if ([fromViewController isKindOfClass:[UINavigationController class]]) &#123;</span><br><span class="line">    return _innerCurrentVC(fromViewController.viewControllers.lastObject());</span><br><span class="line">&#125; else if([fromViewController isKindOfClass:[UITabBarController class]]) &#123;</span><br><span class="line">    return _innerCurrentVC(fromViewController.selectedViewController);</span><br><span class="line">&#125; else if(fromViewController.presentedViewController) &#123;</span><br><span class="line">    return _innerCurrentVC(fromViewController.presentedViewController);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    return fromViewController;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//获取某个类的所有子类</span><br><span class="line">LDSubClassWithView = (classView) =&gt; choose(classView);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//获取某个view的所有子view</span><br><span class="line">LDSubViews = (view) =&gt; view.recursiveDescription() .description;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//对外输出的接口提示使用者用 没有具体含义</span><br><span class="line">exports.LDInterface = [</span><br><span class="line">&apos;LDRootVC&apos;,</span><br><span class="line">&apos;LDkeyWindow&apos;,</span><br><span class="line">&apos;LDBundleId&apos;,</span><br><span class="line">&apos;LDDocumentPath&apos;,</span><br><span class="line">&apos;LDCachePath&apos;,</span><br><span class="line">&apos;LDCurrentViewController&apos;,</span><br><span class="line">&apos;LDSubClassWithView&apos;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>用法如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-e1a796a66befdda2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15415980079446.jpg"></p>
+<p>这样就不用每次都写了，不使用该文件也是可以的，无非就是麻烦些而已</p>
 
       
 
@@ -355,7 +279,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">iOS逆向</a>
         		</li>
       		
 		</ul>
@@ -374,18 +298,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/10/28/【iOS逆向】-越狱环境搭建/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          【iOS逆向】-越狱环境搭建
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/10/07/assembly-register/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">【8086汇编】-- 常用寄存器</div>
+    <a href="/2018/10/28/【iOS逆向】-操控iPhone/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【iOS逆向】- 操控iPhone</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -413,7 +328,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="assembly-function" data-title="【8086汇编】-- 函数的本质" data-url="http://yoursite.com/2018/10/07/assembly-function/"></div>
+	<div class="ds-thread" data-thread-key="【iOS逆向】-Cycript" data-title="【iOS逆向】- Cycript" data-url="http://yoursite.com/2018/11/07/【iOS逆向】-Cycript/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -435,7 +350,7 @@
   
 
   
-  <div id="SOHUCS" sid="assembly-function" ></div> 
+  <div id="SOHUCS" sid="【iOS逆向】-Cycript" ></div> 
 <script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
 <script type="text/javascript">
     window.changyan.api.config({
