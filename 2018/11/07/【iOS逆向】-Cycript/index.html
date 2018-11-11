@@ -355,8 +355,20 @@
 
   
   <div id="gitment-ctn"></div> 
-// <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
-<link rel="stylesheet" href="https://github.com/fangshufeng/gitments/blob/master/gitment.css">
+<link rel="stylesheet" href="https://www.wenjunjiang.win/css/gitment.css">
+
+<style type="text/css">
+
+   .gitment-comment-header {
+	  background-color: transparent;
+	}
+
+	a.gitment-comment-name,
+	a.gitment-comment-name:visited {
+		color: #2196F3
+	}
+</style>
+
 <script src="https://jjeejj.github.io/js/gitment.js"></script>
 <script>
 var gitment = new Gitment({
@@ -452,6 +464,10 @@ gitment.render('gitment-ctn')
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">其他</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
               </li>
              
@@ -461,10 +477,6 @@ gitment.render('gitment-ctn')
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">汇编</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">其他</a>
               </li>
              
               <li class="article-tag-list-item">
