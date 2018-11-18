@@ -6,20 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>CocoaPods常见命令 | I&#39;m FangLaoDa</title>
+  <title>Archives: 2018 | I&#39;m FangLaoDa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1sudo gem install cocoapods 通过gem来安装cocoapods(上面命令会访问https://rubygems.org/)然后就被墙了">
-<meta name="keywords" content="Objective-C">
-<meta property="og:type" content="article">
-<meta property="og:title" content="CocoaPods常见命令">
-<meta property="og:url" content="http://yoursite.com/2017/02/09/CocoaPods/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="I&#39;m FangLaoDa">
+<meta property="og:url" content="http://yoursite.com/archives/2018/page/3/index.html">
 <meta property="og:site_name" content="I&#39;m FangLaoDa">
-<meta property="og:description" content="1sudo gem install cocoapods 通过gem来安装cocoapods(上面命令会访问https://rubygems.org/)然后就被墙了">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-13T13:50:14.111Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CocoaPods常见命令">
-<meta name="twitter:description" content="1sudo gem install cocoapods 通过gem来安装cocoapods(上面命令会访问https://rubygems.org/)然后就被墙了">
+<meta name="twitter:title" content="I&#39;m FangLaoDa">
   
     <link rel="alternative" href="/atom.xml" title="I&#39;m FangLaoDa" type="application/atom+xml">
   
@@ -173,195 +168,63 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-CocoaPods" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      CocoaPods常见命令
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/02/01/Cisco/" class="archive-article-date">
+  	<time datetime="2018-02-01T06:17:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-01</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/02/01/Cisco/">网络编程必备调试工具 WireShark 、 Cisco Packet Tracer</a>
     </h1>
   
 
-        
-        <a href="/2017/02/09/CocoaPods/" class="archive-article-date">
-  	<time datetime="2017-02-09T08:31:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem install cocoapods</span><br></pre></td></tr></table></figure>
-<p>通过gem来安装cocoapods(上面命令会访问<a href="https://rubygems.org/)然后就被墙了" target="_blank" rel="noopener">https://rubygems.org/)然后就被墙了</a></p>
-<a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem sources -l</span><br></pre></td></tr></table></figure>
-<p>通过该命令来查看当前的源</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.gem sources --remove https://rubygems.org/</span><br><span class="line">2.gem sources -a http://ruby.taobao.org/</span><br></pre></td></tr></table></figure>
-<p>上面2个命令然后镜像到国内的 都说淘宝的不能用了 如果不行的话试试下面这个<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gem source -r https://ruby.taobao.org   </span><br><span class="line">gem source -a https://gems.ruby-china.org </span><br><span class="line">gem source -u # 更新 update</span><br></pre></td></tr></table></figure></p>
-<p>换完了源之后再重新执行 sudo gem install cocoapods</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod setup  用来同步master上的库。我们需要经常执行这条命令，否则有新的Pods依赖库的时候执行pod search命令是搜不出来的</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem list --local | grep cocoapods 查看当前安装了哪些版本</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem uninstall cocoapods 删除安装过的所有版本</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem uninstall cocoapods -v xxx 强制卸载某一个版本</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem install cocoapods -v xxx.xxx.xxx 安装指定版本</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以通过 pod --help 查看相关命令</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd到文件下 pod init 创建Podfile文件</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pod install 生成的Podfile.lock文件 lock文件会保存pod版本</span><br><span class="line">pod update 重新生成Podfile.lock文件</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod install --verbose --no-repo-update 可快速更新忽略本地repo的更新</span><br></pre></td></tr></table></figure>
-<p>=================cocoapod常见报错===================</p>
-<p>#更新gem报错(sudo gem update –system)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">错误一:</span><br><span class="line">ERROR: While executing gem … (Errno::EPERM) </span><br><span class="line">Operation not permitted - /usr/bin/xcodeproj</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">执行sudo gem install -n /usr/local/bin cocoapods</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">错误二： </span><br><span class="line">While executing gem … (Errno::EPERM) </span><br><span class="line">Operation not permitted - /usr/bin/update_rubygems</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">安装Homebrew（Homebrew installs the stuff you need that Apple didn’t.） </span><br><span class="line">objc  /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br></pre></td></tr></table></figure>
-<p>当pod install失败的时候可以尝试先卸载再重新安装试试</p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/assets/img/161539425082_.pic.jpg">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Cisco</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2017/03/14/CocoaPods_pri/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          使用CocoaPods建立私有仓库
-        
-      </div>
-    </a>
   
   
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  <div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="CocoaPods" data-title="CocoaPods常见命令" data-url="http://yoursite.com/2017/02/09/CocoaPods/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"litten-hexo"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
-  <div id="gitment-ctn"></div> 
-<link rel="stylesheet" href="https://www.wenjunjiang.win/css/gitment.css">
-
-<style type="text/css">
-
-   .gitment-comment-header {
-	  background-color: transparent;
-	}
-
-	a.gitment-comment-name,
-	a.gitment-comment-name:visited {
-		color: #2196F3
-	}
-</style>
-
-<script src="https://jjeejj.github.io/js/gitment.js"></script>
-<script>
-var gitment = new Gitment({
-  id: "http://yoursite.com/2017/02/09/CocoaPods/",
-  owner: 'fangshufeng',
-  repo: 'fangshufeng.github.io',
-  oauth: {
-    client_id: '889a210d751e50ade6dd',
-    client_secret: 'd443d8c86de77a856fe0eaa85b743ba066377f67',
-  },
-})
-gitment.render('gitment-ctn')
-</script>
+    
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/archives/2018/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/2018/">1</a><a class="page-number" href="/archives/2018/page/2/">2</a><span class="page-number current">3</span>
+    </nav>
   
 
 
@@ -385,8 +248,8 @@ gitment.render('gitment-ctn')
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
