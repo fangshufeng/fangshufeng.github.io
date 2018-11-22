@@ -6,15 +6,34 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>I&#39;m FangLaoDa</title>
+  <title>LLDB | I&#39;m FangLaoDa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="I&#39;m FangLaoDa">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+  <meta name="description" content="平时开发的过程中使用Xcode都是图形化操作习惯了，要是脱离了xcode你还能调试代码吗，恩，Xcode已经把我们惯坏了，不管怎样，作为一个开发对于了解图形操作背后的东西应该要了解。 申明：本文的[]都表示命令简写">
+<meta name="keywords" content="Objective-C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLDB">
+<meta property="og:url" content="http://yoursite.com/2018/11/22/LLDB/index.html">
 <meta property="og:site_name" content="I&#39;m FangLaoDa">
+<meta property="og:description" content="平时开发的过程中使用Xcode都是图形化操作习惯了，要是脱离了xcode你还能调试代码吗，恩，Xcode已经把我们惯坏了，不管怎样，作为一个开发对于了解图形操作背后的东西应该要了解。 申明：本文的[]都表示命令简写">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-ffbc506b30d9a937.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-aa7e646070f69751.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-18e643a8a70aca3b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-b4cb4d10da5d501a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-dbd6792e83653ec4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-fa8e02dc8e18da66.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-5846082b5cad0fea.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-5c810caacadbee7d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-8bac6cfe15f52ddb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-bf96628c8fb06e66.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-590b234867f682cc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-db48af4dd528ed27.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-b902fb1bd98d02f4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-11-22T14:01:27.743Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="I&#39;m FangLaoDa">
+<meta name="twitter:title" content="LLDB">
+<meta name="twitter:description" content="平时开发的过程中使用Xcode都是图形化操作习惯了，要是脱离了xcode你还能调试代码吗，恩，Xcode已经把我们惯坏了，不管怎样，作为一个开发对于了解图形操作背后的东西应该要了解。 申明：本文的[]都表示命令简写">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-ffbc506b30d9a937.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="I&#39;m FangLaoDa" type="application/atom+xml">
   
@@ -168,61 +187,160 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-block-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-LLDB" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/25/block-2/">OC--Block--(二)</a>
+    <h1 class="article-title" itemprop="name">
+      LLDB
     </h1>
   
 
         
-        <a href="/2018/08/25/block-2/" class="archive-article-date">
-  	<time datetime="2018-08-25T07:15:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-25</time>
+        <a href="/2018/11/22/LLDB/" class="archive-article-date">
+  	<time datetime="2018-11-22T13:59:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-22</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>上篇讲到了<code>Block</code>其实就是<code>oc对象</code></p>
-<p>本文主要讲解<code>Block值捕获</code>以及如何修改<code>block</code>捕获的变量,说明下本文的目录结构</p>
-<ol>
-<li><p>Block是如何捕获变量的</p>
+        <p>平时开发的过程中使用<code>Xcode</code>都是图形化操作习惯了，要是脱离了xcode你还能调试代码吗，恩，<code>Xcode</code>已经把我们惯坏了，不管怎样，作为一个开发对于了解图形操作背后的东西应该要了解。</p>
+<p>申明：本文的<code>[]</code>都表示命令简写</p>
+<a id="more"></a>
+<h3 id="一、增加方法断点"><a href="#一、增加方法断点" class="headerlink" title="一、增加方法断点"></a>一、增加方法断点</h3><ul>
+<li>breakpoint set –name[-n]  “<strong><code>方法名称</code></strong>“</li>
+<li>breakpoint set –address[-a] <strong><code>方法的内存地址</code></strong></li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-ffbc506b30d9a937.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15428751580151.jpg"></p>
+<p>上面4个都是等价的，通过<code>breakpoint list</code>查看已经添加的断点</p>
 <ul>
-<li>捕获的是auto局部变量<ul>
-<li>基本数据类型</li>
-<li>对象类型</li>
-</ul>
-</li>
-<li>捕获的是非auto变量（static变量的和全局变量）<ul>
-<li>基本数据类型</li>
-<li>对象类型</li>
-</ul>
+<li><p>模糊设置断点 breakpoint set -r <strong><code>方法名称</code></strong>,r 是正则的意思</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(lldb) breakpoint set -r foo</span><br><span class="line">Breakpoint 2: 136 locations.</span><br></pre></td></tr></table></figure>
+<p>  发现有136个地方包含了<code>foo</code>字符串的方法,通过<code>breakpoint list</code>查看可以知道在哪里有这个方法，输出太多这边就截取一部分。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(lldb) breakpoint list</span><br><span class="line">Current breakpoints:</span><br><span class="line">1: file = &apos;/Users/fangshufeng/Desktop/thirdPart/image/Image/Image/ViewController.m&apos;, line = 24, exact_match = 0, locations = 1, resolved = 1, hit count = 2</span><br><span class="line"></span><br><span class="line">  1.1: where = Image`-[ViewController touchesBegan:withEvent:] + 77 at ViewController.m:24, address = 0x000000010a4f768d, resolved, hit count = 2 </span><br><span class="line"></span><br><span class="line">2: regex = &apos;foo&apos;, locations = 136, resolved = 136, hit count = 2</span><br><span class="line">  2.1: where = Image`-[ViewController foo] + 23 at ViewController.m:30, address = 0x000000010a4f76f7, resolved, hit count = 2 </span><br><span class="line">  2.2: where = libbsm.0.dylib`au_print_xml_footer, address = 0x000000010ce5d665, resolved, hit count = 0 </span><br><span class="line">  2.3: where = libsystem_kernel.dylib`proc_reset_footprint_interval, address = 0x000000010d5254ed, resolved, hit count = 0 </span><br><span class="line">  </span><br><span class="line"> [...]</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-</li>
-<li><p>Block捕获对对象的引用计数的影响</p>
 <ul>
-<li>对象类型</li>
+<li>开关断点<ul>
+<li>breakpoint disable <code>断点编号</code>（让某个断点不可用但是不是删除）</li>
+<li>breakpoint enable <code>断点编号</code>（让断点由不可用到可用）</li>
+<li>breakpoint delete <code>断点编号</code> （删除断点不可恢复，需重新添加，不加编号则让你选择是否全部删除）</li>
 </ul>
 </li>
-<li><p>__block如何做到可以修改变量的</p>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-aa7e646070f69751.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15428758913025.jpg"></p>
+<h3 id="二、线程断点"><a href="#二、线程断点" class="headerlink" title="二、线程断点"></a>二、线程断点</h3><h4 id="源码调试"><a href="#源码调试" class="headerlink" title="源码调试"></a>源码调试</h4><p>这个平时用的最多了，看下图</p>
 <ul>
-<li>__block变量的内存结构</li>
+<li>thread continue [continue] [c ] : 程序继续</li>
+<li>thread step-over [next] [n] : 单步运⾏，把子函数当做整体⼀一步执行</li>
+<li>thread step-in [step] [s] : 单步运⾏，遇到子函数会进入⼦函数</li>
+<li>thread step-out [finish] : 直接执行完函数，返回函数调用处</li>
 </ul>
-</li>
-</ol>
-        
-          <a class="article-more-a" href="/2018/08/25/block-2/#more">more >></a>
-        
+<p>太常用不贴代码了</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-18e643a8a70aca3b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15428763316698.jpg"></p>
+<ul>
+<li>thread backtrace [bt]:查看调用栈回溯</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-b4cb4d10da5d501a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15428766389548.jpg"></p>
+<p>如图有时想查看代码的调用堆栈，但是xcode无法查看全，左边的地方只能看到部分，当然你可以点击这个地方，去查看。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-dbd6792e83653ec4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15428767683217.jpg"></p>
+<p>也可以通过命令<code>thread backtrace</code>或者<code>bt</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-fa8e02dc8e18da66.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15428770034517.jpg"></p>
+<p><code>frame</code>为栈帧的意思，想了解函数栈帧的<a href="https://fangshufeng.com/2018/10/07/assembly-function/" target="_blank" rel="noopener">点击此处</a></p>
+<ul>
+<li>frame variable :查看函数栈帧内的局部变量的值</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(lldb) frame variable</span><br><span class="line">(ViewController *) self = 0x00007fe390a04960</span><br><span class="line">(SEL) _cmd = &quot;touchesBegan:withEvent:&quot;</span><br><span class="line">(__NSSetM *) touches = 0x0000600003d30640 1 element</span><br><span class="line">(UITouchesEvent *) event = 0x0000600000f66250</span><br><span class="line">(int) a = 10</span><br></pre></td></tr></table></figure>
+<p>我们知道<code>oc</code>的方法内置了<code>self</code>和<code>_cmd</code>参数,所以上面有<code>self</code>和<code>_cmd</code></p>
+<h4 id="汇编代码调试"><a href="#汇编代码调试" class="headerlink" title="汇编代码调试"></a>汇编代码调试</h4><p>开启汇编模式</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-5846082b5cad0fea.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15428781223072.jpg"></p>
+<p>和源码的区别是</p>
+<ul>
+<li>ni : 单步运⾏，把子函数当做整体⼀一步执行</li>
+<li>si: 单步运⾏，遇到子函数会进入⼦函数</li>
+</ul>
+<h3 id="三、内存断点"><a href="#三、内存断点" class="headerlink" title="三、内存断点"></a>三、内存断点</h3><p>有时候想看某个内存发生改变的时候触发断点</p>
+<ul>
+<li>watchpoint set variable 变量 </li>
+<li>watchpoint set variable 地址</li>
+</ul>
+<p>我们给vc增加一个属性<code>bar</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event &#123;</span><br><span class="line">    NSLog(@&quot;fff&quot;);</span><br><span class="line">    [self foo];</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (void)foo &#123;</span><br><span class="line">    NSLog(@&quot;--foo--&quot;);</span><br><span class="line">    NSLog(@&quot;--foo2--&quot;);</span><br><span class="line">    NSLog(@&quot;--foo3--&quot;);</span><br><span class="line">    </span><br><span class="line">    for ( int i = 0; i &lt; 3; i++) &#123;</span><br><span class="line">        self.bar += 10;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过该命令，每当内存地址内容被修改都会断到</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-5c810caacadbee7d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15428798696567.jpg"></p>
+<p>还可以配合<code>watchpoint command</code>使用</p>
+<ul>
+<li>watchpoint command add 断点编号：当内存断点触发的时候执行一些操作</li>
+</ul>
+<p>每次改变都会输出值。<br><img src="https://upload-images.jianshu.io/upload_images/3279997-8bac6cfe15f52ddb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15428800472134.jpg"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> watchpoint command add 1 // 1 表示 watchpoint 断点编号</span><br><span class="line">Enter your debugger command(s).  Type &apos;DONE&apos; to end.</span><br><span class="line">&gt; p self.bar;</span><br><span class="line">&gt; DONE // DONE 表示命令输入结束</span><br></pre></td></tr></table></figure>
+<p>相关指令如下，见名知意了不需要作介绍了</p>
+<ul>
+<li>watchpoint list</li>
+<li>watchpoint disable 断点编号</li>
+<li>watchpoint enable 断点编号 </li>
+<li>watchpoint delete 断点编号 </li>
+<li>watchpoint command list 断点编号 </li>
+<li>watchpoint command delete 断点编号</li>
+</ul>
+<h3 id="四、不常用但很实用的指令"><a href="#四、不常用但很实用的指令" class="headerlink" title="四、不常用但很实用的指令"></a>四、不常用但很实用的指令</h3><p>场景1：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-bf96628c8fb06e66.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15428794369809.jpg"></p>
+<p>要想代码执行到31行的断点的时候直接返回，不想执行后面的代码，就可以通过<code>thread return</code>指令，当代码执行到31行断点时，<code>thread return</code>可以实现。</p>
+<p>场景2：有时崩溃了直接到<code>main</code>函数了，无法知道崩溃的地方</p>
+<p>都知道下面的代码会崩溃</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-590b234867f682cc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15428804652206.jpg"></p>
+<p>此时崩溃在下面的main函数处</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-db48af4dd528ed27.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15428805038949.jpg"></p>
+<p>终端输出信息</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-b902fb1bd98d02f4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15428805244685.jpg"></p>
+<p>并不知道函数崩溃在哪一行可以使用<code>image lookup</code>指令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(lldb) image lookup -a 0x00000001022365db</span><br><span class="line">      Address: Image[0x00000001000015db] (Image.__TEXT.__text + 203)</span><br><span class="line">      Summary: Image`-[ViewController touchesBegan:withEvent:] + 139 at ViewController.m:30</span><br></pre></td></tr></table></figure>
+<p>发现崩溃在<code>ViewController</code>的<code>touchesBegan:withEvent:</code>在30行处。</p>
+<p><code>image lookup</code>周边</p>
+<ul>
+<li>image lookup -t 类：查看类的属性</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(lldb) image lookup -t UIView</span><br><span class="line">Best match found in /Users/fangshufeng/Library/Developer/Xcode/DerivedData/Image-cncplmezlusnyackyzpyppykazhf/Build/Products/Debug-iphonesimulator/Image.app/Image:</span><br><span class="line">id = &#123;0x00001063&#125;, name = &quot;UIView&quot;, byte-size = 8, decl = UIView.h:143, compiler_type = &quot;@interface UIView : UIResponder</span><br><span class="line">@property ( readonly,getter = layerClass,setter = &lt;null selector&gt;,nonatomic,class ) Class layerClass;</span><br><span class="line">@property ( getter = isUserInteractionEnabled,setter = setUserInteractionEnabled:,assign,readwrite,nonatomic ) BOOL userInteractionEnabled;</span><br><span class="line">@property ( getter = tag,setter = setTag:,assign,readwrite,nonatomic ) NSInteger tag;</span><br><span class="line">@property ( readonly,getter = layer,setter = &lt;null selector&gt;,nonatomic ) CALayer * layer;</span><br><span class="line">@property ( readonly,getter = canBecomeFocused,setter = &lt;null selector&gt;,nonatomic ) BOOL canBecomeFocused;</span><br><span class="line">@property ( readonly,getter = isFocused,setter = &lt;null selector&gt;,nonatomic ) BOOL focused;</span><br><span class="line">@property ( getter = semanticContentAttribute,setter = setSemanticContentAttribute:,assign,readwrite,nonatomic ) UISemanticContentAttribute semanticContentAttribute;</span><br><span class="line">@property ( readonly,getter = effectiveUserInterfaceLayoutDirection,setter = &lt;null selector&gt;,nonatomic ) UIUserInterfaceLayoutDirection effectiveUserInterfaceLayoutDirection;</span><br><span class="line">@end&quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>image lookup -n 方法名称：查看方法的位置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(lldb) image lookup -n foo</span><br><span class="line">1 match found in /Users/fangshufeng/Library/Developer/Xcode/DerivedData/Image-cncplmezlusnyackyzpyppykazhf/Build/Products/Debug-iphonesimulator/Image.app/Image:</span><br><span class="line">        Address: Image[0x0000000100001660] (Image.__TEXT.__text + 224)</span><br><span class="line">        Summary: Image`-[ViewController foo] at ViewController.m:33</span><br></pre></td></tr></table></figure>
+<ul>
+<li>image lookup -o -f ：可以查看内存的偏移量，这个在逆向中很常用</li>
+</ul>
+<p>还有一些常见的指令比如<code>p</code>、<code>po</code>、<code>expression</code>就不说了。</p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/161539425082_.pic.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -242,16 +360,24 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/25/block-2/">展开全文 >></a>
-        </p>
-      
 
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/18/【iOS逆向】-脱壳/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【iOS逆向】- 脱壳</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -271,733 +397,63 @@
 
 
 
-
   
-    <article id="post-block-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/19/block-1/">OC--Block--(一)</a>
-    </h1>
-  
-
-        
-        <a href="/2018/08/19/block-1/" class="archive-article-date">
-  	<time datetime="2018-08-19T10:45:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>##基本知识点回顾</p>
-<p>我们知道按照变量的作用域划分的话，变量可划分为<code>局部变量</code>和<code>全局变量</code>，而<code>局部变量</code>又分为<code>自动变量</code>和<code>静态变量</code>，<code>全局变量</code>分为<code>静态全局变量</code>和<code>非静态全局变量</code></p>
-        
-          <a class="article-more-a" href="/2018/08/19/block-1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/19/block-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-oc-category" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/12/oc-category/">OC--分类</a>
-    </h1>
-  
-
-        
-        <a href="/2018/08/12/oc-category/" class="archive-article-date">
-  	<time datetime="2018-08-12T07:19:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本篇是解决<a href="http://fangshufeng.com/blog/2018/08/02/oc-instance-metaclass/" target="_blank" rel="noopener">上一篇</a>的第一个问题的；</p>
-<p>读过我<a href="http://fangshufeng.com/blog/2018/08/02/oc-instance-metaclass/" target="_blank" rel="noopener">实例对象、类对象和元类对象是如何分工的</a>的朋友应该知道一个类的实例方法是存放在<code>类对象</code>中的，类方法是存在<code>元类对象</code>中，这些是在编译阶段就能确定的，但是我们并没有发现分类的方法，也就有了下面的疑问：</p>
-<ol>
-<li>分类的加载时机；</li>
-<li>分类中的方法存放的地方；</li>
-<li>如果分类和原来的类拥有共同的方法，调用结果如何；</li>
-<li>如果同一个类的多个分类拥有同一个方法，调用结果如何；</li>
-<li>load方法是如何加载的；</li>
-<li>继承中的load方法是如何调用的；</li>
-<li>initialize方法如何加载的；</li>
-<li>综合结论</li>
-</ol>
-        
-          <a class="article-more-a" href="/2018/08/12/oc-category/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/12/oc-category/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-kvc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/11/kvc/">OC-KVC调用和赋值原理</a>
-    </h1>
-  
-
-        
-        <a href="/2018/08/11/kvc/" class="archive-article-date">
-  	<time datetime="2018-08-11T15:37:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文主要介绍kvo是如何查找变量然后赋值，以及通过key取出值的</p>
-        
-          <a class="article-more-a" href="/2018/08/11/kvc/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/11/kvc/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-kvo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/08/kvo/">OC--KVO实现原理</a>
-    </h1>
-  
-
-        
-        <a href="/2018/08/08/kvo/" class="archive-article-date">
-  	<time datetime="2018-08-08T02:35:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>创建一个<code>iOS</code>项目<br>新建类<code>TestObj</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//TestObj.h</span><br><span class="line"></span><br><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">@interface TestObj : NSObject</span><br><span class="line"></span><br><span class="line">@property (nonatomic, copy) NSString *name;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">//TestObj.m</span><br><span class="line"></span><br><span class="line">#import &quot;TestObj.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation TestObj</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p><code>ViewController</code>如果要需要监听<code>TestObj</code>对象的<code>name</code>值的改变，代码如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#import &quot;TestObj.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) TestObj *obj1;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    TestObj *obj1 = [[TestObj alloc] init];</span><br><span class="line">    obj1.name = @&quot;jack&quot;;</span><br><span class="line">    _obj1 = obj1;</span><br><span class="line">    </span><br><span class="line">    [self.obj1 addObserver:self forKeyPath:@&quot;name&quot; options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event &#123;</span><br><span class="line">    self.obj1.name = @&quot;Tom&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary&lt;NSKeyValueChangeKey,id&gt; *)change context:(void *)context &#123;</span><br><span class="line">    NSLog(@&quot;%@对象的%@值改变了%@&quot;,object,keyPath,change);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运作模拟器点击后输出以下 很简单</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> &lt;TestObj: 0x6000024d4400&gt;对象的name值改变了&#123;</span><br><span class="line">    kind = 1;</span><br><span class="line">    new = Tom;</span><br><span class="line">    old = jack;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2018/08/08/kvo/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/08/kvo/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-oc-method" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/02/oc-method/">OC--如何获取变量和方法的信息</a>
-    </h1>
-  
-
-        
-        <a href="/2018/08/02/oc-method/" class="archive-article-date">
-  	<time datetime="2018-08-02T15:23:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这一篇是解决<a href="https://www.jianshu.com/p/14b096d6a233" target="_blank" rel="noopener">上一篇</a>遗留问题中的第2个问题的，如果没有读过的请先阅读上一篇的内容</p>
-<p>变量:有<code>成员变量</code>和<code>属性变量</code>2者是包含关系，这个上篇已经解释过了；<br>方法：分为<code>实例方法</code>和<code>类方法</code>；</p>
-        
-          <a class="article-more-a" href="/2018/08/02/oc-method/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/02/oc-method/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-oc-obj" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/02/oc-obj/">OC--实例对象、类对象和元类对象是如何分工的</a>
-    </h1>
-  
-
-        
-        <a href="/2018/08/02/oc-obj/" class="archive-article-date">
-  	<time datetime="2018-08-02T07:12:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文已经默认你已经了解了<code>实例对象</code>、<code>类对象</code>和<code>元类对象</code>，关于什么是<code>实例对象</code>、<code>类对象</code>和<code>元类对象</code>，请自行了解不在本文的范围内。</p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="*前言"></a>*前言</h3><p>平时开发的过程中我们会创建类，然后给这个类增加属性，方法，甚至添加协议和分类，然后分类有添加方法等等，那么这些添加的东西在内存中是如何存放的呢，当我们调用某个方法的时候又是如何完成调用的呢？</p>
-        
-          <a class="article-more-a" href="/2018/08/02/oc-obj/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/02/oc-obj/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-oc-alloc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/29/oc-alloc/">OC-对象的内存分配</a>
-    </h1>
-  
-
-        
-        <a href="/2018/07/29/oc-alloc/" class="archive-article-date">
-  	<time datetime="2018-07-29T15:10:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="问题1：一个NSObject对象占用了多少内存？"><a href="#问题1：一个NSObject对象占用了多少内存？" class="headerlink" title="问题1：一个NSObject对象占用了多少内存？"></a>问题1：一个<code>NSObject</code>对象占用了多少内存？</h3><p>可以通过方法<code>malloc_size</code>来查看某个对象分配了多少内存</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">#import &lt;malloc/malloc.h&gt;</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">       NSObject *obj = [[NSObject alloc] init];</span><br><span class="line">     </span><br><span class="line">        NSLog(@&quot;%zd&quot;,malloc_size( (__bridge const void *)(obj)));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">16</span><br></pre></td></tr></table></figure>
-<p>为什么会是16呢？？</p>
-        
-          <a class="article-more-a" href="/2018/07/29/oc-alloc/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/29/oc-alloc/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-simctl" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/13/simctl/">通过命令行控制模拟器--simctl</a>
-    </h1>
-  
-
-        
-        <a href="/2018/07/13/simctl/" class="archive-article-date">
-  	<time datetime="2018-07-13T15:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>要想实现命令行控制模拟器需要用的到命令是<code>simctl</code>: <code>Simulators Control</code> 看这命令的意思像是这两个单词的缩写，搭载<code>xcrun</code>命令，可以通过这个命令实现以下功能</p>
-<ol>
-<li>创建、删除、开启 模拟器</li>
-<li>添加图片到模拟器</li>
-<li>安装、卸载、打开、关闭APP</li>
-</ol>
-        
-          <a class="article-more-a" href="/2018/07/13/simctl/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/13/simctl/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-method_exchangeImplementations" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/23/method_exchangeImplementations/">思考：多次使用method_exchangeImplementations同一个方法会是怎样的结果，以及分类的加载顺序又是什么呢？</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/23/method_exchangeImplementations/" class="archive-article-date">
-  	<time datetime="2018-03-23T06:34:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="先看第一个问题：分类的加载顺序"><a href="#先看第一个问题：分类的加载顺序" class="headerlink" title="先看第一个问题：分类的加载顺序"></a>先看第一个问题：分类的加载顺序</h3><p>举例<code>UIViewController</code>3个分类分别为<br><code>UIViewController+A</code><br><code>UIViewController+B</code><br><code>UIViewController+C</code></p>
-<p><code>.A</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        </span><br><span class="line">        NSLog(@&quot;----A---&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>.B</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        </span><br><span class="line">        NSLog(@&quot;----B---&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>.C</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        </span><br><span class="line">        NSLog(@&quot;----C---&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2018-03-23 11:06:10.975429+0800 ExchangeImp[4802:195579] ----C---</span><br><span class="line">2018-03-23 11:06:10.976176+0800 ExchangeImp[4802:195579] ----A---</span><br><span class="line">2018-03-23 11:06:10.976392+0800 ExchangeImp[4802:195579] ----B---</span><br></pre></td></tr></table></figure>
-<p>这个顺序是怎么来的的呢，就不卖关子了，本文的重点是第二个问题<br>
-        
-          <a class="article-more-a" href="/2018/03/23/method_exchangeImplementations/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/23/method_exchangeImplementations/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="LLDB" data-title="LLDB" data-url="http://yoursite.com/2018/11/22/LLDB/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"litten-hexo"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="https://www.wenjunjiang.win/css/gitment.css">
+
+<style type="text/css">
+
+   .gitment-comment-header {
+	  background-color: transparent;
+	}
+
+	a.gitment-comment-name,
+	a.gitment-comment-name:visited {
+		color: #2196F3
+	}
+</style>
+
+<script src="https://jjeejj.github.io/js/gitment.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2018/11/22/LLDB/",
+  owner: 'fangshufeng',
+  repo: 'fangshufeng.github.io',
+  oauth: {
+    client_id: '889a210d751e50ade6dd',
+    client_secret: 'd443d8c86de77a856fe0eaa85b743ba066377f67',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -1020,8 +476,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
