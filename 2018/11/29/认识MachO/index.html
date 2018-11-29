@@ -6,20 +6,63 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>CocoaPods常见命令 | I&#39;m FangLaoDa</title>
+  <title>【认识MachO】 | I&#39;m FangLaoDa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1sudo gem install cocoapods 通过gem来安装cocoapods(上面命令会访问https://rubygems.org/)然后就被墙了">
-<meta name="keywords" content="Objective-C">
+  <meta name="description" content="简介MachO文件是mac平台上一类文件的简称，它的类型有以下种类，可以在#import &amp;lt;mach-o/loader.h&amp;gt;文件中找到 12345678910111213#define	MH_OBJECT	0x1		/* relocatable object file */#define	MH_EXECUTE	0x2		/* demand paged executable file *">
+<meta name="keywords" content="MachO">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CocoaPods常见命令">
-<meta property="og:url" content="http://yoursite.com/2017/02/09/CocoaPods/index.html">
+<meta property="og:title" content="【认识MachO】">
+<meta property="og:url" content="http://yoursite.com/2018/11/29/认识MachO/index.html">
 <meta property="og:site_name" content="I&#39;m FangLaoDa">
-<meta property="og:description" content="1sudo gem install cocoapods 通过gem来安装cocoapods(上面命令会访问https://rubygems.org/)然后就被墙了">
+<meta property="og:description" content="简介MachO文件是mac平台上一类文件的简称，它的类型有以下种类，可以在#import &amp;lt;mach-o/loader.h&amp;gt;文件中找到 12345678910111213#define	MH_OBJECT	0x1		/* relocatable object file */#define	MH_EXECUTE	0x2		/* demand paged executable file *">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-13T13:50:14.111Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-465146d94413d13b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-5f2ae0fbd83d3946.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-b44ae95da3d22c96.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-75bc312f543706d7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-66be887047ba29ac.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-217abd60301c2744.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-0bb51820f74ce3fa.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-00142b7d05e7b03b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-edf1127eab7b44ef.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-62fcdc62ecf7ac8e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-78171b4f872c4188.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-a63f92723dc5a78c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-7b2943022b04c117.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-590d6b8c401886ac.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-013a9e401f5eb016.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-d0aff3f9add98e9f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-8ed2e74eb0d56734.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-6804d0b16e57f7a2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-1b13e70461c4371f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-ea754603dbdc624b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-407d22458c943573.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-f1b7b7fa6fbe6fbe.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-b4c99f5a838d2080.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-d8ed6fbe9a2dd1e9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-9c09eaabfc69c1a7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-4f31e271097c50fa.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-36fdbafc0bde7189.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-29e07ff8f1696345.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-884a13c7b703b9b5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-d11208b36432b59f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-c2800908c429db6e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-1dfa92a929246fba.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-25791757142034d6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-03830527ac089c15.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-855f2bf69abf3767.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-236315fa72c135df.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-9167bd58b06f968e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-a43cd91c3b417268.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-308dcdc0a8b72727.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-aa47167f6e02e5e0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-1432d2ba8884fd1b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-a43b6f277554bd05.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-11-29T14:16:07.211Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CocoaPods常见命令">
-<meta name="twitter:description" content="1sudo gem install cocoapods 通过gem来安装cocoapods(上面命令会访问https://rubygems.org/)然后就被墙了">
+<meta name="twitter:title" content="【认识MachO】">
+<meta name="twitter:description" content="简介MachO文件是mac平台上一类文件的简称，它的类型有以下种类，可以在#import &amp;lt;mach-o/loader.h&amp;gt;文件中找到 12345678910111213#define	MH_OBJECT	0x1		/* relocatable object file */#define	MH_EXECUTE	0x2		/* demand paged executable file *">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-465146d94413d13b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="I&#39;m FangLaoDa" type="application/atom+xml">
   
@@ -177,14 +220,14 @@
           <div id="js-content" class="content-ll">
             
 
-<article id="post-CocoaPods" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-认识MachO" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      CocoaPods常见命令
+      【认识MachO】
     </h1>
   
 
@@ -206,8 +249,8 @@
 
       
                    
-        <a href="/2017/02/09/CocoaPods/" class="archive-article-date">
-  	<time datetime="2017-02-09T08:31:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-09</time>
+        <a href="/2018/11/29/认识MachO/" class="archive-article-date">
+  	<time datetime="2018-11-29T14:07:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-29</time>
 </a>
         
          
@@ -220,29 +263,225 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem install cocoapods</span><br></pre></td></tr></table></figure>
-<p>通过gem来安装cocoapods(上面命令会访问<a href="https://rubygems.org/)然后就被墙了" target="_blank" rel="noopener">https://rubygems.org/)然后就被墙了</a></p>
+        <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>MachO文件是mac平台上一类文件的简称，它的类型有以下种类，可以在<code>#import &lt;mach-o/loader.h&gt;</code>文件中找到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#define	MH_OBJECT	0x1		/* relocatable object file */</span><br><span class="line">#define	MH_EXECUTE	0x2		/* demand paged executable file */</span><br><span class="line">#define	MH_FVMLIB	0x3		/* fixed VM shared library file */</span><br><span class="line">#define	MH_CORE		0x4		/* core file */</span><br><span class="line">#define	MH_PRELOAD	0x5		/* preloaded executable file */</span><br><span class="line">#define	MH_DYLIB	0x6		/* dynamically bound shared library */</span><br><span class="line">#define	MH_DYLINKER	0x7		/* dynamic link editor */</span><br><span class="line">#define	MH_BUNDLE	0x8		/* dynamically bound bundle file */</span><br><span class="line">#define	MH_DYLIB_STUB	0x9		/* shared library stub for static */</span><br><span class="line">					/*  linking only, no section contents */</span><br><span class="line">#define	MH_DSYM		0xa		/* companion file with only debug */</span><br><span class="line">					/*  sections */</span><br><span class="line">#define	MH_KEXT_BUNDLE	0xb		/* x86_64 kexts */</span><br></pre></td></tr></table></figure>
+<p>列举一些常见的类型</p>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem sources -l</span><br></pre></td></tr></table></figure>
-<p>通过该命令来查看当前的源</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.gem sources --remove https://rubygems.org/</span><br><span class="line">2.gem sources -a http://ruby.taobao.org/</span><br></pre></td></tr></table></figure>
-<p>上面2个命令然后镜像到国内的 都说淘宝的不能用了 如果不行的话试试下面这个<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gem source -r https://ruby.taobao.org   </span><br><span class="line">gem source -a https://gems.ruby-china.org </span><br><span class="line">gem source -u # 更新 update</span><br></pre></td></tr></table></figure></p>
-<p>换完了源之后再重新执行 sudo gem install cocoapods</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod setup  用来同步master上的库。我们需要经常执行这条命令，否则有新的Pods依赖库的时候执行pod search命令是搜不出来的</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem list --local | grep cocoapods 查看当前安装了哪些版本</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem uninstall cocoapods 删除安装过的所有版本</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem uninstall cocoapods -v xxx 强制卸载某一个版本</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem install cocoapods -v xxx.xxx.xxx 安装指定版本</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以通过 pod --help 查看相关命令</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd到文件下 pod init 创建Podfile文件</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pod install 生成的Podfile.lock文件 lock文件会保存pod版本</span><br><span class="line">pod update 重新生成Podfile.lock文件</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod install --verbose --no-repo-update 可快速更新忽略本地repo的更新</span><br></pre></td></tr></table></figure>
-<p>=================cocoapod常见报错===================</p>
-<p>#更新gem报错(sudo gem update –system)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">错误一:</span><br><span class="line">ERROR: While executing gem … (Errno::EPERM) </span><br><span class="line">Operation not permitted - /usr/bin/xcodeproj</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">执行sudo gem install -n /usr/local/bin cocoapods</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">错误二： </span><br><span class="line">While executing gem … (Errno::EPERM) </span><br><span class="line">Operation not permitted - /usr/bin/update_rubygems</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">安装Homebrew（Homebrew installs the stuff you need that Apple didn’t.） </span><br><span class="line">objc  /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br></pre></td></tr></table></figure>
-<p>当pod install失败的时候可以尝试先卸载再重新安装试试</p>
+<table>
+<thead>
+<tr>
+<th>文件类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MH_OBJECT</td>
+<td>目标文件，平时.o结尾的文件</td>
+</tr>
+<tr>
+<td>MH_EXECUTE</td>
+<td>可执行文件，我们平时编译后的包中的执行文件</td>
+</tr>
+<tr>
+<td>MH_DYLIB</td>
+<td>一些动态库，该文件夹下很多/usr/lib/xxx.dylib</td>
+</tr>
+<tr>
+<td>MH_DSYM</td>
+<td>符号文件，编译成功后XXX.app.dSYM</td>
+</tr>
+</tbody>
+</table>
+<h3 id="一、MachO的分类"><a href="#一、MachO的分类" class="headerlink" title="一、MachO的分类"></a>一、MachO的分类</h3><p>这里准备了一些macho文件，分别通过<code>MachOView</code>工具来看看，如果你的<code>MachOView</code>会崩溃，<a href="https://github.com/fangshufeng/MachOView" target="_blank" rel="noopener">点击下载这个</a></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-465146d94413d13b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15427852296930.jpg"></p>
+<p>分别用<code>MachOView</code>打开如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-5f2ae0fbd83d3946.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15427855943405.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-b44ae95da3d22c96.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15427856226881.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-75bc312f543706d7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15427856442658.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-66be887047ba29ac.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15427856577687.jpg"></p>
+<h3 id="二、MachO的组成"><a href="#二、MachO的组成" class="headerlink" title="二、MachO的组成"></a>二、MachO的组成</h3><p><img src="https://upload-images.jianshu.io/upload_images/3279997-217abd60301c2744.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15433949955546.jpg"></p>
+<p>每个Macho文件都会有个<code>Header</code>对这个<code>Macho</code>进行整体描述，这个<code>header</code>根据你打包的选择的架构又分为<code>Fat Header</code> 和 <code>Mach Header</code>，先介绍下如何生成这2个文件类型</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-0bb51820f74ce3fa.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15433953066278.jpg"></p>
+<p><code>Architectures</code>和<code>valid Architectures</code> 的交集就是最后打的包的架构，<code>Architectures</code>后面是标准的架构，我把项目设置为<code>iOS8</code>选择真机，将<code>build</code>改成<code>release</code>，会编译出一开始的展示的<code>MochO_arm_fat</code>文件放到<code>MachOView</code>中如图</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-00142b7d05e7b03b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15433957268022.jpg"></p>
+<p>然后选择模拟器将<code>build</code>改成<code>debug</code>  ,<code>build</code>会出现<code>MochO_x86</code>,结果如图</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-edf1127eab7b44ef.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15433959756469.jpg"></p>
+<h4 id="2-1-fat-header"><a href="#2-1-fat-header" class="headerlink" title="2.1 fat_header"></a>2.1 fat_header</h4><h5 id="2-1-1-fat-header-结构"><a href="#2-1-1-fat-header-结构" class="headerlink" title="2.1.1 fat_header 结构"></a>2.1.1 <code>fat_header</code> 结构</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct fat_header &#123;</span><br><span class="line">	uint32_t	magic;		/* FAT_MAGIC or FAT_MAGIC_64 */</span><br><span class="line">	uint32_t	nfat_arch;	/* number of structs that follow */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>magic</code>： 描述文件类型 值分为2组分别为 <code>FAT_CIGAM(0xbebafeca)</code>、 <code>FAT_MAGIC(0xcafebabe)</code>和<code>FAT_CIGAM_64(0xbfbafeca)</code>、<code>FAT_MAGIC_64(0xcafebabf)</code>，值也就是大小端的区别；</li>
+<li><code>nfat_arch</code>：描述当前<code>fat</code>有多少个架构。</li>
+</ol>
+<h5 id="2-1-2-fat-arch-结构"><a href="#2-1-2-fat-arch-结构" class="headerlink" title="2.1.2 fat_arch 结构"></a>2.1.2 <code>fat_arch</code> 结构</h5><p><code>2.1.1</code> 说到<code>fat_header</code>的<code>nfat_arch</code>会描述有多少个架构，其实架构的类型就是<code>fat_arch</code>类型的，结构如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct fat_arch &#123;</span><br><span class="line">	cpu_type_t	cputype;	/* cpu specifier (int) */</span><br><span class="line">	cpu_subtype_t	cpusubtype;	/* machine specifier (int) */</span><br><span class="line">	uint32_t	offset;		/* file offset to this object file */</span><br><span class="line">	uint32_t	size;		/* size of this object file */</span><br><span class="line">	uint32_t	align;		/* alignment as a power of 2 */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>cputype</code>：说明CPU的类型一般有<code>CPU_TYPE_X86</code>、<code>CPU_TYPE_X86_64</code>、<code>CPU_TYPE_ARM64</code>、<code>CPU_TYPE_ARM</code>；</li>
+<li><code>cpusubtype</code>： 对cpu类型的具体划分一般有<code>CPU_SUBTYPE_I386_ALL</code>、<code>CPU_SUBTYPE_X86_ALL</code>、<code>CPU_SUBTYPE_ARM_V7</code>、<code>CPU_SUBTYPE_ARM_V7S</code>；</li>
+<li><code>offset</code>： 当前架构的偏移量；</li>
+<li><code>size</code>：当前架构的大小；</li>
+<li><code>align</code>：对齐大小。</li>
+</ol>
+<p>通过<code>MachOView</code>来看下<code>MochO_arm_fat</code>的<code>fat_header</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-62fcdc62ecf7ac8e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434008769918.jpg"></p>
+<p>也可以用<code>otool</code>查看</p>
+<p><code>otool -f /Users/fangshufeng/Desktop/thirdPart/macho/MochO/MochO/exccute/</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">MochO_arm_fat</span><br><span class="line"></span><br><span class="line">Fat headers</span><br><span class="line">fat_magic 0xcafebabe</span><br><span class="line">nfat_arch 2</span><br><span class="line">architecture 0</span><br><span class="line">    cputype 12</span><br><span class="line">    cpusubtype 9</span><br><span class="line">    capabilities 0x0</span><br><span class="line">    offset 16384</span><br><span class="line">    size 112048</span><br><span class="line">    align 2^14 (16384)</span><br><span class="line">architecture 1</span><br><span class="line">    cputype 16777228</span><br><span class="line">    cpusubtype 0</span><br><span class="line">    capabilities 0x0</span><br><span class="line">    offset 131072</span><br><span class="line">    size 108624</span><br><span class="line">    align 2^14 (16384)</span><br></pre></td></tr></table></figure>
+<p>上面可以看到<br>架构<code>architecture 0</code>的偏移地址是<code>16384</code>，也就是16进制的<code>0x4000</code>；<br>架构<code>architecture 1</code>的偏移地址是<code>131072</code>，也就是16进制的<code>0x20000</code>；</p>
+<p>我们来看下是否正确</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-78171b4f872c4188.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434030151535.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-a63f92723dc5a78c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434030281499.jpg"></p>
+<p>正好是要的值</p>
+<h4 id="2-2-mac-header"><a href="#2-2-mac-header" class="headerlink" title="2.2 mac_header"></a>2.2 <code>mac_header</code></h4><p>对于不是<code>fat</code>的<code>Macho</code>文件一开始的内容就是<code>mac_header</code></p>
+<h5 id="2-2-1-结构"><a href="#2-2-1-结构" class="headerlink" title="2.2.1 结构"></a>2.2.1 <code>结构</code></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">struct mach_header &#123;</span><br><span class="line">	uint32_t	magic;		/* mach magic number identifier */</span><br><span class="line">	cpu_type_t	cputype;	/* cpu specifier */</span><br><span class="line">	cpu_subtype_t	cpusubtype;	/* machine specifier */</span><br><span class="line">	uint32_t	filetype;	/* type of file */</span><br><span class="line">	uint32_t	ncmds;		/* number of load commands */</span><br><span class="line">	uint32_t	sizeofcmds;	/* the size of all the load commands */</span><br><span class="line">	uint32_t	flags;		/* flags */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>magic</code>、<code>cputype</code>、<code>cpusubtype</code>：同上；</li>
+<li><code>filetype</code>：Macho文件的类型，也就是文章一开始列举的类型；</li>
+<li><code>ncmds</code>：接下来<code>load commands</code>的数量，后面会介绍；</li>
+<li><code>sizeofcmds</code>：接下来<code>load commands</code>的大小，后面会介绍；</li>
+<li><p><code>flags</code>：文件的表示信息，值如下：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/* Constants for the flags field of the mach_header */</span><br><span class="line">#define    MH_NOUNDEFS 0x1     /* the object file has no undefinedreferences */</span><br><span class="line">#define    MH_INCRLINK 0x2     /* the object file is the output of an</span><br><span class="line">                       incremental link against a base file</span><br><span class="line">                       and can&apos;t be link edited again */</span><br><span class="line">#define MH_DYLDLINK    0x4     /* the object file is input for the</span><br><span class="line">                       dynamic linker and can&apos;t be staticly</span><br><span class="line">                       link edited again */</span><br><span class="line">#define MH_BINDATLOAD  0x8     /* the object file&apos;s undefined</span><br><span class="line">                       references are bound by the dynamic</span><br><span class="line">                       linker when loaded. */</span><br><span class="line">#define MH_PREBOUND    0x10        /* the file has its dynamic undefined</span><br><span class="line">                       references prebound. */</span><br><span class="line">#define MH_SPLIT_SEGS  0x20        /* the file has its read-only and</span><br><span class="line">                       read-write segments split */</span><br><span class="line">#define MH_LAZY_INIT   0x40        /* the shared library init routine is</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>截图如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-7b2943022b04c117.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434129532803.jpg"></p>
+<p>同样使用<code>otool</code>也是可以的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  MochO otool -h exccute/MochO_x86</span><br><span class="line">Mach header</span><br><span class="line">      magic cputype cpusubtype  caps    filetype ncmds sizeofcmds      flags</span><br><span class="line"> 0xfeedfacf 16777223          3  0x00           2    21       3176 0x00200085</span><br><span class="line">➜  MochO</span><br></pre></td></tr></table></figure>
+<p>上面显示该文件的类型为<code>MH_EXECUTE</code>，<code>Load Commands</code>的数量为21个，数一下确实是21个。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-590d6b8c401886ac.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434132636545.jpg"></p>
+<p>也就是说<code>mach_header</code>更多的是对<code>load Commands</code>的描述</p>
+<h4 id="2-3-load-Commands"><a href="#2-3-load-Commands" class="headerlink" title="2.3 load Commands"></a>2.3 <code>load Commands</code></h4><p><code>load Commands</code>是由很多的<code>LC_Type</code>组成的，而<code>LC_Type</code>有很多种,可在文件<code>loader.h</code>文件中查看，这边就列出前几种</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/* Constants for the cmd field of all load commands, the type */</span><br><span class="line">#define	LC_SEGMENT	0x1	/* segment of this file to be mapped */</span><br><span class="line">#define	LC_SYMTAB	0x2	/* link-edit stab symbol table info */</span><br><span class="line">#define	LC_SYMSEG	0x3	/* link-edit gdb symbol table info (obsolete) */</span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
+<p>而每个<code>LC_Type</code>都会有一个头部<code>load_command</code>结构如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct load_command &#123;</span><br><span class="line">	uint32_t cmd;		/* type of load command */</span><br><span class="line">	uint32_t cmdsize;	/* total size of command in bytes */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>是的就是对<code>segment</code>的描述</p>
+<ol>
+<li><code>cmd</code> ： 当前load command的类型；</li>
+<li><code>cmdsize</code>：load command的大小。</li>
+</ol>
+<p>也就是下面这张图</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-013a9e401f5eb016.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434151220239.jpg"></p>
+<h5 id="2-3-1-LC-SEGMENT"><a href="#2-3-1-LC-SEGMENT" class="headerlink" title="2.3.1 LC_SEGMENT"></a>2.3.1 <code>LC_SEGMENT</code></h5><p>为了方便管理，程序在内存中是分段管理的，先来看看<code>LC_Type</code>其中一种<code>LC_SEGMENT</code>的结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">struct segment_command &#123; /* for 32-bit architectures */</span><br><span class="line">	uint32_t	cmd;		/* LC_SEGMENT */</span><br><span class="line">	uint32_t	cmdsize;	/* includes sizeof section structs */</span><br><span class="line">	char		segname[16];	/* segment name */</span><br><span class="line">	uint32_t	vmaddr;		/* memory address of this segment */</span><br><span class="line">	uint32_t	vmsize;		/* memory size of this segment */</span><br><span class="line">	uint32_t	fileoff;	/* file offset of this segment */</span><br><span class="line">	uint32_t	filesize;	/* amount to map from the file */</span><br><span class="line">	vm_prot_t	maxprot;	/* maximum VM protection */</span><br><span class="line">	vm_prot_t	initprot;	/* initial VM protection */</span><br><span class="line">	uint32_t	nsects;		/* number of sections in segment */</span><br><span class="line">	uint32_t	flags;		/* flags */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>cmd</code>和<code>cmdsize</code>： 就是上面的<code>load_command</code>类型；</li>
+<li><code>segname</code>：就是当前<code>segment</code>的名称</li>
+<li><code>vmaddr</code>：在虚拟内存中的地址，这个很重要的，以后会介绍到</li>
+<li><code>vmsize</code>：在虚拟内存中所占用的大小；</li>
+<li><code>fileoff</code>：在文件中的偏移量；</li>
+<li><code>filesize</code>：在文件中的大小，注意和<code>vmaddr</code>、<code>vmsize</code>区别</li>
+<li><code>maxprot</code>：表示页面所需要的最高内存保护；</li>
+<li><code>initprot</code>:表示页面初始的内存保护;</li>
+<li><code>nsects</code>: 当前<code>segment</code>有多少个<code>sections</code></li>
+<li><code>flags</code>：表示段的标志信息。</li>
+</ol>
+<p>常见的<code>LC_SEGMENT</code>有以下几种</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#define	SEG_PAGEZERO	&quot;__PAGEZERO&quot;</span><br><span class="line">#define	SEG_TEXT	&quot;__TEXT&quot;	/* the tradition UNIX text segment */</span><br><span class="line">#define	SEG_DATA	&quot;__DATA&quot;	/* the tradition UNIX data segment */</span><br></pre></td></tr></table></figure>
+<h6 id="2-3-1-1-PAGEZERO"><a href="#2-3-1-1-PAGEZERO" class="headerlink" title="2.3.1.1 __PAGEZERO"></a>2.3.1.1 <code>__PAGEZERO</code></h6><p>这是一个不可读、不可写、不可执行的空间，能够在空指针访问时抛出异常。这个段的大小，32位上是 0x4000，64位上<code>0000000100000000</code>也就是 4G，4GB 并不是文件的真实大小，但是规定了进程地址空间的前 4GB 被映射为 不可执行、不可写和不可读，是从0（也是NULL指针的位置）开始的，这就是为什么当读写一个 NULL 指针或更小的值时会得到一个 EXC_BAD_ACCESS 错误。</p>
+<p>内容如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-d0aff3f9add98e9f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434506392822.jpg"></p>
+<h6 id="2-3-1-2-TEXT"><a href="#2-3-1-2-TEXT" class="headerlink" title="2.3.1.2 __TEXT"></a>2.3.1.2 <code>__TEXT</code></h6><p>这是程序的代码段，该段是可读可执行，但是不可写。常见的<code>section</code>如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-8ed2e74eb0d56734.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434508576543.jpg"></p>
+<h6 id="2-3-1-3-DATA"><a href="#2-3-1-3-DATA" class="headerlink" title="2.3.1.3 __DATA"></a>2.3.1.3 <code>__DATA</code></h6><p>数据段，包含了可读写数据。常见的<code>section</code>如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-6804d0b16e57f7a2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434509398356.jpg"></p>
+<h5 id="2-3-2-LC-DYLD-INFO-ONLY"><a href="#2-3-2-LC-DYLD-INFO-ONLY" class="headerlink" title="2.3.2 LC_DYLD_INFO_ONLY"></a>2.3.2 <code>LC_DYLD_INFO_ONLY</code></h5><p><code>LC_DYLD_INFO_ONLY</code>和<code>LC_DYLD_INFO</code>是同一个结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">struct dyld_info_command &#123;</span><br><span class="line">   uint32_t   cmd;      /* LC_DYLD_INFO or LC_DYLD_INFO_ONLY */</span><br><span class="line">   uint32_t   cmdsize;      /* sizeof(struct dyld_info_command) */</span><br><span class="line"> </span><br><span class="line">   uint32_t   rebase_off;   /* file offset to rebase info  */</span><br><span class="line">   uint32_t   rebase_size;  /* size of rebase info   */</span><br><span class="line"> </span><br><span class="line">   uint32_t   bind_off; /* file offset to binding info   */</span><br><span class="line">   uint32_t   bind_size;    /* size of binding info  */</span><br><span class="line"> </span><br><span class="line">   uint32_t   weak_bind_off;    /* file offset to weak binding info   */</span><br><span class="line">   uint32_t   weak_bind_size;  /* size of weak binding info  */</span><br><span class="line"> </span><br><span class="line">   uint32_t   lazy_bind_off;    /* file offset to lazy binding info */</span><br><span class="line">   uint32_t   lazy_bind_size;  /* size of lazy binding infs */</span><br><span class="line"> </span><br><span class="line">   uint32_t   export_off;   /* file offset to lazy binding info */</span><br><span class="line">   uint32_t   export_size;  /* size of lazy binding infs */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这个<code>command</code>是<code>dyld</code>在将二进制文件装载到内存链接的时候使用的</p>
+<ol>
+<li>前面2个不介绍了，<code>rebase</code>：由于<code>Macho</code>被加载到内存的时候首地址不是固定的，是随机分配的，针对这个做修正的；</li>
+<li><code>bind</code>：在链接的时候对一些符号进行绑定的，比如我们用到了<code>UIKIT</code>框架的api，但是二进制中又没有这个符号，此刻就是做这个对应的工作；</li>
+<li><code>lazy_bind</code>：就是一开始不必要立即绑定，后面用到的时候再绑定。</li>
+</ol>
+<p>内容如下<br><img src="https://upload-images.jianshu.io/upload_images/3279997-1b13e70461c4371f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434628271603.jpg"></p>
+<p>可以通过偏移量找到对应的地方</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-ea754603dbdc624b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434628607183.jpg"></p>
+<h5 id="2-3-3-LC-SYMTAB"><a href="#2-3-3-LC-SYMTAB" class="headerlink" title="2.3.3 LC_SYMTAB"></a>2.3.3 <code>LC_SYMTAB</code></h5><p>这里面记录着所有的符号信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct symtab_command &#123;</span><br><span class="line">	uint32_t	cmd;		/* LC_SYMTAB */</span><br><span class="line">	uint32_t	cmdsize;	/* sizeof(struct symtab_command) */</span><br><span class="line">	uint32_t	symoff;		/* symbol table offset */</span><br><span class="line">	uint32_t	nsyms;		/* number of symbol table entries */</span><br><span class="line">	uint32_t	stroff;		/* string table offset */</span><br><span class="line">	uint32_t	strsize;	/* string table size in bytes */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>symoff</code>:符号表的偏移量；</li>
+<li><code>nsyms</code>：符号表的元素的数量；</li>
+<li><code>stroff</code>：符号的字符串的偏移量；</li>
+<li><code>strsize</code>：所占的字节数。</li>
+</ol>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-407d22458c943573.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434724909458.jpg"></p>
+<h6 id="2-3-3-1-查看Symbol-Table"><a href="#2-3-3-1-查看Symbol-Table" class="headerlink" title="2.3.3.1 查看Symbol Table"></a>2.3.3.1 查看<code>Symbol Table</code></h6><p>上面说到<code>symbol</code>的偏移量为<code>21568</code>也就是<code>0x0000 5440</code> </p>
+<p>选择如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-f1b7b7fa6fbe6fbe.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434728268791.jpg"></p>
+<p>看到下图</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-b4c99f5a838d2080.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434728083212.jpg"></p>
+<p><code>Symbol Table</code>装着都是结构<code>nlist_64</code>或者<code>nlist</code>可以<code>see &lt;mach-o/nlist.h&gt;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">struct nlist_64 &#123;</span><br><span class="line">    union &#123;</span><br><span class="line">        uint32_t  n_strx; /* index into the string table */</span><br><span class="line">    &#125; n_un;</span><br><span class="line">    uint8_t n_type;        /* type flag, see below */</span><br><span class="line">    uint8_t n_sect;        /* section number or NO_SECT */</span><br><span class="line">    uint16_t n_desc;       /* see &lt;mach-o/stab.h&gt; */</span><br><span class="line">    uint64_t n_value;      /* value of this symbol (or stab offset) */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>n_type</code>: 可选的值有<code>N_STAB</code>、<code>N_PEXT</code>、<code>N_TYPE</code>、<code>N_EXT</code>；</li>
+<li><code>n_sect</code>： <code>section</code>的类型，要么就是<code>NO_SECT</code>；</li>
+<li><code>n_desc</code>：</li>
+<li><code>n_value</code>: 符号对应的地址</li>
+</ol>
+<p>这里以<code>AppDelegate</code>的符号<code>_OBJC_CLASS_$_AppDelegate</code>来演示</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-d8ed6fbe9a2dd1e9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434733206364.jpg"></p>
+<p>根据图得出以下信息：</p>
+<ol>
+<li><code>n_sect</code>显示位于<code>__DATA,__objct_data</code>；</li>
+<li><code>value</code>显示地址为<code>0x100003F48</code>。</li>
+</ol>
+<p>跳到对应的地址看到确实是我们要找的：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-9c09eaabfc69c1a7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434734789740.jpg"></p>
+<p>具体的数据如图</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-4f31e271097c50fa.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434735103837.jpg"></p>
+<p>读出以下信息：</p>
+<ol>
+<li><code>_OBJC_CLASS_$_AppDelegate</code>的isa是_OBJC_METACLASS_$_AppDelegate;</li>
+<li>父类是<code>UIResponder</code></li>
+<li>此时的缓存是空</li>
+<li>缓存的数量为0</li>
+<li>当前类相关的信息在地址<code>0x100003DC0</code>;</li>
+</ol>
+<p>到这是不是觉得特别熟悉呢，我们把<code>AppDelegate</code>的代码用<code>c++</code>看下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">xcrun -sdk iphoneos clang -arch arm64 -rewrite-objc AppDelegate.m</span><br></pre></td></tr></table></figure>
+<p>可以看到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">extern &quot;C&quot; __declspec(dllexport) struct _class_t OBJC_CLASS_$_AppDelegate __attribute__ ((used, section (&quot;__DATA,__objc_data&quot;))) = &#123;</span><br><span class="line">	0, // &amp;OBJC_METACLASS_$_AppDelegate,</span><br><span class="line">	0, // &amp;OBJC_CLASS_$_UIResponder,</span><br><span class="line">	0, // (void *)&amp;_objc_empty_cache,</span><br><span class="line">	0, // unused, was (void *)&amp;_objc_empty_vtable,</span><br><span class="line">	&amp;_OBJC_CLASS_RO_$_AppDelegate,</span><br><span class="line">&#125;;</span><br><span class="line">static void OBJC_CLASS_SETUP_$_AppDelegate(void ) &#123;</span><br><span class="line">	[...这里删除了元类的信息]</span><br><span class="line">	</span><br><span class="line">	OBJC_CLASS_$_AppDelegate.isa = &amp;OBJC_METACLASS_$_AppDelegate;</span><br><span class="line">	OBJC_CLASS_$_AppDelegate.superclass = &amp;OBJC_CLASS_$_UIResponder;</span><br><span class="line">	OBJC_CLASS_$_AppDelegate.cache = &amp;_objc_empty_cache;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>和我们的工具看到的不谋而合</p>
+<p>我们继续跳到<code>0x100003DC0</code>看下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-36fdbafc0bde7189.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434741931169.jpg"></p>
+<p>确实看到了我们要的信息，而右边的又是什么呢，由刚才的<code>C++</code>代码可以知道<code>0x100003DC0</code>就是<code>_OBJC_CLASS_RO_$_AppDelegate</code>的地址</p>
+<p>看下<code>_class_ro_t</code>的结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">struct _class_ro_t &#123;</span><br><span class="line">	unsigned int flags;</span><br><span class="line">	unsigned int instanceStart;</span><br><span class="line">	unsigned int instanceSize;</span><br><span class="line">	const unsigned char *ivarLayout;</span><br><span class="line">	const char *name;</span><br><span class="line">	const struct _method_list_t *baseMethods;</span><br><span class="line">	const struct _objc_protocol_list *baseProtocols;</span><br><span class="line">	const struct _ivar_list_t *ivars;</span><br><span class="line">	const unsigned char *weakIvarLayout;</span><br><span class="line">	const struct _prop_list_t *properties;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这个结构也即是我们截图的内容真好匹配</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static struct _class_ro_t _OBJC_CLASS_RO_$_AppDelegate __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = &#123;</span><br><span class="line">	0, </span><br><span class="line">	__OFFSETOFIVAR__(struct AppDelegate, _window), </span><br><span class="line">	sizeof(struct AppDelegate_IMPL), </span><br><span class="line">	0, </span><br><span class="line">	&quot;AppDelegate&quot;,</span><br><span class="line">	(const struct _method_list_t *)&amp;_OBJC_$_INSTANCE_METHODS_AppDelegate,</span><br><span class="line">	(const struct _objc_protocol_list *)&amp;_OBJC_CLASS_PROTOCOLS_$_AppDelegate,</span><br><span class="line">	(const struct _ivar_list_t *)&amp;_OBJC_$_INSTANCE_VARIABLES_AppDelegate,</span><br><span class="line">	0, </span><br><span class="line">	(const struct _prop_list_t *)&amp;_OBJC_$_PROP_LIST_AppDelegate,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>所以到这里我们可以知道该类的所有信息了，比如我们想看看它得方法列表，由截图可以知道地址为<code>0x0000000100003C60</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-29e07ff8f1696345.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434745008586.jpg"></p>
+<p>每一个item对应的就是<code>_objc_method</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct _objc_method &#123;</span><br><span class="line">	struct objc_selector * _cmd;</span><br><span class="line">	const char *method_type;</span><br><span class="line">	void  *_imp;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>比如我们现在想到拿到方法<code>- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions</code>的名称，看图可以知道方法的字符串地址为<code>0000000100001C90</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-884a13c7b703b9b5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434747930624.jpg"></p>
+<p>果然找到了，其它的信息可以自己尝试去找找。更多关于类方面的知识可以看下我之前的oc主题相关的文章，现在文章已经很长了，不说这个了。</p>
+<h6 id="2-3-3-2-查看String-Table"><a href="#2-3-3-2-查看String-Table" class="headerlink" title="2.3.3.2 查看String Table"></a>2.3.3.2 查看<code>String Table</code></h6><p><img src="https://upload-images.jianshu.io/upload_images/3279997-d11208b36432b59f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434758140872.jpg"></p>
+<h5 id="2-3-4-LC-DYSYMTAB"><a href="#2-3-4-LC-DYSYMTAB" class="headerlink" title="2.3.4 LC_DYSYMTAB"></a>2.3.4 <code>LC_DYSYMTAB</code></h5><p>这里记录着所有的动态链接是需要的符号信息</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-c2800908c429db6e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434758929962.jpg"></p>
+<p>同样我们找到<code>00005C10</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-1dfa92a929246fba.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434760343894.jpg"></p>
+<p>很有很多没有截取了，比如这些<code>_NSFullUserName</code>这些在链接的时候回去动态解析这些符号表</p>
+<h5 id="2-3-5-LC-MAIN"><a href="#2-3-5-LC-MAIN" class="headerlink" title="2.3.5 LC_MAIN"></a>2.3.5 <code>LC_MAIN</code></h5><p>指定了<code>main</code>函数的入口地址</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-25791757142034d6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434763840725.jpg"></p>
+<p>加载到内存后增加头部地址就是函数的真正地址了</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-03830527ac089c15.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434764315415.jpg"></p>
+<h5 id="2-3-6-LC-LOAN-DYLIB"><a href="#2-3-6-LC-LOAN-DYLIB" class="headerlink" title="2.3.6 LC_LOAN_DYLIB"></a>2.3.6 <code>LC_LOAN_DYLIB</code></h5><p>描述了一些动态库相关的信息</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-855f2bf69abf3767.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434765147302.jpg"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">struct dylib &#123;</span><br><span class="line">    union lc_str  name; /* library&apos;s path name */</span><br><span class="line">    uint32_t timestamp;	/* library&apos;s build time stamp */</span><br><span class="line">    uint32_t current_version; /* library&apos;s current version number */</span><br><span class="line">    uint32_t compatibility_version; /* library&apos;s compatibility vers number*/</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct dylib_command &#123;</span><br><span class="line">	uint32_t	cmd;		/* LC_ID_DYLIB, LC_LOAD_&#123;,WEAK_&#125;DYLIB,LC_REEXPORT_DYLIB */</span><br><span class="line">	uint32_t	cmdsize;	/* includes pathname string */</span><br><span class="line">	struct dylib	dylib;		/* the library identification */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="2-3-7-LC-RPATH"><a href="#2-3-7-LC-RPATH" class="headerlink" title="2.3.7 LC_RPATH"></a>2.3.7 <code>LC_RPATH</code></h5><p>程序运行链接路径</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-236315fa72c135df.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434770431910.jpg"></p>
+<p>xcode中可以看到</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-9167bd58b06f968e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434769572907.jpg"></p>
+<h5 id="2-3-8-LC-FUNCTION-STARTS"><a href="#2-3-8-LC-FUNCTION-STARTS" class="headerlink" title="2.3.8 LC_FUNCTION_STARTS"></a>2.3.8 <code>LC_FUNCTION_STARTS</code></h5><p>方法是从哪里开始的</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-a43cd91c3b417268.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434771721891.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-308dcdc0a8b72727.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434771848408.jpg"></p>
+<p>和解析出来的顺序也是一致的</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-aa47167f6e02e5e0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434772180884.jpg"></p>
+<h5 id="2-3-9-LC-CODE-SINGATURE"><a href="#2-3-9-LC-CODE-SINGATURE" class="headerlink" title="2.3.9 LC_CODE_SINGATURE"></a>2.3.9 <code>LC_CODE_SINGATURE</code></h5><p>签名相关的信息</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-1432d2ba8884fd1b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434773234743.jpg"></p>
+<p>找到地方<code>0x67E0</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-a43b6f277554bd05.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434773374419.jpg"></p>
+<p>关于签名的后面打算单独写一篇</p>
+<p>本篇完。</p>
 
       
 
@@ -282,7 +521,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MachO</a>
         		</li>
       		
 		</ul>
@@ -301,15 +540,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/03/14/CocoaPods_pri/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          使用CocoaPods建立私有仓库
-        
-      </div>
-    </a>
   
+    <a href="/2018/11/22/LLDB/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">LLDB</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
@@ -334,7 +569,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一、MachO的分类"><span class="toc-number">2.</span> <span class="toc-text">一、MachO的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、MachO的组成"><span class="toc-number">3.</span> <span class="toc-text">二、MachO的组成</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-fat-header"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 fat_header</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-1-fat-header-结构"><span class="toc-number">3.1.1.</span> <span class="toc-text">2.1.1 fat_header 结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-2-fat-arch-结构"><span class="toc-number">3.1.2.</span> <span class="toc-text">2.1.2 fat_arch 结构</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-mac-header"><span class="toc-number">3.2.</span> <span class="toc-text">2.2 mac_header</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-1-结构"><span class="toc-number">3.2.1.</span> <span class="toc-text">2.2.1 结构</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-load-Commands"><span class="toc-number">3.3.</span> <span class="toc-text">2.3 load Commands</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-1-LC-SEGMENT"><span class="toc-number">3.3.1.</span> <span class="toc-text">2.3.1 LC_SEGMENT</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#2-3-1-1-PAGEZERO"><span class="toc-number">3.3.1.1.</span> <span class="toc-text">2.3.1.1 __PAGEZERO</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-3-1-2-TEXT"><span class="toc-number">3.3.1.2.</span> <span class="toc-text">2.3.1.2 __TEXT</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-3-1-3-DATA"><span class="toc-number">3.3.1.3.</span> <span class="toc-text">2.3.1.3 __DATA</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-2-LC-DYLD-INFO-ONLY"><span class="toc-number">3.3.2.</span> <span class="toc-text">2.3.2 LC_DYLD_INFO_ONLY</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-3-LC-SYMTAB"><span class="toc-number">3.3.3.</span> <span class="toc-text">2.3.3 LC_SYMTAB</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#2-3-3-1-查看Symbol-Table"><span class="toc-number">3.3.3.1.</span> <span class="toc-text">2.3.3.1 查看Symbol Table</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-3-3-2-查看String-Table"><span class="toc-number">3.3.3.2.</span> <span class="toc-text">2.3.3.2 查看String Table</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-4-LC-DYSYMTAB"><span class="toc-number">3.3.4.</span> <span class="toc-text">2.3.4 LC_DYSYMTAB</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-5-LC-MAIN"><span class="toc-number">3.3.5.</span> <span class="toc-text">2.3.5 LC_MAIN</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-6-LC-LOAN-DYLIB"><span class="toc-number">3.3.6.</span> <span class="toc-text">2.3.6 LC_LOAN_DYLIB</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-7-LC-RPATH"><span class="toc-number">3.3.7.</span> <span class="toc-text">2.3.7 LC_RPATH</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-8-LC-FUNCTION-STARTS"><span class="toc-number">3.3.8.</span> <span class="toc-text">2.3.8 LC_FUNCTION_STARTS</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-9-LC-CODE-SINGATURE"><span class="toc-number">3.3.9.</span> <span class="toc-text">2.3.9 LC_CODE_SINGATURE</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -348,7 +583,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="CocoaPods" data-title="CocoaPods常见命令" data-url="http://yoursite.com/2017/02/09/CocoaPods/"></div>
+	<div class="ds-thread" data-thread-key="认识MachO" data-title="【认识MachO】" data-url="http://yoursite.com/2018/11/29/认识MachO/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -392,7 +627,7 @@
 <script src="https://jjeejj.github.io/js/gitment.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/2017/02/09/CocoaPods/",
+  id: "http://yoursite.com/2018/11/29/认识MachO/",
   owner: 'fangshufeng',
   repo: 'fangshufeng.github.io',
   oauth: {
