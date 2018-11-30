@@ -191,30 +191,12 @@
   
 
 
-      <div style="
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      color:#999
-      "
-      >
-
-      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
-        </script>
-      
-            <span style="margin-right: 30px" id="busuanzi_container_page_pv">
-              本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-            </span>
-
-      
-                   
+           
         <a href="/2017/11/22/try-catch/" class="archive-article-date">
   	<time datetime="2017-11-22T14:05:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-22</time>
 </a>
         
-         
-
-            </div>
+    
  
       </header>
     
@@ -246,6 +228,7 @@
 <p>使用try catch还是有不少问题的，所以苹果推荐使用NSError模式处理异常,再改造一下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    NSError *err = nil;</span><br><span class="line">    [self testTemoExcep:&amp;err];</span><br><span class="line">    if (err) &#123;</span><br><span class="line">        NSLog(@&quot;%@&quot;,err);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (void)testTemoExcep:(NSError **)error &#123;</span><br><span class="line">    TestExceptions * exceptionption  = [[TestExceptions alloc] init];</span><br><span class="line">    </span><br><span class="line">    *error = [NSError errorWithDomain:@&quot;异常&quot; code:500 userInfo:nil];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
 
@@ -298,6 +281,22 @@
       
       <div class="clearfix"></div>
     </div>
+
+
+   
+           <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+        </script>
+      
+      <div style="display: flex;flex-direction: row;justify-content: flex-end;margin-right: 20px;">
+        <span style="margin-left: 50px;color:#999;" id="busuanzi_container_page_pv">
+              访问量<span id="busuanzi_value_page_pv" ></span>次
+            </span>
+      </div>   
+
+      
+  
+
+
   </div>
 </article>
 
@@ -319,6 +318,7 @@
       <i class="icon-circle-right"></i>
     </a>
   
+
 </nav>
 
 
@@ -415,6 +415,7 @@ gitment.render('gitment-ctn')
 
 
 
+
           </div>
         </div>
       </div>
@@ -496,11 +497,11 @@ gitment.render('gitment-ctn')
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
+                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
+                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
               </li>
              
               <li class="article-tag-list-item">

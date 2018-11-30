@@ -207,30 +207,12 @@
   
 
 
-      <div style="
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      color:#999
-      "
-      >
-
-      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
-        </script>
-      
-            <span style="margin-right: 30px" id="busuanzi_container_page_pv">
-              本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-            </span>
-
-      
-                   
+           
         <a href="/2018/08/25/block-2/" class="archive-article-date">
   	<time datetime="2018-08-25T07:15:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-25</time>
 </a>
         
-         
-
-            </div>
+    
  
       </header>
     
@@ -388,6 +370,7 @@
 <p>代码过了<code>21</code>行，<code>myBlock</code>就已经在<code>堆</code>上了，到了<code>23</code>行访问还是栈中的结构体变量，那为何还是打印<code>rose</code>呢，就是因为有了<code>__forwarding</code>指针的作用，保证了此时不管在<code>栈</code>中还是在<code>堆</code>中都可以访问到同一个<code>MyPerson</code>类型的变量<code>p</code>，当<code>__block</code>修饰的变量从栈中copy到堆中的时候发送的事情入下图</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/3279997-671ebf6ca1c4aa0b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15351817089007.jpg"></p>
 
+
       
 
       
@@ -439,6 +422,22 @@
       
       <div class="clearfix"></div>
     </div>
+
+
+   
+           <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+        </script>
+      
+      <div style="display: flex;flex-direction: row;justify-content: flex-end;margin-right: 20px;">
+        <span style="margin-left: 50px;color:#999;" id="busuanzi_container_page_pv">
+              访问量<span id="busuanzi_value_page_pv" ></span>次
+            </span>
+      </div>   
+
+      
+  
+
+
   </div>
 </article>
 
@@ -460,6 +459,7 @@
       <i class="icon-circle-right"></i>
     </a>
   
+
 </nav>
 
 
@@ -556,6 +556,7 @@ gitment.render('gitment-ctn')
 
 
 
+
           </div>
         </div>
       </div>
@@ -637,11 +638,11 @@ gitment.render('gitment-ctn')
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
+                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
+                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
               </li>
              
               <li class="article-tag-list-item">
