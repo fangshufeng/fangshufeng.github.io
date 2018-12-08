@@ -6,34 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>【iOS逆向】- 操控iPhone | I&#39;m FangLaoDa</title>
+  <title>【iOS逆向】-- theos的安装与使用 | I&#39;m FangLaoDa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="要想逆向app肯定是要对手机进行操控的，远程登录这里采用的是SSH协议，这是一个应用层的协议是基于tcp的，那至于数据具体是如何从Mac到iPhone的，从物理层协议来说的话有2个  WiFi的方式 USB的方式">
+  <meta name="description" content="[TOC] 一、简介 Theos是一个越狱开发工具包，由iOS越狱界知名 人士Dustin Howett（@DHowett）开发并分享到GitHub上。Theos与其他越狱开发工具相比，最大的 特点就是简单：下载安装简单、Logos语法简单、编译发布简单，可以让使用者把精力都放在开发工作上 去。">
 <meta name="keywords" content="iOS逆向">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【iOS逆向】- 操控iPhone">
-<meta property="og:url" content="http://yoursite.com/2018/10/28/【iOS逆向】-操控iPhone/index.html">
+<meta property="og:title" content="【iOS逆向】-- theos的安装与使用">
+<meta property="og:url" content="http://yoursite.com/2018/12/08/【iOS逆向】-theos的安装与使用/index.html">
 <meta property="og:site_name" content="I&#39;m FangLaoDa">
-<meta property="og:description" content="要想逆向app肯定是要对手机进行操控的，远程登录这里采用的是SSH协议，这是一个应用层的协议是基于tcp的，那至于数据具体是如何从Mac到iPhone的，从物理层协议来说的话有2个  WiFi的方式 USB的方式">
+<meta property="og:description" content="[TOC] 一、简介 Theos是一个越狱开发工具包，由iOS越狱界知名 人士Dustin Howett（@DHowett）开发并分享到GitHub上。Theos与其他越狱开发工具相比，最大的 特点就是简单：下载安装简单、Logos语法简单、编译发布简单，可以让使用者把精力都放在开发工作上 去。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-09495852eaf1c7b0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-4492484262c752c8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-78f1358b75fdb8d1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-9955214adf9237de.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-7765484009a08642.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-4c43f297b30585f0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-933ca1b04940697e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-41a44dd755ca612e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-71dfa30a5453a0f9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-4cb03da08a0cf8d6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-1c0531c5cfda9403.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-5af926c36578b10e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-744b8443d6710282.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-01T08:18:52.966Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-9b1ba8ddab5830af.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-6548886efcffa921.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-af050555eb29b97b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-b853c8df44dc607d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-9bb5a1fead8789c1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-08T06:16:20.019Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【iOS逆向】- 操控iPhone">
-<meta name="twitter:description" content="要想逆向app肯定是要对手机进行操控的，远程登录这里采用的是SSH协议，这是一个应用层的协议是基于tcp的，那至于数据具体是如何从Mac到iPhone的，从物理层协议来说的话有2个  WiFi的方式 USB的方式">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-09495852eaf1c7b0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500">
+<meta name="twitter:title" content="【iOS逆向】-- theos的安装与使用">
+<meta name="twitter:description" content="[TOC] 一、简介 Theos是一个越狱开发工具包，由iOS越狱界知名 人士Dustin Howett（@DHowett）开发并分享到GitHub上。Theos与其他越狱开发工具相比，最大的 特点就是简单：下载安装简单、Logos语法简单、编译发布简单，可以让使用者把精力都放在开发工作上 去。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-9b1ba8ddab5830af.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="I&#39;m FangLaoDa" type="application/atom+xml">
   
@@ -191,21 +183,21 @@
           <div id="js-content" class="content-ll">
             
 
-<article id="post-【iOS逆向】-操控iPhone" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-【iOS逆向】-theos的安装与使用" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      【iOS逆向】- 操控iPhone
+      【iOS逆向】-- theos的安装与使用
     </h1>
   
 
 
            
-        <a href="/2018/10/28/【iOS逆向】-操控iPhone/" class="archive-article-date">
-  	<time datetime="2018-10-28T14:37:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-28</time>
+        <a href="/2018/12/08/【iOS逆向】-theos的安装与使用/" class="archive-article-date">
+  	<time datetime="2018-12-08T06:14:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-08</time>
 </a>
         
     
@@ -216,82 +208,113 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>要想逆向app肯定是要对手机进行操控的，远程登录这里采用的是<code>SSH</code>协议，这是一个应用层的协议是基于<code>tcp</code>的，那至于数据具体是如何从<code>Mac</code>到<code>iPhone</code>的，从物理层协议来说的话有2个</p>
-<ol>
-<li>WiFi的方式</li>
-<li>USB的方式</li>
-</ol>
+        <p>[TOC]</p>
+<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><blockquote>
+<p>Theos是一个越狱开发工具包，由iOS越狱界知名 人士Dustin Howett（@DHowett）开发并分享到<br>GitHub上。Theos与其他越狱开发工具相比，最大的 特点就是简单：下载安装简单、Logos语法简单、编译发布简单，可以让使用者把精力都放在开发工作上 去。</p>
+</blockquote>
 <a id="more"></a>
-<h2 id="一、OpenSSH"><a href="#一、OpenSSH" class="headerlink" title="一、OpenSSH"></a>一、OpenSSH</h2><p>先通过<code>cydia</code>安装插件<code>OpenSSH</code>，他为我们远程登录提供了条件</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-09495852eaf1c7b0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500" alt="15407321062485.jpg"></p>
-<p>点击<code>OpenSSH Access How-To</code>可以查看使用方式 ，<code>iPhone</code>为我们提供了2个账户<code>root</code>和<code>mobile</code>，默认的密码都是<code>aipine</code>,修改默认的密码方式如下</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-4492484262c752c8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500" alt="15407323754486.jpg"></p>
-<p>我们是通过<code>SSH</code>来链接手机的，具体的方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ssh 用户名@主机地址</span><br></pre></td></tr></table></figure>
-<p>例如,我手机的ip地址是<code>192.168.1.103</code>那么</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@192.168.1.103</span><br></pre></td></tr></table></figure>
-<h2 id="二、WiFi-SSH"><a href="#二、WiFi-SSH" class="headerlink" title="二、WiFi-SSH"></a>二、WiFi-SSH</h2><p><code>SSH</code>是应用层的协议,它是基于<code>TCP</code>协议的。</p>
-<blockquote>
-<p>SSH 为建立在应用层基础上的安全协议。SSH 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。</p>
-</blockquote>
-<p><code>SSH</code>整个过程分为3个步骤</p>
+<h2 id="二、安装ldid"><a href="#二、安装ldid" class="headerlink" title="二、安装ldid"></a>二、安装ldid</h2><p>ldid是专门用来签名iOS可执行文件的工具，用以 在越狱iOS中取代Xcode自带的codesign。</p>
+<p>通过<code>Homebrew</code>安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install ldid #如果没有brew 执行下这个命令 /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="三、安装dpkg"><a href="#三、安装dpkg" class="headerlink" title="三、安装dpkg"></a>三、安装dpkg</h2><p><code>deb</code>是越狱开发安装包的标准格式，<code>dpkg</code>是 一个用于操作deb文件的工具，有了这个工具，<code>Theos</code> 才能正确地把工程打包成为<code>deb</code>文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install dpkg</span><br></pre></td></tr></table></figure>
+<h2 id="四、安装THEOS和配置"><a href="#四、安装THEOS和配置" class="headerlink" title="四、安装THEOS和配置"></a>四、安装THEOS和配置</h2><p>配置好环境变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;export THEOS=~/theos&quot; &gt;&gt; ~/.bash_profile</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone --recursive https://github.com/theos/theos.git $THEOS</span><br></pre></td></tr></table></figure>
+<p>现在敲下面的指令就有提示了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ ~/theos/bin/nic.pl</span><br></pre></td></tr></table></figure>
+<p>要想直接敲<code>nic.pl</code>，将<code>export PATH=~/theos/bin:$PATH</code>加到<code>~/.bash_profile</code>中即可</p>
+<h3 id="4-1-新建项目"><a href="#4-1-新建项目" class="headerlink" title="4.1 新建项目"></a>4.1 新建项目</h3><p>找到你想要放的目录，执行<code>nic.pl</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">➜  temp2 nic.pl</span><br><span class="line">NIC 2.0 - New Instance Creator</span><br><span class="line">------------------------------</span><br><span class="line">  [1.] iphone/activator_event</span><br><span class="line">  [2.] iphone/application_modern</span><br><span class="line">  [3.] iphone/application_swift</span><br><span class="line">  [4.] iphone/cydget</span><br><span class="line">  [5.] iphone/flipswitch_switch</span><br><span class="line">  [6.] iphone/framework</span><br><span class="line">  [7.] iphone/ios7_notification_center_widget</span><br><span class="line">  [8.] iphone/library</span><br><span class="line">  [9.] iphone/notification_center_widget</span><br><span class="line">  [10.] iphone/preference_bundle_modern</span><br><span class="line">  [11.] iphone/tool</span><br><span class="line">  [12.] iphone/tool_swift</span><br><span class="line">  [13.] iphone/tweak</span><br><span class="line">  [14.] iphone/xpc_service</span><br><span class="line">Choose a Template (required): 13</span><br><span class="line">Project Name (required): testtheos</span><br><span class="line">Package Name [com.yourcompany.testtheos]: com.theos.developer</span><br><span class="line">Author/Maintainer Name [fangshufeng]:</span><br><span class="line">[iphone/tweak] MobileSubstrate Bundle filter [com.apple.springboard]: com.app.springboard</span><br><span class="line">[iphone/tweak] List of applications to terminate upon installation (space-separated, &apos;-&apos; for none) [SpringBoard]:</span><br><span class="line">Instantiating iphone/tweak in testtheos/...</span><br><span class="line">Done.</span><br></pre></td></tr></table></figure>
+<p>看到一共有14种模板，逆向中接触最多的是<code>tweak</code>，也就是<code>13</code>,其他更多的模板请<a href="http://bbs.iosre.com/" target="_blank" rel="noopener">参照</a></p>
 <ol>
-<li>建立连接</li>
-<li>客户端登录</li>
-<li>数据传输</li>
+<li>我们选择13（tweak）模板；</li>
+<li>project Name : 工程名称；</li>
+<li>package Name : deb的包名；</li>
+<li>Author Name : </li>
+<li>[iphone/tweak] MobileSubstrate Bundle filter: 你要破解的app的<code>bundleid</code>;</li>
+<li>[iphone/tweak] List of applications to terminate upon installation : 输入tweak安装完成后需要重启的应用，以进 程名表示,一般直接回车。</li>
 </ol>
-<h3 id="1、建立连接"><a href="#1、建立连接" class="headerlink" title="1、建立连接"></a>1、建立连接</h3><p>对于客户端和服务端其实是相对的，谁提供服务那谁就是服务端，我们既然想通过mac来控制手机那么，这里的手机就是服务器，mac就是客户端</p>
-<p><strong>对于服务端</strong>：路径<code>/etc/ssh/ssh_host_dsa_key.pub</code>为公钥 <code>ssh_host_dsa_key</code>为私钥，比如我这台iPhone的公钥就是</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-78f1358b75fdb8d1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15407326270589.jpg"></p>
-<p><strong>对于客户端</strong>：<code>~/.ssh/known_hosts</code>目录下存放着已经主动同意连接的主机信息，对于从未连接过的主机第一次连接会出现像下面的一样的提示信息</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-9955214adf9237de.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15407310612953.jpg"></p>
-<p>当你同意以后就会将对应的公钥信息存放到<code>~/.ssh/known_hosts</code>文件中，比如上面的我们输入<code>yes</code>那么<code>~/.ssh/known_hosts</code>内容如下，可以看到正好是上面手机端的公钥信息</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-7765484009a08642.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15407312659938.jpg"></p>
-<p>当你再次输入<code>ssh root@192.168.1.103</code>的时候则不会再让你同意，而是直接让你输入密码了</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-4c43f297b30585f0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15407313401107.jpg"></p>
-<p>要是想删除已经添加的服务端的信息，直接的办法就是直接打开<code>~/.ssh/known_hosts</code>然后删除对应的主机信息，另一种方式就是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -R 服务端IP地址</span><br></pre></td></tr></table></figure>
-<p>当然服务端和客户端通信还要保证2者的版本号保持一致，还有使用的是什么端口，这些信息保存在</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">客户端：/etc/ssh/ssh_config</span><br><span class="line">服务端：/etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
-<h3 id="2、客户端登录"><a href="#2、客户端登录" class="headerlink" title="2、客户端登录"></a>2、客户端登录</h3><p>客户端登录有2种方式</p>
-<blockquote>
-<p>第一种级别（基于口令的安全验证）<br>只要你知道自己帐号和口令，就可以登录到远程主机。所有传输的数据都会被加密，但是不能保证你正在连接的服务器就是你想连接的服务器。可能会有别的服务器在冒充真正的服务器，也就是受到“中间人”这种方式的攻击。<br>第二种级别（基于密匙的安全验证）<br>需要依靠密匙，也就是你必须为自己创建一对密匙，并把公用密匙放在需要访问的服务器上。如果你要连接到SSH服务器上，客户端软件就会向服务器发出请求，请求用你的密匙进行安全验证。服务器收到请求之后，先在该服务器上你的主目录下寻找你的公用密匙，然后把它和你发送过来的公用密匙进行比较。如果两个密匙一致，服务器就用公用密匙加密“质询”（challenge）并把它发送给客户端软件。客户端软件收到“质询”之后就可以用你的私人密匙解密再把它发送给服务器。<br>用这种方式，你必须知道自己密匙的口令。但是，与第一种级别相比，第二种级别不需要在网络上传送口令。<br>第二种级别不仅加密所有传送的数据，而且“中间人”这种攻击方式也是不可能的（因为他没有你的私人密匙）。但是整个登录的过程可能需要10秒 [2]  。</p>
-</blockquote>
-<p><strong>第一种</strong></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-933ca1b04940697e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15407337723625.jpg"></p>
-<p>也就是每次连接服务器 都要 输入 密码</p>
-<p>这种方式有2个不好第一是每次都要输入密码，很烦人，第二就是还有安全问题，可能会受到中间人攻击</p>
-<p><strong>第二种</strong><br>关于这个上面已经解释很清楚了，需要客户端生成一对公钥和私钥</p>
-<p>通过<code>ssh-keygen</code>命令生成一对rsa的公钥和私钥</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-41a44dd755ca612e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15407339295368.jpg"></p>
-<p>然后一路回车到底然后再 <code>~/.ssh/</code>目录下生成 <code>id_rsa</code>和<code>id_rsa.pub</code>文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  .ssh tree</span><br><span class="line">.</span><br><span class="line">├── id_rsa</span><br><span class="line">├── id_rsa.pub</span><br><span class="line"></span><br><span class="line">➜  .ssh</span><br></pre></td></tr></table></figure>
-<p>我们需要把客户端的公钥给到服务端，通过命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp-copy-id 登录名称@服务器地址</span><br></pre></td></tr></table></figure>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-71dfa30a5453a0f9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15407342504144.jpg"></p>
-<p>输入密码得到</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-4cb03da08a0cf8d6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15407343044292.jpg"></p>
-<p>此时我们再在终端输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@192.168.1.103</span><br></pre></td></tr></table></figure>
-<p>直接就链接成功了，无需输入密码了</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-1c0531c5cfda9403.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15407343334532.jpg"></p>
-<h3 id="3-数据传输"><a href="#3-数据传输" class="headerlink" title="3. 数据传输"></a>3. 数据传输</h3><p>数据传输，其实我们上面就已经是在传输数据了，我们可以通过<code>scp</code>命令将mac上的文件拷贝到iPhone上，比如想将mac上的 <code>~/.ssh/id_rsa.pub</code>复制到手机的<code>~</code>下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scp ~/.ssh/id_rsa.pub 登录名@服务器主机地址:~</span><br><span class="line"></span><br><span class="line">scp ~/.ssh/id_rsa.pub root@192.168.1.103:~</span><br></pre></td></tr></table></figure>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-5af926c36578b10e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15407348198003.jpg"></p>
-<p>看下手机的目录<br>[图片上传失败…(image-2979a2-1540736735720)]</p>
-<h2 id="三、-USB-SSH的方式"><a href="#三、-USB-SSH的方式" class="headerlink" title="三、 USB-SSH的方式"></a>三、 USB-SSH的方式</h2><p>上面说的数据都是通过<code>WIFI</code>传输的，<code>mac</code>和<code>iPhone</code>都要联网。而且传输速度也是有限的，mac还提供了一种方式就是通过<code>usb</code>来传输数据，首先明白这个：22端口提供SSH服务（可以查看/etc/ssh/sshd_config的Port字段），Mac上有个服务程序usbmuxd（它会开机自动启动），可以将Mac的数据通过USB传输到iPhone.可以通过以下路径找到 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/System/Library/PrivateFrameworks/MobileDevice.framework/Resources/usbmuxd</span><br></pre></td></tr></table></figure>
-<p>要想使用该服务，需要下载<a href="https://cgit.sukimashita.com/usbmuxd.git/snapshot/usbmuxd-1.0.8.tar.gz" target="_blank" rel="noopener">文件</a>，里面有个python脚本<code>tcprelay.py</code></p>
-<p>这个脚本可以将本地的端口和手机的<code>22</code>端口进行映射 </p>
-<p>通过命令将本地的<code>10001</code>端口和<code>22</code>端口进行映射，<code>10001</code>根据自己定，只要不是保留端口就可以了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python ~/jailbreak/Tcprelay.py -t 22:10001</span><br></pre></td></tr></table></figure>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-744b8443d6710282.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15407353414928.jpg"><br>这样就映射成功了</p>
-<p>然后新开一个终端通过下面命令登录iPhone</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh  root@localhost -p 10001</span><br></pre></td></tr></table></figure>
-<p>发现也登录成功了,在逆向工程里面还是用的usb的方式多一些，我们可以把上面的命令写成shell脚本的形式，方式执行</p>
-<p>当然也可以拷贝文件到手机上</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -P 10010 ~/.ssh/id_rsa.pub  root@localhost:~/</span><br></pre></td></tr></table></figure>
-<p>注意<code>P</code>大写</p>
+<p>完成以后目录结构如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">── testtheos</span><br><span class="line">    ├── Makefile</span><br><span class="line">    ├── Tweak.xm</span><br><span class="line">    ├── control</span><br><span class="line">    └── testtheos.plist</span><br></pre></td></tr></table></figure>
+<h4 id="4-1-1-Makefile"><a href="#4-1-1-Makefile" class="headerlink" title="4.1.1 Makefile"></a>4.1.1 Makefile</h4><p>内容如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">include $(THEOS)/makefiles/common.mk</span><br><span class="line"></span><br><span class="line">TWEAK_NAME = testtheos</span><br><span class="line">testtheos_FILES = Tweak.xm</span><br><span class="line"></span><br><span class="line">include $(THEOS_MAKE_PATH)/tweak.mk</span><br><span class="line"></span><br><span class="line">after-install::</span><br><span class="line">	install.exec &quot;killall -9 SpringBoard&quot;</span><br></pre></td></tr></table></figure>
+<h5 id="4-1-1-1-include-THEOS-makefiles-common-mk"><a href="#4-1-1-1-include-THEOS-makefiles-common-mk" class="headerlink" title="4.1.1.1 include $(THEOS)/makefiles/common.mk"></a>4.1.1.1 include $(THEOS)/makefiles/common.mk</h5><p>echo下这个路径如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/theos/makefiles/common.mk</span><br></pre></td></tr></table></figure>
+<p>这里封装了很多内置的命令，一般不做修改</p>
+<h5 id="4-1-1-2-TWEAK-NAME-testtheos"><a href="#4-1-1-2-TWEAK-NAME-testtheos" class="headerlink" title="4.1.1.2 TWEAK_NAME = testtheos"></a>4.1.1.2 TWEAK_NAME = testtheos</h5><p>插件的名称,之前新建工程的时候写的</p>
+<h5 id="4-1-1-3-testtheos-FILES-Tweak-xm"><a href="#4-1-1-3-testtheos-FILES-Tweak-xm" class="headerlink" title="4.1.1.3 testtheos_FILES = Tweak.xm"></a>4.1.1.3 testtheos_FILES = Tweak.xm</h5><p>自己写的hook文件，多个话以空格隔开</p>
+<h5 id="4-1-1-4-include-THEOS-MAKE-PATH-tweak-mk"><a href="#4-1-1-4-include-THEOS-MAKE-PATH-tweak-mk" class="headerlink" title="4.1.1.4 include $(THEOS_MAKE_PATH)/tweak.mk"></a>4.1.1.4 include $(THEOS_MAKE_PATH)/tweak.mk</h5><p>根据不同的Theos工程类型，通过include命令指 定不同的.mk文件；在逆向工程初级阶段，我们开发 的一般是Application、Tweak和Tool三种类型的程序， 它们对应的.mk文件分别是application.mk、tweak.mk 和tool.mk，可以按需更改。</p>
+<h5 id="4-1-1-5-after-install-install-exec-“killall-9-SpringBoard”"><a href="#4-1-1-5-after-install-install-exec-“killall-9-SpringBoard”" class="headerlink" title="4.1.1.5 after-install::install.exec “killall -9 SpringBoard”"></a>4.1.1.5 after-install::install.exec “killall -9 SpringBoard”</h5><p>插件安装成功后重启<code>SpringBoard</code></p>
+<p>关于<code>Makefile</code>更多<a href="http://www.gnu.org/software/make/manual/html_node/Makefiles.html" target="_blank" rel="noopener">参照</a></p>
+<h4 id="4-1-2-Tweak-xm"><a href="#4-1-2-Tweak-xm" class="headerlink" title="4.1.2 Tweak.xm"></a>4.1.2 Tweak.xm</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">/* How to Hook with Logos</span><br><span class="line">Hooks are written with syntax similar to that of an Objective-C @implementation.</span><br><span class="line">You don&apos;t need to #include &lt;substrate.h&gt;, it will be done automatically, as will</span><br><span class="line">the generation of a class list and an automatic constructor.</span><br><span class="line"></span><br><span class="line">%hook ClassName</span><br><span class="line"></span><br><span class="line">// Hooking a class method</span><br><span class="line">+ (id)sharedInstance &#123;</span><br><span class="line">	return %orig;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Hooking an instance method with an argument.</span><br><span class="line">- (void)messageName:(int)argument &#123;</span><br><span class="line">	%log; // Write a message about this call, including its class, name and arguments, to the system log.</span><br><span class="line"></span><br><span class="line">	%orig; // Call through to the original function with its original arguments.</span><br><span class="line">	%orig(nil); // Call through to the original function with a custom argument.</span><br><span class="line"></span><br><span class="line">	// If you use %orig(), you MUST supply all arguments (except for self and _cmd, the automatically generated ones.)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Hooking an instance method with no arguments.</span><br><span class="line">- (id)noArguments &#123;</span><br><span class="line">	%log;</span><br><span class="line">	id awesome = %orig;</span><br><span class="line">	[awesome doSomethingElse];</span><br><span class="line"></span><br><span class="line">	return awesome;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Always make sure you clean up after yourself; Not doing so could have grave consequences!</span><br><span class="line">%end</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<p>这个文件就是用来写hook代码，使用的语法是<code>Logos</code>语法，关于<code>logo</code>语法后面会写个详细介绍，也可自行<a href="http://iphonedevwiki.net/index.php/Logos" target="_blank" rel="noopener">学习</a></p>
+<h4 id="4-1-3-control"><a href="#4-1-3-control" class="headerlink" title="4.1.3 control"></a>4.1.3 control</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Package: com.theos.developer</span><br><span class="line">Name: testtheos </span><br><span class="line">Depends: mobilesubstrate</span><br><span class="line">Version: 0.0.1</span><br><span class="line">Architecture: iphoneos-arm</span><br><span class="line">Description: An awesome MobileSubstrate tweak!</span><br><span class="line">Maintainer: fangshufeng</span><br><span class="line">Author: fangshufeng</span><br><span class="line">Section: Tweaks</span><br></pre></td></tr></table></figure>
+<p>这里没啥要介绍的了</p>
+<h4 id="4-1-4-testtheos-plist"><a href="#4-1-4-testtheos-plist" class="headerlink" title="4.1.4 testtheos.plist"></a>4.1.4 testtheos.plist</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; Filter = &#123; Bundles = ( &quot;com.app.springboard&quot; ); &#125;; &#125;</span><br></pre></td></tr></table></figure>
+<p>这里就是hook的app的bundleid</p>
+<h3 id="4-2-编译、打包、安装"><a href="#4-2-编译、打包、安装" class="headerlink" title="4.2 编译、打包、安装"></a>4.2 编译、打包、安装</h3><h4 id="4-2-1-编译-make"><a href="#4-2-1-编译-make" class="headerlink" title="4.2.1 编译 make"></a>4.2.1 编译 make</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  testtheos make</span><br><span class="line">&gt; Making all for tweak testtheos…</span><br><span class="line">==&gt; Preprocessing Tweak.xm…</span><br><span class="line">==&gt; Compiling Tweak.xm (armv7)…</span><br><span class="line">==&gt; Linking tweak testtheos (armv7)…</span><br><span class="line">==&gt; Generating debug symbols for testtheos…</span><br><span class="line">==&gt; Signing testtheos…</span><br><span class="line">➜  testtheos</span><br></pre></td></tr></table></figure>
+<p>可以看出<code>make</code>指令完成了<code>预处理</code>、<code>编译</code>、<code>链接</code>、<code>签名</code>操作,同时多了个<code>.theos</code>文件夹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  testtheos la</span><br><span class="line">total 32</span><br><span class="line">drwxr-xr-x  4 fangshufeng  staff   128B Dec  8 11:05 .theos</span><br><span class="line">-rw-r--r--  1 fangshufeng  staff   181B Dec  8 11:03 Makefile</span><br><span class="line">-rw-r--r--  1 fangshufeng  staff   1.0K Dec  8 11:03 Tweak.xm</span><br><span class="line">-rw-r--r--  1 fangshufeng  staff   219B Dec  8 11:03 control</span><br><span class="line">drwxr-xr-x  3 fangshufeng  staff    96B Dec  8 11:05 obj</span><br><span class="line">-rw-r--r--  1 fangshufeng  staff    57B Dec  8 11:03 testtheos.plist</span><br></pre></td></tr></table></figure>
+<p>进到<code>.theos</code>文件下查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  testtheos ls -l ./.theos/obj/debug/</span><br><span class="line">total 200</span><br><span class="line">drwxr-xr-x  6 fangshufeng  staff    192 Dec  8 11:05 arm64</span><br><span class="line">drwxr-xr-x  6 fangshufeng  staff    192 Dec  8 11:05 armv7</span><br><span class="line">-rwxr-xr-x  1 fangshufeng  staff  98704 Dec  8 11:05 testtheos.dylib</span><br></pre></td></tr></table></figure>
+<p>有个<code>testtheos.dylib</code>，这个动态库是插件最核心的部分了。</p>
+<h4 id="4-2-2-打包-make-package"><a href="#4-2-2-打包-make-package" class="headerlink" title="4.2.2 打包 make package"></a>4.2.2 打包 make package</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  testtheos make package</span><br><span class="line">&gt; Making all for tweak testtheos…</span><br><span class="line">make[2]: Nothing to be done for `internal-library-compile&apos;.</span><br><span class="line">&gt; Making stage for tweak testtheos…</span><br><span class="line">dpkg-deb: building package &apos;com.theos.developer&apos; in &apos;./packages/com.theos.developer_0.0.1-1+debug_iphoneos-arm.deb&apos;.</span><br></pre></td></tr></table></figure>
+<p>这个步骤就是使用<code>dpkg</code>将动态库打包成<code>deb</code>包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">➜  testtheos la</span><br><span class="line">total 32</span><br><span class="line">drwxr-xr-x  8 fangshufeng  staff   256B Dec  8 11:13 .theos</span><br><span class="line">-rw-r--r--  1 fangshufeng  staff   181B Dec  8 11:03 Makefile</span><br><span class="line">-rw-r--r--  1 fangshufeng  staff   1.0K Dec  8 11:03 Tweak.xm</span><br><span class="line">-rw-r--r--  1 fangshufeng  staff   219B Dec  8 11:03 control</span><br><span class="line">drwxr-xr-x  3 fangshufeng  staff    96B Dec  8 11:05 obj</span><br><span class="line">drwxr-xr-x  3 fangshufeng  staff    96B Dec  8 11:13 packages</span><br><span class="line">-rw-r--r--  1 fangshufeng  staff    57B Dec  8 11:03 testtheos.plist</span><br></pre></td></tr></table></figure>
+<p>发现多了一个<code>packages</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  testtheos la ./packages</span><br><span class="line">total 8</span><br><span class="line">-rw-r--r--  1 fangshufeng  staff   2.3K Dec  8 11:13 com.theos.developer_0.0.1-1+debug_iphoneos-arm.deb</span><br><span class="line">➜  testtheos</span><br></pre></td></tr></table></figure>
+<p><code>com.theos.developer_0.0.1-1+debug_iphoneos-arm.deb</code>就是可以安装到手机上的<code>deb</code>最终安装包。</p>
+<p>执行完了<code>make package</code>除了生成了<code>packages</code>文件夹之外，在<code>.theos</code>文件下还多了一个<code>_</code>文件夹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  testtheos ls -l ./.theos</span><br><span class="line">total 8</span><br><span class="line">drwxr-xr-x  4 fangshufeng  staff  128 Dec  8 11:13 _</span><br><span class="line">-rw-r--r--  1 fangshufeng  staff    0 Dec  8 11:04 build_session</span><br><span class="line">-rw-r--r--  1 fangshufeng  staff    0 Dec  8 11:13 fakeroot</span><br><span class="line">-rw-r--r--  1 fangshufeng  staff   62 Dec  8 11:13 last_package</span><br><span class="line">drwxr-xr-x  3 fangshufeng  staff   96 Dec  8 11:05 obj</span><br><span class="line">drwxr-xr-x  3 fangshufeng  staff   96 Dec  8 11:13 packages</span><br></pre></td></tr></table></figure>
+<p>看下这个文件夹中的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">➜  _ tree</span><br><span class="line">.</span><br><span class="line">├── DEBIAN</span><br><span class="line">│   └── control</span><br><span class="line">└── Library</span><br><span class="line">    └── MobileSubstrate</span><br><span class="line">        └── DynamicLibraries</span><br><span class="line">            ├── testtheos.dylib</span><br><span class="line">            └── testtheos.plist</span><br><span class="line"></span><br><span class="line">4 directories, 3 files</span><br><span class="line">➜  _</span><br></pre></td></tr></table></figure>
+<p><code>control</code>内容和我们一开始的<code>control</code>差不多，<code>Library</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">└── Library</span><br><span class="line">    └── MobileSubstrate</span><br><span class="line">        └── DynamicLibraries</span><br><span class="line">            ├── testtheos.dylib</span><br><span class="line">            └── testtheos.plist</span><br></pre></td></tr></table></figure>
+<p>这个到时就是到手机上的安装目录</p>
+<p>我们对比下生成的<code>deb</code>包的内容 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">➜  testtheos dpkg -c packages/com.theos.developer_0.0.1-1+debug_iphoneos-arm.deb</span><br><span class="line">drwxr-xr-x fangshufeng/staff 0 2018-12-08 11:13 ./</span><br><span class="line">drwxr-xr-x fangshufeng/staff 0 2018-12-08 11:13 ./Library/</span><br><span class="line">drwxr-xr-x fangshufeng/staff 0 2018-12-08 11:13 ./Library/MobileSubstrate/</span><br><span class="line">drwxr-xr-x fangshufeng/staff 0 2018-12-08 11:13 ./Library/MobileSubstrate/DynamicLibraries/</span><br><span class="line">-rwxr-xr-x fangshufeng/staff 98704 2018-12-08 11:13 ./Library/MobileSubstrate/DynamicLibraries/testtheos.dylib</span><br><span class="line">-rw-r--r-- fangshufeng/staff    57 2018-12-08 11:13 ./Library/MobileSubstrate/DynamicLibraries/testtheos.plist</span><br></pre></td></tr></table></figure>
+<h4 id="4-2-3-安装"><a href="#4-2-3-安装" class="headerlink" title="4.2.3 安装"></a>4.2.3 安装</h4><p>有了第二步的<code>deb</code>安装包，有2种安装方式可以装到手机上</p>
+<h5 id="4-2-3-1-图形界面"><a href="#4-2-3-1-图形界面" class="headerlink" title="4.2.3.1 图形界面"></a>4.2.3.1 图形界面</h5><p>将<code>deb</code>安装包通过<code>iFunBox</code>复制到手机上，然后通过<code>iFlie</code>安装，需要的话重启手机即可。</p>
+<h5 id="4-2-3-2-命令的方式make-install"><a href="#4-2-3-2-命令的方式make-install" class="headerlink" title="4.2.3.2 命令的方式make install"></a>4.2.3.2 命令的方式make install</h5><p>图形界面的方式的话人机交互太多，不方便插件开发，下面介绍直接通过命令完成安装</p>
+<p>需要现在文件<code>Makefile</code>文件的顶部添加手机的ip地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export THEOS_DEVICE_IP=iosip</span><br></pre></td></tr></table></figure>
+<p>然后再执行<code>make install</code>即可</p>
+<h2 id="五、一个简单的例子"><a href="#五、一个简单的例子" class="headerlink" title="五、一个简单的例子"></a>五、一个简单的例子</h2><p>前面一直在将理论，下面来写一个简单的例子来熟悉一下整个过程</p>
+<h3 id="新建一个iOS工程"><a href="#新建一个iOS工程" class="headerlink" title="新建一个iOS工程"></a>新建一个iOS工程</h3><p>我们新建一个空的<code>iOS</code>工程用来测试我们的插件</p>
+<p>目录结构如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">➜  sign tree</span><br><span class="line">.</span><br><span class="line">├── sign</span><br><span class="line">│   ├── AppDelegate.h</span><br><span class="line">│   ├── AppDelegate.m</span><br><span class="line">│   ├── Assets.xcassets</span><br><span class="line">│   │   ├── AppIcon.appiconset</span><br><span class="line">│   │   │   └── Contents.json</span><br><span class="line">│   │   └── Contents.json</span><br><span class="line">│   ├── Base.lproj</span><br><span class="line">│   │   ├── LaunchScreen.storyboard</span><br><span class="line">│   │   └── Main.storyboard</span><br><span class="line">│   ├── Info.plist</span><br><span class="line">│   ├── ViewController.h</span><br><span class="line">│   ├── ViewController.m</span><br><span class="line">│   └── main.m</span><br><span class="line">├── sign.xcodeproj</span><br><span class="line">│   ├── project.pbxproj</span><br><span class="line">│   ├── project.xcworkspace</span><br><span class="line">│   │   ├── contents.xcworkspacedata</span><br><span class="line">│   │   ├── xcshareddata</span><br><span class="line">│   │   │   └── IDEWorkspaceChecks.plist</span><br><span class="line">│   │   └── xcuserdata</span><br><span class="line">│   │       └── fangshufeng.xcuserdatad</span><br><span class="line">│   │           └── UserInterfaceState.xcuserstate</span><br><span class="line">│   └── xcuserdata</span><br><span class="line">│       └── fangshufeng.xcuserdatad</span><br><span class="line">│           └── xcschemes</span><br><span class="line">│               └── xcschememanagement.plist</span><br><span class="line">└── signUITests</span><br><span class="line">    ├── Info.plist</span><br><span class="line">    └── signUITests.m</span><br><span class="line"></span><br><span class="line">13 directories, 17 files</span><br></pre></td></tr></table></figure>
+<p>在<code>ViewController</code>上写一个<code>label</code>作为展示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    UILabel *num = [[UILabel alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];</span><br><span class="line">    num.text = @&quot;30&quot;;</span><br><span class="line">    [self.view addSubview:num];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后将工程跑到越用手机上备用。</p>
+<h3 id="新建一个Tweak工程"><a href="#新建一个Tweak工程" class="headerlink" title="新建一个Tweak工程"></a>新建一个<code>Tweak</code>工程</h3><p>control内容如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Package: com.sign.test</span><br><span class="line">Name: signtest</span><br><span class="line">Depends: mobilesubstrate</span><br><span class="line">Version: 0.0.1</span><br><span class="line">Architecture: iphoneos-arm</span><br><span class="line">Description: An awesome MobileSubstrate tweak!</span><br><span class="line">Maintainer: fangshufeng</span><br><span class="line">Author: fangshufeng</span><br><span class="line">Section: Tweaks</span><br></pre></td></tr></table></figure>
+<p>由于我们的测试工程的<code>bundleid</code>是<code>com.sign.test</code></p>
+<h3 id="编写hook代码"><a href="#编写hook代码" class="headerlink" title="编写hook代码"></a>编写hook代码</h3><p>现在我们想做一个插件，当测试app打开的时候就弹一个<code>alert</code>，那么<code>hook</code>代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">%hook ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">	</span><br><span class="line">	%orig;</span><br><span class="line">	</span><br><span class="line">	    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        UIAlertView *aler = [[UIAlertView</span><br><span class="line">                              alloc] initWithTitle:@&quot;弹框&quot; message:nil delegate:nil cancelButtonTitle:@&quot;取消&quot; otherButtonTitles:nil, nil];</span><br><span class="line">        [aler show];</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">%end</span><br></pre></td></tr></table></figure>
+<h3 id="编译打包"><a href="#编译打包" class="headerlink" title="编译打包"></a>编译打包</h3><p>执行<code>make</code>和<code>make package</code>命令（<code>make package</code> 已经包含了<code>make</code>命令了，所以直接执行<code>make package</code>也是可以的）</p>
+<p>执行完成以后会有个<code>com.sign.test_0.0.1-1+debug_iphoneos-arm.deb</code></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="图形界面方式"><a href="#图形界面方式" class="headerlink" title="图形界面方式"></a>图形界面方式</h4><p>通过<code>iFunbox</code>将<code>com.sign.test_0.0.1-1+debug_iphoneos-arm.deb</code>放到iPhone的根目录下，通过 <code>iFile</code>查看</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-9b1ba8ddab5830af.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15442482115467.jpg"></p>
+<p>点击安装，如果安装成功，打开<code>Cydia</code>可以看到，如果看不到，重启一下手机</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-6548886efcffa921.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15442483443840.jpg"></p>
+<p>点击查看安装的路径</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-af050555eb29b97b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15442483716762.jpg"></p>
+<p>正好使我们之前说的路径，通过<code>iFunbox</code>也可以找到该动态库</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-b853c8df44dc607d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15442484389650.jpg"></p>
+<p>此时打开我们的测试程序</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-9bb5a1fead8789c1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15442485059481.jpg"></p>
+<p>插件已经生效了</p>
+<h4 id="命令方式"><a href="#命令方式" class="headerlink" title="命令方式"></a>命令方式</h4><p>如果你已经执行了图形的操作，先在<code>Cydia</code>中卸载该插件。</p>
+<p>先在<code>Makefile</code>文件的顶部增加<code>export THEOS_DEVICE_IP=192.168.1.102</code>，地址换成你自己手机的地址</p>
+<p>然后执行<code>make install</code>命令即可，发现和图形界面是一样的效果</p>
+<h2 id="六、常见报错"><a href="#六、常见报错" class="headerlink" title="六、常见报错"></a>六、常见报错</h2><h3 id="6-1-error-Cowardly-refusing-to-make-a-project-inside-THEOS"><a href="#6-1-error-Cowardly-refusing-to-make-a-project-inside-THEOS" class="headerlink" title="6.1 [error] Cowardly refusing to make a project inside $THEOS"></a>6.1 [error] Cowardly refusing to make a project inside $THEOS</h3><p>有可能是你执行<code>git clone --recursive https://github.com/theos/theos.git $THEOS</code>命令 的时候报错了 ，有些代码没下载下来，请检查git clone信息</p>
+<h3 id="6-2-如果安装的插件一直到手机的根目录（针对命令行安装）不在-Library-MobileSubstrate-DynamicLibraries-下"><a href="#6-2-如果安装的插件一直到手机的根目录（针对命令行安装）不在-Library-MobileSubstrate-DynamicLibraries-下" class="headerlink" title="6.2 如果安装的插件一直到手机的根目录（针对命令行安装）不在/Library/MobileSubstrate/DynamicLibraries/下"></a>6.2 如果安装的插件一直到手机的根目录（针对命令行安装）不在<code>/Library/MobileSubstrate/DynamicLibraries/</code>下</h3><p>则 将文件$THEOS/makefiles/package/deb.mk 中 53行附近，由</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(ECHO_NOTHING)COPYFILE_DISABLE=1 $(FAKEROOT) -r $(_THEOS_PLATFORM_DPKG_DEB) -Z$(_THEOS_PLATFORM_DPKG_DEB_COMPRESSION) -b &quot;$(THEOS_STAGING_DIR)&quot; &quot;$(_THEOS_DEB_PACKAGE_FILENAME)&quot;$(ECHO_END)</span><br></pre></td></tr></table></figure>
+<p>替换为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(ECHO_NOTHING)COPYFILE_DISABLE=1 $(FAKEROOT) -r dpkg-deb -Zgzip -b &quot;$(THEOS_STAGING_DIR)&quot; &quot;$(_THEOS_DEB_PACKAGE_FILENAME)&quot; $(STDERR_NULL_REDIRECT)$(ECHO_END)</span><br></pre></td></tr></table></figure>
+<p>具体参考<a href="http://www.iosre.com/t/theos/12762/18" target="_blank" rel="noopener">链接</a></p>
+<p>到这应该感受到了插件的强大了，接下来只要学会分析app和熟悉logo语法就可以写更多好用的插件了。</p>
 
 
       
@@ -367,18 +390,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/11/07/【iOS逆向】-Cycript/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          【iOS逆向】- Cycript
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/10/28/【iOS逆向】-越狱环境搭建/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">【iOS逆向】-越狱环境搭建</div>
+    <a href="/2018/11/29/认识MachO/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【认识MachO】</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -406,7 +420,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、OpenSSH"><span class="toc-number">1.</span> <span class="toc-text">一、OpenSSH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、WiFi-SSH"><span class="toc-number">2.</span> <span class="toc-text">二、WiFi-SSH</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、建立连接"><span class="toc-number">2.1.</span> <span class="toc-text">1、建立连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、客户端登录"><span class="toc-number">2.2.</span> <span class="toc-text">2、客户端登录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-数据传输"><span class="toc-number">2.3.</span> <span class="toc-text">3. 数据传输</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、-USB-SSH的方式"><span class="toc-number">3.</span> <span class="toc-text">三、 USB-SSH的方式</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、简介"><span class="toc-number">1.</span> <span class="toc-text">一、简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、安装ldid"><span class="toc-number">2.</span> <span class="toc-text">二、安装ldid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、安装dpkg"><span class="toc-number">3.</span> <span class="toc-text">三、安装dpkg</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、安装THEOS和配置"><span class="toc-number">4.</span> <span class="toc-text">四、安装THEOS和配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-新建项目"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 新建项目</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-1-Makefile"><span class="toc-number">4.1.1.</span> <span class="toc-text">4.1.1 Makefile</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-1-1-include-THEOS-makefiles-common-mk"><span class="toc-number">4.1.1.1.</span> <span class="toc-text">4.1.1.1 include $(THEOS)/makefiles/common.mk</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-1-2-TWEAK-NAME-testtheos"><span class="toc-number">4.1.1.2.</span> <span class="toc-text">4.1.1.2 TWEAK_NAME = testtheos</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-1-3-testtheos-FILES-Tweak-xm"><span class="toc-number">4.1.1.3.</span> <span class="toc-text">4.1.1.3 testtheos_FILES = Tweak.xm</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-1-4-include-THEOS-MAKE-PATH-tweak-mk"><span class="toc-number">4.1.1.4.</span> <span class="toc-text">4.1.1.4 include $(THEOS_MAKE_PATH)/tweak.mk</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-1-5-after-install-install-exec-“killall-9-SpringBoard”"><span class="toc-number">4.1.1.5.</span> <span class="toc-text">4.1.1.5 after-install::install.exec “killall -9 SpringBoard”</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-2-Tweak-xm"><span class="toc-number">4.1.2.</span> <span class="toc-text">4.1.2 Tweak.xm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-3-control"><span class="toc-number">4.1.3.</span> <span class="toc-text">4.1.3 control</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-4-testtheos-plist"><span class="toc-number">4.1.4.</span> <span class="toc-text">4.1.4 testtheos.plist</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-编译、打包、安装"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 编译、打包、安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-1-编译-make"><span class="toc-number">4.2.1.</span> <span class="toc-text">4.2.1 编译 make</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-2-打包-make-package"><span class="toc-number">4.2.2.</span> <span class="toc-text">4.2.2 打包 make package</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-3-安装"><span class="toc-number">4.2.3.</span> <span class="toc-text">4.2.3 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2-3-1-图形界面"><span class="toc-number">4.2.3.1.</span> <span class="toc-text">4.2.3.1 图形界面</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2-3-2-命令的方式make-install"><span class="toc-number">4.2.3.2.</span> <span class="toc-text">4.2.3.2 命令的方式make install</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、一个简单的例子"><span class="toc-number">5.</span> <span class="toc-text">五、一个简单的例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新建一个iOS工程"><span class="toc-number">5.1.</span> <span class="toc-text">新建一个iOS工程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#新建一个Tweak工程"><span class="toc-number">5.2.</span> <span class="toc-text">新建一个Tweak工程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编写hook代码"><span class="toc-number">5.3.</span> <span class="toc-text">编写hook代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编译打包"><span class="toc-number">5.4.</span> <span class="toc-text">编译打包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">5.5.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#图形界面方式"><span class="toc-number">5.5.1.</span> <span class="toc-text">图形界面方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#命令方式"><span class="toc-number">5.5.2.</span> <span class="toc-text">命令方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、常见报错"><span class="toc-number">6.</span> <span class="toc-text">六、常见报错</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-error-Cowardly-refusing-to-make-a-project-inside-THEOS"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 [error] Cowardly refusing to make a project inside $THEOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-如果安装的插件一直到手机的根目录（针对命令行安装）不在-Library-MobileSubstrate-DynamicLibraries-下"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 如果安装的插件一直到手机的根目录（针对命令行安装）不在/Library/MobileSubstrate/DynamicLibraries/下</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -420,7 +434,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="【iOS逆向】-操控iPhone" data-title="【iOS逆向】- 操控iPhone" data-url="http://yoursite.com/2018/10/28/【iOS逆向】-操控iPhone/"></div>
+	<div class="ds-thread" data-thread-key="【iOS逆向】-theos的安装与使用" data-title="【iOS逆向】-- theos的安装与使用" data-url="http://yoursite.com/2018/12/08/【iOS逆向】-theos的安装与使用/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -464,7 +478,7 @@
 <script src="https://jjeejj.github.io/js/gitment.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/2018/10/28/【iOS逆向】-操控iPhone/",
+  id: "http://yoursite.com/2018/12/08/【iOS逆向】-theos的安装与使用/",
   owner: 'fangshufeng',
   repo: 'fangshufeng.github.io',
   oauth: {
