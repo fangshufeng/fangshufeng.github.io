@@ -174,6 +174,108 @@
   
     
 
+<article id="post-【iOS逆向】-debugserver" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/12/【iOS逆向】-debugserver/">【iOS逆向】-- debugserver</a>
+    </h1>
+  
+
+
+           
+        <a href="/2018/12/12/【iOS逆向】-debugserver/" class="archive-article-date">
+  	<time datetime="2018-12-12T13:21:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-12</time>
+</a>
+        
+    
+ 
+      </header>
+    
+ 
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Xcode-为什么可以调试APP"><a href="#Xcode-为什么可以调试APP" class="headerlink" title="Xcode 为什么可以调试APP?"></a>Xcode 为什么可以调试APP?</h2><p>平时开发中当我们给代码打断点，调试程序（lldb），这一切都离不开一个媒介<code>debugserver</code>，它负责将<code>lldb</code>指令给到<code>app</code>，然后<code>app</code>将结果通过<code>debugserver</code>传给<code>lldb</code></p>
+<p><code>debugserver</code>一开始是在<code>Xcode</code>中的，一旦手机连接<code>Xcode</code>信任后，<code>debugserver</code>便会安装到手机上</p>
+<ol>
+<li><p><code>Xcode</code>目录： <code>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/DeviceSupport/9.1/DeveloperDiskImage.dmg/usr/bin/debugserver</code>；</p>
+</li>
+<li><p><code>iPhone</code>目录：<code>/Developer/usr/bin/debugserver</code></p>
+</li>
+</ol>
+<p>但是缺少<code>task_for_pid</code>权限，通过<code>Xcode</code>安装的<code>debugserver</code>，只能调试自己的app,要想逆向别人的app，这种肯定是行不通的。前面说到，不能调试别人app的原因是权限不够，要想在没有源码的情况下调试别人的app，就需要修改<code>debugserver</code>权限。</p>
+        
+          <a class="article-more-a" href="/2018/12/12/【iOS逆向】-debugserver/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">iOS逆向</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/12/【iOS逆向】-debugserver/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+
+
+   
+        
+      
+  
+
+
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  
+    
+
 <article id="post-【iOS逆向】-theos的安装与使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1032,100 +1134,6 @@
 
 
   
-    
-
-<article id="post-assembly-callandret" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/07/assembly-callandret/">【8086汇编】-- call 和 ret 指令 的应用和本质</a>
-    </h1>
-  
-
-
-           
-        <a href="/2018/10/07/assembly-callandret/" class="archive-article-date">
-  	<time datetime="2018-10-07T07:20:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-07</time>
-</a>
-        
-    
- 
-      </header>
-    
- 
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在高级语言开发中会把一些功能封装成方法然后调用，下面我们来用汇编实现一个打印<code>hello world</code>的方法</p>
-        
-          <a class="article-more-a" href="/2018/10/07/assembly-callandret/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/07/assembly-callandret/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-
-
-   
-        
-      
-  
-
-
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1290,7 +1298,7 @@
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">FangLaoDa ，&lt;br&gt; 目前就职于点融网s &lt;/br&gt;</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">FangLaoDa ，&lt;br&gt;Coder&lt;/br&gt; &lt;br&gt; 目前就职于点融网 &lt;/br&gt;</div>
   	  	
     	</section>
     

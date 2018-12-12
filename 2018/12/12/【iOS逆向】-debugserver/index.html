@@ -6,15 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018 | I&#39;m FangLaoDa</title>
+  <title>【iOS逆向】-- debugserver | I&#39;m FangLaoDa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="I&#39;m FangLaoDa">
-<meta property="og:url" content="http://yoursite.com/archives/2018/page/2/index.html">
+  <meta name="description" content="Xcode 为什么可以调试APP?平时开发中当我们给代码打断点，调试程序（lldb），这一切都离不开一个媒介debugserver，它负责将lldb指令给到app，然后app将结果通过debugserver传给lldb debugserver一开始是在Xcode中的，一旦手机连接Xcode信任后，debugserver便会安装到手机上  Xcode目录： /Applications/Xcode.a">
+<meta name="keywords" content="iOS逆向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【iOS逆向】-- debugserver">
+<meta property="og:url" content="http://yoursite.com/2018/12/12/【iOS逆向】-debugserver/index.html">
 <meta property="og:site_name" content="I&#39;m FangLaoDa">
+<meta property="og:description" content="Xcode 为什么可以调试APP?平时开发中当我们给代码打断点，调试程序（lldb），这一切都离不开一个媒介debugserver，它负责将lldb指令给到app，然后app将结果通过debugserver传给lldb debugserver一开始是在Xcode中的，一旦手机连接Xcode信任后，debugserver便会安装到手机上  Xcode目录： /Applications/Xcode.a">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-032685ebbe97828a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-ee40ea0fb19742ef.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-f390b3dce4853955.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-4a560add5618c60e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-17ff3f49071fadf2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-32bc9034b5fe6b35.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-3003d84f1a89bc02.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-12T13:23:12.521Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="I&#39;m FangLaoDa">
+<meta name="twitter:title" content="【iOS逆向】-- debugserver">
+<meta name="twitter:description" content="Xcode 为什么可以调试APP?平时开发中当我们给代码打断点，调试程序（lldb），这一切都离不开一个媒介debugserver，它负责将lldb指令给到app，然后app将结果通过debugserver传给lldb debugserver一开始是在Xcode中的，一旦手机连接Xcode信任后，debugserver便会安装到手机上  Xcode目录： /Applications/Xcode.a">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-032685ebbe97828a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="I&#39;m FangLaoDa" type="application/atom+xml">
   
@@ -171,405 +184,297 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
+
+<article id="post-【iOS逆向】-debugserver" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【iOS逆向】-- debugserver
+    </h1>
+  
+
+
+           
+        <a href="/2018/12/12/【iOS逆向】-debugserver/" class="archive-article-date">
+  	<time datetime="2018-12-12T13:21:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-12</time>
+</a>
+        
     
+ 
+      </header>
+    
+ 
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Xcode-为什么可以调试APP"><a href="#Xcode-为什么可以调试APP" class="headerlink" title="Xcode 为什么可以调试APP?"></a>Xcode 为什么可以调试APP?</h2><p>平时开发中当我们给代码打断点，调试程序（lldb），这一切都离不开一个媒介<code>debugserver</code>，它负责将<code>lldb</code>指令给到<code>app</code>，然后<code>app</code>将结果通过<code>debugserver</code>传给<code>lldb</code></p>
+<p><code>debugserver</code>一开始是在<code>Xcode</code>中的，一旦手机连接<code>Xcode</code>信任后，<code>debugserver</code>便会安装到手机上</p>
+<ol>
+<li><p><code>Xcode</code>目录： <code>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/DeviceSupport/9.1/DeveloperDiskImage.dmg/usr/bin/debugserver</code>；</p>
+</li>
+<li><p><code>iPhone</code>目录：<code>/Developer/usr/bin/debugserver</code></p>
+</li>
+</ol>
+<p>但是缺少<code>task_for_pid</code>权限，通过<code>Xcode</code>安装的<code>debugserver</code>，只能调试自己的app,要想逆向别人的app，这种肯定是行不通的。前面说到，不能调试别人app的原因是权限不够，要想在没有源码的情况下调试别人的app，就需要修改<code>debugserver</code>权限。</p>
+<a id="more"></a>    
+<h2 id="更改debugserver-权限"><a href="#更改debugserver-权限" class="headerlink" title="更改debugserver 权限"></a>更改<code>debugserver</code> 权限</h2><h3 id="认识debugserver"><a href="#认识debugserver" class="headerlink" title="认识debugserver"></a>认识debugserver</h3><p> 放在<code>/Developer/usr/bin/debugserver</code>是没有调试其他app的权限的，现在的做法是先把<code>iPhone</code>上的<code>debugserver</code>放到电脑上修改好权限再放回手机上，已达到可以调试其他app的目的。</p>
+<p> 拖到<code>MachOView</code>中可以看到这是个胖二进制文件</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-032685ebbe97828a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15443398356634.jpg"></p>
+<h3 id="给debugserver瘦身"><a href="#给debugserver瘦身" class="headerlink" title="给debugserver瘦身"></a>给debugserver瘦身</h3><p>由于<code>debugserver</code>是个胖二进制文件，我的越狱手机是<code>iPhone6plus</code>、<code>iOS9.0.1</code>是<code>arm64</code>架构的，我们只要流行<code>arm64</code>即可使用<code>lipo</code>命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">lipo -thin arm64 ./debugserver -o ./debugserver_arm64</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-ee40ea0fb19742ef.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15443403611713.jpg"></p>
+<p>为了方便将<code>debugserver_arm64</code>改为<code>debugserver</code>，下面的提到的<code>debugserver</code>指的都是<code>debugserver_arm64</code>。</p>
+<h3 id="给debugserver增加-task-for-pid权限"><a href="#给debugserver增加-task-for-pid权限" class="headerlink" title="给debugserver增加 task_for_pid权限"></a>给debugserver增加 task_for_pid权限</h3><h4 id="查看debugserver原来的权限"><a href="#查看debugserver原来的权限" class="headerlink" title="查看debugserver原来的权限"></a>查看<code>debugserver</code>原来的权限</h4><p>通过<code>ldid</code>查看原来的命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">➜  debugserver ldid -e ./debugserver</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span><br><span class="line">&lt;plist version=&quot;1.0&quot;&gt;</span><br><span class="line">&lt;dict&gt;</span><br><span class="line">	&lt;key&gt;com.apple.backboardd.debugapplications&lt;/key&gt;</span><br><span class="line">	&lt;true/&gt;</span><br><span class="line">	&lt;key&gt;com.apple.backboardd.launchapplications&lt;/key&gt;</span><br><span class="line">	&lt;true/&gt;</span><br><span class="line">	&lt;key&gt;com.apple.diagnosticd.diagnostic&lt;/key&gt;</span><br><span class="line">	&lt;true/&gt;</span><br><span class="line">	&lt;key&gt;com.apple.frontboard.debugapplications&lt;/key&gt;</span><br><span class="line">	&lt;true/&gt;</span><br><span class="line">	&lt;key&gt;com.apple.frontboard.launchapplications&lt;/key&gt;</span><br><span class="line">	&lt;true/&gt;</span><br><span class="line">	&lt;key&gt;com.apple.security.network.client&lt;/key&gt;</span><br><span class="line">	&lt;true/&gt;</span><br><span class="line">	&lt;key&gt;com.apple.security.network.server&lt;/key&gt;</span><br><span class="line">	&lt;true/&gt;</span><br><span class="line">	&lt;key&gt;com.apple.springboard.debugapplications&lt;/key&gt;</span><br><span class="line">	&lt;true/&gt;</span><br><span class="line">	&lt;key&gt;run-unsigned-code&lt;/key&gt;</span><br><span class="line">	&lt;true/&gt;</span><br><span class="line">	&lt;key&gt;seatbelt-profiles&lt;/key&gt;</span><br><span class="line">	&lt;array&gt;</span><br><span class="line">		&lt;string&gt;debugserver&lt;/string&gt;</span><br><span class="line">	&lt;/array&gt;</span><br><span class="line">&lt;/dict&gt;</span><br><span class="line">&lt;/plist&gt;</span><br></pre></td></tr></table></figure>
+<p>将旧的权限输出到<code>entitlement.plist</code>文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  debugserver ldid -e ./debugserver &gt; ./entitlement.plist</span><br></pre></td></tr></table></figure>
+<p>在<code>entitlement.plist</code>增加一个<code>task_for_pid-allow</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-f390b3dce4853955.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15443412160922.jpg"></p>
+<h4 id="重签名debugserver"><a href="#重签名debugserver" class="headerlink" title="重签名debugserver"></a>重签名<code>debugserver</code></h4><p>将改好的<code>entitlement.plist</code>重签<code>debugserver</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  debugserver ldid -Sentitlement.plist debugserver</span><br></pre></td></tr></table></figure>
+<p>再次查看<code>debugserver</code>权限确认是否添加成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  debugserver ldid -e ./debugserver | grep task_for_pid-allow</span><br><span class="line">	&lt;key&gt;task_for_pid-allow&lt;/key&gt;</span><br><span class="line">➜  debugserver</span><br></pre></td></tr></table></figure>
+<p>说明成功添加</p>
+<h2 id="将debugserver-放回到手机"><a href="#将debugserver-放回到手机" class="headerlink" title="将debugserver 放回到手机"></a>将<code>debugserver</code> 放回到手机</h2><p>前面已经赋予了<code>debugserver</code>可以调试其他<code>app</code>的权限了，接下来放回到手机上使用。</p>
+<p>此时我们把修改后的<code>debugserver</code>放到手机的<code>/usr/bin/</code>目录下，原因有2个</p>
+<ol>
+<li>手机上原来的<code>debugserver</code>存放的目录<code>/Developer/usr/bin/debugserver</code>是只读的；</li>
+<li>放到<code>/usr/bin/</code>下可以在手机上直接敲<code>debugserver</code>方便使用</li>
+</ol>
+<p>顺便增加执行权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iPhone:~ root# chmod +x /usr/bin/debugserver</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iPhone:~ root# ls -l /usr/bin/debugserver</span><br><span class="line">-rwxr-xr-x 1 root wheel 4646672 Dec  9 15:49 /usr/bin/debugserver</span><br><span class="line">iPhone:~ root#</span><br></pre></td></tr></table></figure>
+<h2 id="用debugserver启动或附加进程"><a href="#用debugserver启动或附加进程" class="headerlink" title="用debugserver启动或附加进程"></a>用<code>debugserver</code>启动或附加进程</h2><h3 id="启动进程"><a href="#启动进程" class="headerlink" title="启动进程"></a>启动进程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">debugserver -x backboard IP:port /path/to/executable</span><br></pre></td></tr></table></figure>
+<p>debugserver会启动executable，并开启port端口， 等待来自IP的LLDB接入。</p>
+<p>先实现一个打开系统的app,iPhone系统应用都放在<code>/Applications</code>下面</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-4a560add5618c60e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15443469873180.jpg"></p>
+<p>已打开系统的计算器为例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iPhone:~ root# debugserver -x backboard *:1234 /Applications/Calculator.app/Calculator</span><br></pre></td></tr></table></figure>
+<p>上面的代码会启动<code>Calculator.app</code>，并开启1234端 口，等待任意IP地址的LLDB接入。</p>
+<h3 id="附加进程"><a href="#附加进程" class="headerlink" title="附加进程"></a>附加进程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">debugserver IP:port -a &quot;ProcessName&quot;</span><br></pre></td></tr></table></figure>
+<p><code>debugserver</code>会附加<code>ProcessName</code>，并开启port端 口，等待来自IP的LLDB接入。</p>
+<p>已打开手机上的新浪微博为例子</p>
+<p>用户安装的app放在<code>/var/mobile/Containers/Bundle/Application</code>下</p>
+<p>先点击<code>新浪微博</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">iPhone:~ root# debugserver *:1234 -a &quot;Weibo&quot;</span><br><span class="line">debugserver-@(#)PROGRAM:debugserver  PROJECT:debugserver-340.3.51.1</span><br><span class="line"> for arm64.</span><br><span class="line">Attaching to process Weibo...</span><br><span class="line">Listening to port 1234 for a connection from *...</span><br></pre></td></tr></table></figure>
+<p><code>-a</code>是附加的意思</p>
+<h2 id="lldb连接debugserver"><a href="#lldb连接debugserver" class="headerlink" title="lldb连接debugserver"></a><code>lldb</code>连接<code>debugserver</code></h2><p>现在手机端的服务已经开启。</p>
+<p>先电脑端输入<code>lldb</code>指令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ lldb</span><br><span class="line">(lldb)</span><br></pre></td></tr></table></figure>
+<p>连接服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process connect connect://192.168.1.102:1234</span><br></pre></td></tr></table></figure>
+<p><code>ip</code>就是手机的ip地址<br><code>1234</code>就是端口</p>
+<p>稍微等一会（1到2分钟吧）就会出现下面的东西</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Process 4348 stopped</span><br><span class="line">* thread #1, queue = &apos;com.apple.main-thread&apos;, stop reason = signal SIGSTOP</span><br><span class="line">    frame #0: 0x000000019b3c4c30 libsystem_kernel.dylib`mach_msg_trap + 8</span><br><span class="line">libsystem_kernel.dylib`mach_msg_trap:</span><br><span class="line">-&gt;  0x19b3c4c30 &lt;+8&gt;: ret</span><br><span class="line"></span><br><span class="line">libsystem_kernel.dylib`mach_msg_overwrite_trap:</span><br><span class="line">    0x19b3c4c34 &lt;+0&gt;: mov    x16, #-0x20</span><br><span class="line">    0x19b3c4c38 &lt;+4&gt;: svc    #0x80</span><br><span class="line">    0x19b3c4c3c &lt;+8&gt;: ret</span><br><span class="line">Target 0: (Weibo) stopped.</span><br><span class="line">(lldb)</span><br></pre></td></tr></table></figure>
+<p>此时的app是无法交互的我们输入<code>c</code>继续程序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(lldb) c</span><br><span class="line">Process 4348 resuming</span><br><span class="line">(lldb)</span><br></pre></td></tr></table></figure>
+<p>会发现微博可以交互了。</p>
+<h2 id="一个简单的demo"><a href="#一个简单的demo" class="headerlink" title="一个简单的demo"></a>一个简单的demo</h2><h3 id="连接手机"><a href="#连接手机" class="headerlink" title="连接手机"></a>连接手机</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@10.9.24.154</span><br></pre></td></tr></table></figure>
+<p>你也可以使用usb连接</p>
+<h3 id="开启手机服务"><a href="#开启手机服务" class="headerlink" title="开启手机服务"></a>开启手机服务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">debugserver *:1234 -a 818</span><br></pre></td></tr></table></figure>
+<h3 id="mac端输入lldb指令连接手机"><a href="#mac端输入lldb指令连接手机" class="headerlink" title="mac端输入lldb指令连接手机"></a>mac端输入<code>lldb</code>指令连接手机</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ lldb</span><br><span class="line">(lldb) process connect connect://10.9.24.154:1234</span><br><span class="line">Process 818 stopped</span><br><span class="line">* thread #1, queue = &apos;com.apple.main-thread&apos;, stop reason = signal SIGSTOP</span><br><span class="line">    frame #0: 0x000000019811cc30 libsystem_kernel.dylib`mach_msg_trap + 8</span><br><span class="line">libsystem_kernel.dylib`mach_msg_trap:</span><br><span class="line">-&gt;  0x19811cc30 &lt;+8&gt;: ret</span><br><span class="line"></span><br><span class="line">libsystem_kernel.dylib`mach_msg_overwrite_trap:</span><br><span class="line">    0x19811cc34 &lt;+0&gt;: mov    x16, #-0x20</span><br><span class="line">    0x19811cc38 &lt;+4&gt;: svc    #0x80</span><br><span class="line">    0x19811cc3c &lt;+8&gt;: ret</span><br><span class="line">Target 0: (Debugserver) stopped.</span><br></pre></td></tr></table></figure>
+<h3 id="计算-ViewController-btnClick-的真实函数地址"><a href="#计算-ViewController-btnClick-的真实函数地址" class="headerlink" title="计算-[ViewController btnClick]:的真实函数地址"></a>计算<code>-[ViewController btnClick]:</code>的真实函数地址</h3><h4 id="查看ASLR"><a href="#查看ASLR" class="headerlink" title="查看ASLR"></a>查看ASLR</h4><h5 id="什么是ASLR"><a href="#什么是ASLR" class="headerlink" title="什么是ASLR"></a>什么是ASLR</h5><p>全称<code>ASLR (Address Space Layout Randomization)</code>每次进程启动时，同一进程的所有模块在虚拟内存中的起始 地址都会产生随机偏移。就拿我们的例子来说，在虚拟内存的起始地址是<code>0x0</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-17ff3f49071fadf2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15446038665381.jpg"></p>
+<p>我们先不考虑随机地址偏移，也就是说明了这个<code>macho</code>加载内存的时候<code>_TEXT</code>段的起始地址应该是<code>0x100000000</code>,但是如果有了偏移量，那么我们加上偏移量就能计算出内存中的真实地址了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(lldb) image list -o -f</span><br><span class="line">[  0] 0x00000000000dc000 /Users/fangshufeng/Library/Developer/Xcode/iOS DeviceSupport/9.0.1 (13A404)/Symbols/usr/lib/dyld</span><br><span class="line">[  1] 0x00000000000b0000 /var/mobile/Containers/Bundle/Application/FA2608EB-E892-4C24-9272-F40908101AA0/Debugserver.app/Debugserver(0x00000001000b0000)</span><br><span class="line">[  2] 0x00000001000c4000 /Library/MobileSubstrate/MobileSubstrate.dylib(0x00000001000c4000)</span><br><span class="line"></span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
+<ol>
+<li>第一列[X]是模块的序</li>
+<li>第二列是模块在虚拟内存中的起始地址因ASLR 而产生的随机偏移（以下简称ASLR偏移）；</li>
+<li>第三列 是模块的全路径，括号里是偏移之后的起始地址。</li>
+</ol>
+<p>可以看到偏移量为<code>0x40000</code></p>
+<h4 id="hopper查看再Macho中的值"><a href="#hopper查看再Macho中的值" class="headerlink" title="hopper查看再Macho中的值"></a>hopper查看再Macho中的值</h4><p><img src="https://upload-images.jianshu.io/upload_images/3279997-32bc9034b5fe6b35.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15445997853528.jpg"></p>
+<p>所以真实的函数地址是 = <code>0x00000000000b0000</code> + <code>0x0000000100006738</code> == <code>0x1000B6738</code>;</p>
+<h3 id="在-ViewController-btnClick-设置断点"><a href="#在-ViewController-btnClick-设置断点" class="headerlink" title="在-[ViewController btnClick]:设置断点"></a>在<code>-[ViewController btnClick]:</code>设置断点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(lldb) breakpoint set -a 0x1000B6738</span><br><span class="line">Breakpoint 3: where = Debugserver`-[ViewController btnClick], address = 0x00000001000b6738</span><br><span class="line">(lldb)</span><br></pre></td></tr></table></figure>
+<h4 id="输入c继续程序"><a href="#输入c继续程序" class="headerlink" title="输入c继续程序"></a>输入<code>c</code>继续程序</h4><p>点击按钮</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(lldb) breakpoint set -a 0x1000B6738</span><br><span class="line">Breakpoint 3: where = Debugserver`-[ViewController btnClick], address = 0x00000001000b6738</span><br><span class="line">(lldb) c</span><br><span class="line">* thread #1, queue = &apos;com.apple.main-thread&apos;, stop reason = breakpoint 3.1</span><br><span class="line">    frame #0: 0x00000001000b6738 Debugserver`-[ViewController btnClick]</span><br><span class="line">Debugserver`-[ViewController btnClick]:</span><br><span class="line">-&gt;  0x1000b6738 &lt;+0&gt;:  sub    sp, sp, #0x20             ; =0x20</span><br><span class="line">    0x1000b673c &lt;+4&gt;:  mov    w8, #0x14</span><br><span class="line">    0x1000b6740 &lt;+8&gt;:  mov    w9, #0xa</span><br><span class="line">    0x1000b6744 &lt;+12&gt;: str    x0, [sp, #0x18]</span><br><span class="line">Target 0: (Debugserver) stopped.</span><br><span class="line">(lldb)</span><br></pre></td></tr></table></figure>
+<p>可以看到已经断到了方法处，可以和<code>hopper</code>的内容对比一看是一样的。</p>
+<h4 id="简单使用lldb指令"><a href="#简单使用lldb指令" class="headerlink" title="简单使用lldb指令"></a>简单使用<code>lldb</code>指令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">(lldb) ni</span><br><span class="line">Process 1083 stopped</span><br><span class="line">* thread #1, queue = &apos;com.apple.main-thread&apos;, stop reason = instruction step over</span><br><span class="line">    frame #0: 0x000000018818a3e4 UIKit`&lt;redacted&gt; + 100</span><br><span class="line">UIKit`&lt;redacted&gt;:</span><br><span class="line">-&gt;  0x18818a3e4 &lt;+100&gt;: cmp    x22, #0x0                 ; =0x0</span><br><span class="line">    0x18818a3e8 &lt;+104&gt;: cset   w0, ne</span><br><span class="line">    0x18818a3ec &lt;+108&gt;: ldp    x29, x30, [sp, #0x20]</span><br><span class="line">    0x18818a3f0 &lt;+112&gt;: ldp    x20, x19, [sp, #0x10]</span><br><span class="line">Target 0: (Debugserver) stopped.</span><br><span class="line">(lldb) ni</span><br><span class="line">Process 1083 stopped</span><br><span class="line">* thread #1, queue = &apos;com.apple.main-thread&apos;, stop reason = instruction step over</span><br><span class="line">    frame #0: 0x000000018818a3e8 UIKit`&lt;redacted&gt; + 104</span><br><span class="line">UIKit`&lt;redacted&gt;:</span><br><span class="line">-&gt;  0x18818a3e8 &lt;+104&gt;: cset   w0, ne</span><br><span class="line">    0x18818a3ec &lt;+108&gt;: ldp    x29, x30, [sp, #0x20]</span><br><span class="line">    0x18818a3f0 &lt;+112&gt;: ldp    x20, x19, [sp, #0x10]</span><br><span class="line">    0x18818a3f4 &lt;+116&gt;: ldp    x22, x21, [sp], #0x30</span><br><span class="line">Target 0: (Debugserver) stopped.</span><br><span class="line">(lldb)</span><br></pre></td></tr></table></figure>
+<h5 id="打印寄存器的值"><a href="#打印寄存器的值" class="headerlink" title="打印寄存器的值"></a>打印寄存器的值</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">(lldb) po $w8</span><br><span class="line">20</span><br><span class="line"></span><br><span class="line">(lldb) p $w9</span><br><span class="line">(unsigned int) $1 = 10</span><br><span class="line">(lldb)</span><br></pre></td></tr></table></figure>
+<h5 id="打印层级"><a href="#打印层级" class="headerlink" title="打印层级"></a>打印层级</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(lldb) po [[[UIApplication sharedApplication] keyWindow] recursiveDescription]</span><br><span class="line">&lt;UIWindow: 0x14c63e650; frame = (0 0; 414 736); autoresize = W+H; gestureRecognizers = &lt;NSArray: 0x14c637830&gt;; layer = &lt;UIWindowLayer: 0x14c63d3c0&gt;&gt;</span><br><span class="line">   | &lt;UIView: 0x14c54fe20; frame = (0 0; 414 736); autoresize = W+H; layer = &lt;CALayer: 0x14c54f000&gt;&gt;</span><br><span class="line">   |    | &lt;_UILayoutGuide: 0x14c550280; frame = (0 0; 0 20); hidden = YES; layer = &lt;CALayer: 0x14c54e040&gt;&gt;</span><br><span class="line">   |    | &lt;_UILayoutGuide: 0x14c550c30; frame = (0 736; 0 0); hidden = YES; layer = &lt;CALayer: 0x14c63c690&gt;&gt;</span><br><span class="line">   |    | &lt;UIButton: 0x14c641240; frame = (100 100; 100 100); opaque = NO; layer = &lt;CALayer: 0x14c6411f0&gt;&gt;</span><br><span class="line">   |    |    | &lt;UIButtonLabel: 0x14c63a3c0; frame = (23 39.3333; 54 21.6667); text = &apos;点我啊&apos;; opaque = NO; userInteractionEnabled = NO; layer = &lt;_UILabelLayer: 0x14c633470&gt;&gt;</span><br><span class="line">   |    |    |    | &lt;_UILabelContentLayer: 0x14c651170&gt; (layer)</span><br><span class="line"></span><br><span class="line">(lldb)</span><br></pre></td></tr></table></figure>
+<h5 id="给按钮加一个黄色背景"><a href="#给按钮加一个黄色背景" class="headerlink" title="给按钮加一个黄色背景"></a>给按钮加一个黄色背景</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(lldb) po  [0x14c641240 setBackgroundColor:[UIColor yellowColor] ]</span><br><span class="line">0x0000000000000001</span><br><span class="line"></span><br><span class="line">(lldb) c</span><br><span class="line">Process 1083 resuming</span><br><span class="line">(lldb)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-3003d84f1a89bc02.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15446009775607.jpg"></p>
+<p><a href="https://github.com/fangshufeng/demo_project" target="_blank" rel="noopener">demo地址</a></p>
+<p>（完）</p>
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/161539425082_.pic.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/07/assembly-callandret/" class="archive-article-date">
-  	<time datetime="2018-10-07T07:20:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/07/assembly-callandret/">【8086汇编】-- call 和 ret 指令 的应用和本质</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">iOS逆向</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+
+
+   
+           <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+        </script>
+      
+      <div style="display: flex;flex-direction: row;justify-content: flex-end;margin-right: 20px;">
+        <span style="margin-left: 50px;color:#999;" id="busuanzi_container_page_pv">
+              访问量<span id="busuanzi_value_page_pv" ></span>次
+            </span>
+      </div>   
+
+      
+  
+
+
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/06/assembly-1/" class="archive-article-date">
-  	<time datetime="2018-10-06T11:41:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-06</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/12/08/【iOS逆向】-theos的安装与使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【iOS逆向】-- theos的安装与使用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/06/assembly-1/">【8086汇编】-- 入门知识</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Xcode-为什么可以调试APP"><span class="toc-number">1.</span> <span class="toc-text">Xcode 为什么可以调试APP?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更改debugserver-权限"><span class="toc-number">2.</span> <span class="toc-text">更改debugserver 权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#认识debugserver"><span class="toc-number">2.1.</span> <span class="toc-text">认识debugserver</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给debugserver瘦身"><span class="toc-number">2.2.</span> <span class="toc-text">给debugserver瘦身</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给debugserver增加-task-for-pid权限"><span class="toc-number">2.3.</span> <span class="toc-text">给debugserver增加 task_for_pid权限</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#查看debugserver原来的权限"><span class="toc-number">2.3.1.</span> <span class="toc-text">查看debugserver原来的权限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#重签名debugserver"><span class="toc-number">2.3.2.</span> <span class="toc-text">重签名debugserver</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将debugserver-放回到手机"><span class="toc-number">3.</span> <span class="toc-text">将debugserver 放回到手机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用debugserver启动或附加进程"><span class="toc-number">4.</span> <span class="toc-text">用debugserver启动或附加进程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#启动进程"><span class="toc-number">4.1.</span> <span class="toc-text">启动进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#附加进程"><span class="toc-number">4.2.</span> <span class="toc-text">附加进程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lldb连接debugserver"><span class="toc-number">5.</span> <span class="toc-text">lldb连接debugserver</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一个简单的demo"><span class="toc-number">6.</span> <span class="toc-text">一个简单的demo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#连接手机"><span class="toc-number">6.1.</span> <span class="toc-text">连接手机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开启手机服务"><span class="toc-number">6.2.</span> <span class="toc-text">开启手机服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mac端输入lldb指令连接手机"><span class="toc-number">6.3.</span> <span class="toc-text">mac端输入lldb指令连接手机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算-ViewController-btnClick-的真实函数地址"><span class="toc-number">6.4.</span> <span class="toc-text">计算-[ViewController btnClick]:的真实函数地址</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#查看ASLR"><span class="toc-number">6.4.1.</span> <span class="toc-text">查看ASLR</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#什么是ASLR"><span class="toc-number">6.4.1.1.</span> <span class="toc-text">什么是ASLR</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hopper查看再Macho中的值"><span class="toc-number">6.4.2.</span> <span class="toc-text">hopper查看再Macho中的值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在-ViewController-btnClick-设置断点"><span class="toc-number">6.5.</span> <span class="toc-text">在-[ViewController btnClick]:设置断点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#输入c继续程序"><span class="toc-number">6.5.1.</span> <span class="toc-text">输入c继续程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#简单使用lldb指令"><span class="toc-number">6.5.2.</span> <span class="toc-text">简单使用lldb指令</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#打印寄存器的值"><span class="toc-number">6.5.2.1.</span> <span class="toc-text">打印寄存器的值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#打印层级"><span class="toc-number">6.5.2.2.</span> <span class="toc-text">打印层级</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#给按钮加一个黄色背景"><span class="toc-number">6.5.2.3.</span> <span class="toc-text">给按钮加一个黄色背景</span></a></li></ol></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/04/cache/" class="archive-article-date">
-  	<time datetime="2018-09-04T09:12:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-04</time>
-</a>
-        </div>
-    	 
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="【iOS逆向】-debugserver" data-title="【iOS逆向】-- debugserver" data-url="http://yoursite.com/2018/12/12/【iOS逆向】-debugserver/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"litten-hexo"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/04/cache/">OC--方法缓存</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/25/block-2/" class="archive-article-date">
-  	<time datetime="2018-08-25T07:15:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/25/block-2/">OC--Block--(二)</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/19/block-1/" class="archive-article-date">
-  	<time datetime="2018-08-19T10:45:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/19/block-1/">OC--Block--(一)</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/12/oc-category/" class="archive-article-date">
-  	<time datetime="2018-08-12T07:19:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/12/oc-category/">OC--分类</a>
-    </h1>
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="https://www.wenjunjiang.win/css/gitment.css">
+
+<style type="text/css">
+
+   .gitment-comment-header {
+	  background-color: transparent;
+	}
+
+	a.gitment-comment-name,
+	a.gitment-comment-name:visited {
+		color: #2196F3
+	}
+</style>
+
+<script src="https://jjeejj.github.io/js/gitment.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2018/12/12/【iOS逆向】-debugserver/",
+  owner: 'fangshufeng',
+  repo: 'fangshufeng.github.io',
+  oauth: {
+    client_id: '889a210d751e50ade6dd',
+    client_secret: 'd443d8c86de77a856fe0eaa85b743ba066377f67',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/11/kvc/" class="archive-article-date">
-  	<time datetime="2018-08-11T15:37:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/11/kvc/">OC-KVC调用和赋值原理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/08/kvo/" class="archive-article-date">
-  	<time datetime="2018-08-08T02:35:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/08/kvo/">OC--KVO实现原理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/02/oc-method/" class="archive-article-date">
-  	<time datetime="2018-08-02T15:23:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/02/oc-method/">OC--如何获取变量和方法的信息</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/02/oc-obj/" class="archive-article-date">
-  	<time datetime="2018-08-02T07:12:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/02/oc-obj/">OC--实例对象、类对象和元类对象是如何分工的</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2018/">&laquo; Prev</a><a class="page-number" href="/archives/2018/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2018/page/3/">3</a><a class="extend next" rel="next" href="/archives/2018/page/3/">Next &raquo;</a>
-    </nav>
-  
 
 
 
@@ -593,8 +498,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

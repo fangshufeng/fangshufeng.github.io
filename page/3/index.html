@@ -174,6 +174,104 @@
   
     
 
+<article id="post-oc-alloc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/29/oc-alloc/">OC-对象的内存分配</a>
+    </h1>
+  
+
+
+           
+        <a href="/2018/07/29/oc-alloc/" class="archive-article-date">
+  	<time datetime="2018-07-29T15:10:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-29</time>
+</a>
+        
+    
+ 
+      </header>
+    
+ 
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="问题1：一个NSObject对象占用了多少内存？"><a href="#问题1：一个NSObject对象占用了多少内存？" class="headerlink" title="问题1：一个NSObject对象占用了多少内存？"></a>问题1：一个<code>NSObject</code>对象占用了多少内存？</h3><p>可以通过方法<code>malloc_size</code>来查看某个对象分配了多少内存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">#import &lt;malloc/malloc.h&gt;</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">       NSObject *obj = [[NSObject alloc] init];</span><br><span class="line">     </span><br><span class="line">        NSLog(@&quot;%zd&quot;,malloc_size( (__bridge const void *)(obj)));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">16</span><br></pre></td></tr></table></figure>
+<p>为什么会是16呢？？</p>
+        
+          <a class="article-more-a" href="/2018/07/29/oc-alloc/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/29/oc-alloc/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+
+
+   
+        
+      
+  
+
+
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  
+    
+
 <article id="post-simctl" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1065,101 +1163,6 @@
 
 
   
-    
-
-<article id="post-isa" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/26/isa/">谈谈isa</a>
-    </h1>
-  
-
-
-           
-        <a href="/2017/04/26/isa/" class="archive-article-date">
-  	<time datetime="2017-04-26T07:19:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-26</time>
-</a>
-        
-    
- 
-      </header>
-    
- 
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="先来做几道题目，做的出来的就不要往下看了。"><a href="#先来做几道题目，做的出来的就不要往下看了。" class="headerlink" title="先来做几道题目，做的出来的就不要往下看了。"></a>先来做几道题目，做的出来的就不要往下看了。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@interface Animal : NSObject</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line">@implementation Animal</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface Dog  : Animal</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Dog</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface Demo40ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Demo40ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    Animal *p     = [[Animal alloc] init];</span><br><span class="line">    </span><br><span class="line">    BOOL isEqual  = [p isKindOfClass:[Animal class]]; </span><br><span class="line">    BOOL isEqual1 = [Animal isKindOfClass:[Animal class]]; </span><br><span class="line">    BOOL isEqual2 = [NSObject isKindOfClass:[NSObject class]]; </span><br><span class="line">    </span><br><span class="line">    BOOL isEqual3 = [p isMemberOfClass:[Animal class]]; </span><br><span class="line">    BOOL isEqual4 = [Animal isMemberOfClass:[Animal class]]; </span><br><span class="line">    BOOL isEqual5 = [NSObject isMemberOfClass:[NSObject class]]; </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    BOOL isEqual6 = [(id)[NSObject class] isKindOfClass:[NSObject class]]; </span><br><span class="line">    BOOL isEqual7 = [(id)[NSObject class] isMemberOfClass:[NSObject class]];</span><br><span class="line">    BOOL isEqual8 = [(id)[Dog class] isKindOfClass:[Dog class]]; </span><br><span class="line">    BOOL isEqual9 = [(id)[Dog class] isMemberOfClass:[Dog class]];</span><br><span class="line">    </span><br><span class="line">NSLog(@&quot;%d__%d_%d_%d__%d_%d_%d__%d_%d_&quot;,isEqual,isEqual1,isEqual2,isEqual3,isEqual4,isEqual5,isEqual6,isEqual7,isEqual8,isEqual9);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>下面公布答案，答对的就撤了吧不要在这里浪费时间了，没答出来的那就跟着我一起一探究竟吧😁😀😃</p>
-        
-          <a class="article-more-a" href="/2017/04/26/isa/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/26/isa/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-
-
-   
-        
-      
-  
-
-
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -1324,7 +1327,7 @@
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">FangLaoDa ，&lt;br&gt; 目前就职于点融网s &lt;/br&gt;</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">FangLaoDa ，&lt;br&gt;Coder&lt;/br&gt; &lt;br&gt; 目前就职于点融网 &lt;/br&gt;</div>
   	  	
     	</section>
     
