@@ -16,14 +16,14 @@
 <meta property="og:site_name" content="I&#39;m FangLaoDa">
 <meta property="og:description" content="苹果手机的应用市场分为App Store和非App Store（PP助手、爱思助手）。 我们平时编写的代码最后发布到App Store的时候苹果会对包进行一个加密，生成一个壳程序，防止被篡改。也就是说在App Store上下载的程序都是被加过壳，其他越狱市场下载的一般是没有加过壳的。有很多方式可以看是否已经加过壳了，下面简单介绍一下。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-d34e56e89d0e2474.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-d34e56e89d0e2474.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/400">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-571ea733337c6bad.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-52f14f221c5581e2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-01T08:04:18.895Z">
+<meta property="og:updated_time" content="2018-12-24T13:37:29.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【iOS逆向】- 脱壳">
 <meta name="twitter:description" content="苹果手机的应用市场分为App Store和非App Store（PP助手、爱思助手）。 我们平时编写的代码最后发布到App Store的时候苹果会对包进行一个加密，生成一个壳程序，防止被篡改。也就是说在App Store上下载的程序都是被加过壳，其他越狱市场下载的一般是没有加过壳的。有很多方式可以看是否已经加过壳了，下面简单介绍一下。">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-d34e56e89d0e2474.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-d34e56e89d0e2474.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/400">
   
     <link rel="alternative" href="/atom.xml" title="I&#39;m FangLaoDa" type="application/atom+xml">
   
@@ -211,7 +211,7 @@
 <a id="more"></a>
 <h3 id="class-dump方式"><a href="#class-dump方式" class="headerlink" title="class-dump方式"></a>class-dump方式</h3><p><code>class-dump</code>通过传入一个可执行文件，可以导出该文件的所有类的头文件，<a href="http://stevenygard.com/projects/class-dump/" target="_blank" rel="noopener">下载地址</a>，下载后的文件建议放到<code>/usr/local/bin</code>目录下，就不用改环境变量了，也可以放到你的环境变量的目录下，通过下面的命令查看自己电脑的的环境变量</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $PATH</span><br></pre></td></tr></table></figure>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-d34e56e89d0e2474.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15425400351609.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-d34e56e89d0e2474.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/400" alt="15425400351609.jpg"></p>
 <p>我手机上有上面几个应用，除了<code>网易严选</code>其他都是从<code>App Store</code>上下载的，就拿<code>淘宝</code>和<code>网易严选</code>做个对比看下这2个包分别使用<code>class-dump</code>后会生成什么。在手机上分别打开2个应用后使用命令<code>ps -A</code>找到安装目录，我这台手机上2个包的安装目录分别如下</p>
 <p><code>网易严选</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/var/mobile/Containers/Bundle/Application/A0149F19-C83C-4800-B5A4-27AF0ECCCB1B/NeteaseYanxuan.app/NeteaseYanxuan</span><br></pre></td></tr></table></figure>
@@ -527,19 +527,19 @@ gitment.render('gitment-ctn')
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">其他</a>
+                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">其他</a>
               </li>
              
               <li class="article-tag-list-item">

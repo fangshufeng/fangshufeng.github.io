@@ -29,11 +29,11 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-78171b4f872c4188.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-a63f92723dc5a78c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-7b2943022b04c117.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-590d6b8c401886ac.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-013a9e401f5eb016.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-590d6b8c401886ac.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240/h/500">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-013a9e401f5eb016.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/600">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-d0aff3f9add98e9f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-8ed2e74eb0d56734.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-6804d0b16e57f7a2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-6804d0b16e57f7a2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800/h/400">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-1b13e70461c4371f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-ea754603dbdc624b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-407d22458c943573.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -58,7 +58,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-aa47167f6e02e5e0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-1432d2ba8884fd1b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-a43b6f277554bd05.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-01T08:07:35.240Z">
+<meta property="og:updated_time" content="2018-12-24T13:34:28.980Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【认识MachO】">
 <meta name="twitter:description" content="简介MachO文件是mac平台上一类文件的简称，它的类型有以下种类，可以在#import &amp;lt;mach-o/loader.h&amp;gt;文件中找到 12345678910111213#define	MH_OBJECT	0x1		/* relocatable object file */#define	MH_EXECUTE	0x2		/* demand paged executable file *">
@@ -329,7 +329,7 @@
 <p>同样使用<code>otool</code>也是可以的</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  MochO otool -h exccute/MochO_x86</span><br><span class="line">Mach header</span><br><span class="line">      magic cputype cpusubtype  caps    filetype ncmds sizeofcmds      flags</span><br><span class="line"> 0xfeedfacf 16777223          3  0x00           2    21       3176 0x00200085</span><br><span class="line">➜  MochO</span><br></pre></td></tr></table></figure>
 <p>上面显示该文件的类型为<code>MH_EXECUTE</code>，<code>Load Commands</code>的数量为21个，数一下确实是21个。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-590d6b8c401886ac.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434132636545.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-590d6b8c401886ac.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240/h/500" alt="15434132636545.jpg"></p>
 <p>也就是说<code>mach_header</code>更多的是对<code>load Commands</code>的描述</p>
 <h4 id="2-3-load-Commands"><a href="#2-3-load-Commands" class="headerlink" title="2.3 load Commands"></a>2.3 <code>load Commands</code></h4><p><code>load Commands</code>是由很多的<code>LC_Type</code>组成的，而<code>LC_Type</code>有很多种,可在文件<code>loader.h</code>文件中查看，这边就列出前几种</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/* Constants for the cmd field of all load commands, the type */</span><br><span class="line">#define	LC_SEGMENT	0x1	/* segment of this file to be mapped */</span><br><span class="line">#define	LC_SYMTAB	0x2	/* link-edit stab symbol table info */</span><br><span class="line">#define	LC_SYMSEG	0x3	/* link-edit gdb symbol table info (obsolete) */</span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
@@ -341,7 +341,7 @@
 <li><code>cmdsize</code>：load command的大小。</li>
 </ol>
 <p>也就是下面这张图</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-013a9e401f5eb016.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434151220239.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-013a9e401f5eb016.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="15434151220239.jpg"></p>
 <h5 id="2-3-1-LC-SEGMENT"><a href="#2-3-1-LC-SEGMENT" class="headerlink" title="2.3.1 LC_SEGMENT"></a>2.3.1 <code>LC_SEGMENT</code></h5><p>为了方便管理，程序在内存中是分段管理的，先来看看<code>LC_Type</code>其中一种<code>LC_SEGMENT</code>的结构</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">struct segment_command &#123; /* for 32-bit architectures */</span><br><span class="line">	uint32_t	cmd;		/* LC_SEGMENT */</span><br><span class="line">	uint32_t	cmdsize;	/* includes sizeof section structs */</span><br><span class="line">	char		segname[16];	/* segment name */</span><br><span class="line">	uint32_t	vmaddr;		/* memory address of this segment */</span><br><span class="line">	uint32_t	vmsize;		/* memory size of this segment */</span><br><span class="line">	uint32_t	fileoff;	/* file offset of this segment */</span><br><span class="line">	uint32_t	filesize;	/* amount to map from the file */</span><br><span class="line">	vm_prot_t	maxprot;	/* maximum VM protection */</span><br><span class="line">	vm_prot_t	initprot;	/* initial VM protection */</span><br><span class="line">	uint32_t	nsects;		/* number of sections in segment */</span><br><span class="line">	uint32_t	flags;		/* flags */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <ol>
@@ -364,7 +364,7 @@
 <h6 id="2-3-1-2-TEXT"><a href="#2-3-1-2-TEXT" class="headerlink" title="2.3.1.2 __TEXT"></a>2.3.1.2 <code>__TEXT</code></h6><p>这是程序的代码段，该段是可读可执行，但是不可写。常见的<code>section</code>如下</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/3279997-8ed2e74eb0d56734.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434508576543.jpg"></p>
 <h6 id="2-3-1-3-DATA"><a href="#2-3-1-3-DATA" class="headerlink" title="2.3.1.3 __DATA"></a>2.3.1.3 <code>__DATA</code></h6><p>数据段，包含了可读写数据。常见的<code>section</code>如下</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-6804d0b16e57f7a2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15434509398356.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-6804d0b16e57f7a2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800/h/400" alt="15434509398356.jpg"></p>
 <h5 id="2-3-2-LC-DYLD-INFO-ONLY"><a href="#2-3-2-LC-DYLD-INFO-ONLY" class="headerlink" title="2.3.2 LC_DYLD_INFO_ONLY"></a>2.3.2 <code>LC_DYLD_INFO_ONLY</code></h5><p><code>LC_DYLD_INFO_ONLY</code>和<code>LC_DYLD_INFO</code>是同一个结构</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">struct dyld_info_command &#123;</span><br><span class="line">   uint32_t   cmd;      /* LC_DYLD_INFO or LC_DYLD_INFO_ONLY */</span><br><span class="line">   uint32_t   cmdsize;      /* sizeof(struct dyld_info_command) */</span><br><span class="line"> </span><br><span class="line">   uint32_t   rebase_off;   /* file offset to rebase info  */</span><br><span class="line">   uint32_t   rebase_size;  /* size of rebase info   */</span><br><span class="line"> </span><br><span class="line">   uint32_t   bind_off; /* file offset to binding info   */</span><br><span class="line">   uint32_t   bind_size;    /* size of binding info  */</span><br><span class="line"> </span><br><span class="line">   uint32_t   weak_bind_off;    /* file offset to weak binding info   */</span><br><span class="line">   uint32_t   weak_bind_size;  /* size of weak binding info  */</span><br><span class="line"> </span><br><span class="line">   uint32_t   lazy_bind_off;    /* file offset to lazy binding info */</span><br><span class="line">   uint32_t   lazy_bind_size;  /* size of lazy binding infs */</span><br><span class="line"> </span><br><span class="line">   uint32_t   export_off;   /* file offset to lazy binding info */</span><br><span class="line">   uint32_t   export_size;  /* size of lazy binding infs */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>这个<code>command</code>是<code>dyld</code>在将二进制文件装载到内存链接的时候使用的</p>
@@ -733,19 +733,19 @@ gitment.render('gitment-ctn')
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">其他</a>
+                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">其他</a>
               </li>
              
               <li class="article-tag-list-item">

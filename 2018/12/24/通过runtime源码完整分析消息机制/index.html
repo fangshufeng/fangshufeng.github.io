@@ -6,15 +6,34 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2017/12 | I&#39;m FangLaoDa</title>
+  <title>通过runtime源码完整分析消息机制 | I&#39;m FangLaoDa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="I&#39;m FangLaoDa">
-<meta property="og:url" content="http://yoursite.com/archives/2017/12/index.html">
+  <meta name="description" content="一、前言 本文主要分析当我们调用[p test1]的过程中，runtime是如何调用的。 本文的调试代码地址 由于runtime源码无法正常跑在真机上，本文是通过断点x86代码来类比分析arm64。 本文的代码是objc-750和之前的480有些不一样的地方;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过runtime源码完整分析消息机制">
+<meta property="og:url" content="http://yoursite.com/2018/12/24/通过runtime源码完整分析消息机制/index.html">
 <meta property="og:site_name" content="I&#39;m FangLaoDa">
+<meta property="og:description" content="一、前言 本文主要分析当我们调用[p test1]的过程中，runtime是如何调用的。 本文的调试代码地址 由于runtime源码无法正常跑在真机上，本文是通过断点x86代码来类比分析arm64。 本文的代码是objc-750和之前的480有些不一样的地方;">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-ab3ede58bbf13a31.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-49bbc1d566165712.jpg">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-43f90e41fca74089.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-67876c05f635f497.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-9b5b9c51ee5e5504.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800/h/300">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-10bdb79aef6b3a2e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-c8f0644d65a76960.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-80f3a8556997601f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-75e5fdb34601d905.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-9daf9ab804d00475.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-f1e42941e8076c30.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-7e7403e3e0e24a43.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-7baef2a17a03749d.jpg">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-46e84b0dd25ec536.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-24T13:49:59.749Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="I&#39;m FangLaoDa">
+<meta name="twitter:title" content="通过runtime源码完整分析消息机制">
+<meta name="twitter:description" content="一、前言 本文主要分析当我们调用[p test1]的过程中，runtime是如何调用的。 本文的调试代码地址 由于runtime源码无法正常跑在真机上，本文是通过断点x86代码来类比分析arm64。 本文的代码是objc-750和之前的480有些不一样的地方;">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-ab3ede58bbf13a31.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800">
   
     <link rel="alternative" href="/atom.xml" title="I&#39;m FangLaoDa" type="application/atom+xml">
   
@@ -171,59 +190,288 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
+
+<article id="post-通过runtime源码完整分析消息机制" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/31/Linux/" class="archive-article-date">
-  	<time datetime="2017-12-31T03:44:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-31</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/31/Linux/">Linux下常见命令</a>
+    <h1 class="article-title" itemprop="name">
+      通过runtime源码完整分析消息机制
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">其他</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
+           
+        <a href="/2018/12/24/通过runtime源码完整分析消息机制/" class="archive-article-date">
+  	<time datetime="2018-12-24T13:04:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-24</time>
+</a>
+        
+    
+ 
+      </header>
+    
+ 
 
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><ol>
+<li>本文主要分析当我们调用<code>[p test1]</code>的过程中，runtime是如何调用的。</li>
+<li>本文的调试代码<a href="https://github.com/fangshufeng/demo_project/tree/master/runtime_project" target="_blank" rel="noopener">地址</a></li>
+<li>由于runtime源码无法正常跑在真机上，本文是通过断点<code>x86</code>代码来类比分析<code>arm64</code>。</li>
+<li>本文的代码是<code>objc-750</code>和之前的<code>480</code>有些不一样的地方;</li>
+</ol>
+<a id="more"></a>
+<h2 id="二、缓存查找"><a href="#二、缓存查找" class="headerlink" title="二、缓存查找"></a>二、缓存查找</h2><p>先添加如下测试代码</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-ab3ede58bbf13a31.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="15454413434857.jpg"></p>
+<p><code>23</code>行添加断点</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-49bbc1d566165712.jpg" alt="15454419571462.jpg"></p>
+<p>点击运行程序，程序将断点在<code>23</code>行</p>
+<h3 id="2-1、计算方法test1的索引"><a href="#2-1、计算方法test1的索引" class="headerlink" title="2.1、计算方法test1的索引"></a>2.1、计算方法<code>test1</code>的索引</h3><p><img src="https://upload-images.jianshu.io/upload_images/3279997-43f90e41fca74089.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500" alt="15454455754798.jpg"></p>
+<ol>
+<li>计算方法<code>test1</code>的缓存索引 ，<code>4294971225 &amp; 3 == 1</code>  ；</li>
+<li>先打印索引<code>1</code>的地方有没有占用，可以看到索引为<code>1</code>被<code>init</code>方法占用了，由于是<code>x86</code>架构索引将<code>4294971225</code>➕<code>1</code>然后再<code>&amp; 3</code> == 2，输出为2的位置的<code>_key == 0</code>，所有方法<code>test1</code>索引是<code>2</code>（要是<code>arm64</code>架构的话就是-1了），关于如何缓存的请看<a href="https://fangshufeng.com/2018/09/04/cache/" target="_blank" rel="noopener">这篇</a></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#if __arm__  ||  __x86_64__  ||  __i386__</span><br><span class="line">    #define CACHE_END_MARKER 1</span><br><span class="line">    static inline mask_t cache_next(mask_t i, mask_t mask) &#123;</span><br><span class="line">        return (i+1) &amp; mask;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    #elif __arm64__</span><br><span class="line">    #define CACHE_END_MARKER 0</span><br><span class="line">    static inline mask_t cache_next(mask_t i, mask_t mask) &#123;</span><br><span class="line">        return i ? i-1 : mask;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-2、首次调用test（没有缓存的汇编代码）"><a href="#2-2、首次调用test（没有缓存的汇编代码）" class="headerlink" title="2.2、首次调用test（没有缓存的汇编代码）"></a>2.2、首次调用<code>test</code>（没有缓存的汇编代码）</h3><p>在<code>objc-msg-x86_64.s</code>中打下断点</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-67876c05f635f497.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500" alt="15454460158277.jpg"></p>
+<p>继续调试会到宏<code>CacheLookup</code>代码处,由于此时传的是<code>NORMAL</code>，由于我们的代码最终是跑在真机上的，所以我这里还是分析<code>arm64</code>的汇编吧，<code>x86</code>汇编留给你自己分析吧，读懂<code>arm64</code>的汇编代码，<code>x86</code>汇编不在话下区别就是使用的汇编写法不同（x86是AT&amp;T汇编）</p>
+<h4 id="2-2-1、objc-msg-arm64-s汇编代码如下"><a href="#2-2-1、objc-msg-arm64-s汇编代码如下" class="headerlink" title="2.2.1、objc-msg-arm64.s汇编代码如下"></a>2.2.1、<code>objc-msg-arm64.s</code>汇编代码如下</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">.macro CacheLookup</span><br><span class="line">	// p1 = SEL, p16 = isa</span><br><span class="line">	ldp	p10, p11, [x16, #CACHE]	// p10 = buckets, p11 = occupied|mask</span><br><span class="line">#if !__LP64__</span><br><span class="line">	and	w11, w11, 0xffff	// p11 = mask</span><br><span class="line">#endif</span><br><span class="line">	and	w12, w1, w11		// x12 = _cmd &amp; mask</span><br><span class="line">	add	p12, p10, p12, LSL #(1+PTRSHIFT)</span><br><span class="line">		             // p12 = buckets + ((_cmd &amp; mask) &lt;&lt; (1+PTRSHIFT))</span><br><span class="line"></span><br><span class="line">	ldp	p17, p9, [x12]		// &#123;imp, sel&#125; = *bucket</span><br><span class="line">1:	cmp	p9, p1			// if (bucket-&gt;sel != _cmd)</span><br><span class="line">	b.ne	2f			//     scan more</span><br><span class="line">	CacheHit $0			// call or return imp</span><br><span class="line">	</span><br><span class="line">2:	// not hit: p12 = not-hit bucket</span><br><span class="line">	CheckMiss $0			// miss if bucket-&gt;sel == 0</span><br><span class="line">	cmp	p12, p10		// wrap if bucket == buckets</span><br><span class="line">	b.eq	3f</span><br><span class="line">	ldp	p17, p9, [x12, #-BUCKET_SIZE]!	// &#123;imp, sel&#125; = *--bucket</span><br><span class="line">	b	1b			// loop</span><br><span class="line"></span><br><span class="line">3:	// wrap: p12 = first bucket, w11 = mask</span><br><span class="line">	add	p12, p12, w11, UXTW #(1+PTRSHIFT)</span><br><span class="line">		                        // p12 = buckets + (mask &lt;&lt; 1+PTRSHIFT)</span><br><span class="line"></span><br><span class="line">	// Clone scanning loop to miss instead of hang when cache is corrupt.</span><br><span class="line">	// The slow path may detect any corruption and halt later.</span><br><span class="line"></span><br><span class="line">	ldp	p17, p9, [x12]		// &#123;imp, sel&#125; = *bucket</span><br><span class="line">1:	cmp	p9, p1			// if (bucket-&gt;sel != _cmd)</span><br><span class="line">	b.ne	2f			//     scan more</span><br><span class="line">	CacheHit $0			// call or return imp</span><br><span class="line">	</span><br><span class="line">2:	// not hit: p12 = not-hit bucket</span><br><span class="line">	CheckMiss $0			// miss if bucket-&gt;sel == 0</span><br><span class="line">	cmp	p12, p10		// wrap if bucket == buckets</span><br><span class="line">	b.eq	3f</span><br><span class="line">	ldp	p17, p9, [x12, #-BUCKET_SIZE]!	// &#123;imp, sel&#125; = *--bucket</span><br><span class="line">	b	1b			// loop</span><br><span class="line"></span><br><span class="line">3:	// double wrap</span><br><span class="line">	JumpMiss $0</span><br><span class="line">	</span><br><span class="line">.endmacro</span><br></pre></td></tr></table></figure>
+<p>如果你觉得一头雾水的话我带你一步一步看汇编，首先初步看到这个汇编代码会发现出现很多不知道的寄存器比如<code>p</code>是什么鬼，<code>PTRSHIFT</code>又是什么鬼，原来在<code>objc-750</code>中，苹果使用宏重定义了，其实就是<code>x</code>，可以查看<code>arm64-asm.h</code>头文件可以看到，由于我们是<code>arm64</code>的所以也就是下面的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#if __arm64__</span><br><span class="line"></span><br><span class="line">#if __LP64__</span><br><span class="line">// true arm64</span><br><span class="line"></span><br><span class="line">#define SUPPORT_TAGGED_POINTERS 1</span><br><span class="line">#define PTR .quad</span><br><span class="line">#define PTRSIZE 8</span><br><span class="line">#define PTRSHIFT 3  // 1&lt;&lt;PTRSHIFT == PTRSIZE</span><br><span class="line">// &quot;p&quot; registers are pointer-sized</span><br><span class="line">#define UXTP UXTX</span><br><span class="line">#define p0  x0</span><br><span class="line">#define p1  x1</span><br><span class="line">#define p2  x2</span><br><span class="line">#define p3  x3</span><br><span class="line">#define p4  x4</span><br><span class="line">#define p5  x5</span><br><span class="line">#define p6  x6</span><br><span class="line">#define p7  x7</span><br><span class="line">#define p8  x8</span><br><span class="line">#define p9  x9</span><br><span class="line">#define p10 x10</span><br><span class="line">#define p11 x11</span><br><span class="line">#define p12 x12</span><br><span class="line">#define p13 x13</span><br><span class="line">#define p14 x14</span><br><span class="line">#define p15 x15</span><br><span class="line">#define p16 x16</span><br><span class="line">#define p17 x17</span><br><span class="line"></span><br><span class="line">// true arm64</span><br><span class="line">#else</span><br></pre></td></tr></table></figure>
+<p>这里还是不厌其烦的我还是把宏替换成习惯的形式来方便理解，替换后的结果如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">.macro CacheLookup</span><br><span class="line">	// x1 = SEL, x16 = isa</span><br><span class="line">	ldp	x10, x11, [x16, #16]	// x10 = buckets, x11 = occupied|mask</span><br><span class="line"></span><br><span class="line">	and	w12, w1, w11		// x12 = _cmd &amp; mask</span><br><span class="line">	add	x12, x10, x12, LSL #(1+3)</span><br><span class="line">		             // x12 = buckets + ((_cmd &amp; mask) &lt;&lt; (1+3))</span><br><span class="line"></span><br><span class="line">	ldp	x17, x9, [x12]		// &#123;imp, sel&#125; = *bucket</span><br><span class="line">1:	cmp	x9, x1			// if (bucket-&gt;sel != _cmd)</span><br><span class="line">	b.ne	2f			//     scan more</span><br><span class="line">	CacheHit $0			// call or return imp</span><br><span class="line">	</span><br><span class="line">2:	// not hit: p12 = not-hit bucket</span><br><span class="line">	CheckMiss $0			// miss if bucket-&gt;sel == 0</span><br><span class="line">	cmp	x12, x10		// wrap if bucket == buckets</span><br><span class="line">	b.eq	3f</span><br><span class="line">	ldp	x17, x9, [x12, #-16]!	// &#123;imp, sel&#125; = *--bucket</span><br><span class="line">	b	1b			// loop</span><br><span class="line"></span><br><span class="line">3:	// wrap: x12 = first bucket, w11 = mask</span><br><span class="line">	add	x12, x12, w11, UXTW #(1+3)</span><br><span class="line">		                        // x12 = buckets + (mask &lt;&lt; 1+3)</span><br><span class="line"></span><br><span class="line">	// Clone scanning loop to miss instead of hang when cache is corrupt.</span><br><span class="line">	// The slow path may detect any corruption and halt later.</span><br><span class="line"></span><br><span class="line">	ldp	x17, x9, [x12]		// &#123;imp, sel&#125; = *bucket</span><br><span class="line">1:	cmp	x9, x1			// if (bucket-&gt;sel != _cmd)</span><br><span class="line">	b.ne	2f			//     scan more</span><br><span class="line">	CacheHit $0			// call or return imp</span><br><span class="line">	</span><br><span class="line">2:	// not hit: x12 = not-hit bucket</span><br><span class="line">	CheckMiss $0			// miss if bucket-&gt;sel == 0</span><br><span class="line">	cmp	x12, x10		// wrap if bucket == buckets</span><br><span class="line">	b.eq	3f</span><br><span class="line">	ldp	x17, x9, [x12, #-16]!	// &#123;imp, sel&#125; = *--bucket</span><br><span class="line">	b	1b			// loop</span><br><span class="line"></span><br><span class="line">3:	// double wrap</span><br><span class="line">	JumpMiss $0</span><br><span class="line">	</span><br><span class="line">.endmacro</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-2、汇编代码分析"><a href="#2-2-2、汇编代码分析" class="headerlink" title="2.2.2、汇编代码分析"></a>2.2.2、汇编代码分析</h4><p>下图表示<code>person</code>类对象的内存所占的内存大小图</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-9b5b9c51ee5e5504.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800/h/300" alt="15454726370834.jpg"></p>
+<h5 id="2-2-2-1、ldp-x10-x11-x16-16"><a href="#2-2-2-1、ldp-x10-x11-x16-16" class="headerlink" title="2.2.2.1、ldp    x10, x11, [x16, #16"></a>2.2.2.1、<code>ldp    x10, x11, [x16, #16</code></h5><p><code>_objc_msgSend</code> 调用<code>CacheLookup</code>传的是<code>NORMAL</code>，入参是放在<code>x1 = SEL, x16 = isa</code>中的，最先执行的是<code>ldp    x10, x11, [x16, #16]</code>，这行命令的意思是从<code>x16</code>往下<code>16</code>个字节长度开始，连续读取<code>8</code> + <code>8</code>个字节的长度分别赋值给<code>x10</code>和<code>x11</code>。</p>
+<ol>
+<li>由于<code>x16 == isa</code> ，那么 <code>x16 + 16</code> 就是 <code>_buckets</code>的地址，赋值给<code>x10</code>；</li>
+<li>由于 <code>x10</code>所占的字节长度是<code>8</code>，那么<code>x11</code>就是接下来的<code>8</code>个字节，也就是读取到了<code>_mask</code>和<code>_occupied</code>，所以<code>x11 == _mask + _occupied</code>,由于是小端存储模式，<code>_mask</code>被存放在低<code>16</code>位，可以通过<code>w11</code>取到。</li>
+</ol>
+<p>所以执行完<code>ldp    x10, x11, [x16, #16]</code>代码，<code>x10</code>和<code>x11</code>内容如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-10bdb79aef6b3a2e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500" alt="15454735233773.jpg"></p>
+<h5 id="2-2-2-2、查找缓存列表"><a href="#2-2-2-2、查找缓存列表" class="headerlink" title="2.2.2.2、查找缓存列表"></a>2.2.2.2、查找缓存列表</h5><p><code>2.2.2.1</code>已经找到了缓存<code>_buckets</code>的地址，下面就开始查找缓存了,<code>_buckets</code>的数据结构以及每个元素的地址可以通过下面的方式计算得出如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-c8f0644d65a76960.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500" alt="15454822875161.jpg"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">and	w12, w1, w11		// x12 = _cmd &amp; mask</span><br><span class="line">add	x12, x10, x12, LSL #(1+3) // x12 = buckets + ((_cmd &amp; mask) &lt;&lt; (1+3))</span><br><span class="line">ldp	x17, x9, [x12]		// &#123;imp, sel&#125; = *bucket</span><br></pre></td></tr></table></figure>
+<p>既然已经找到了存放缓存的地址，接下来只要找到调用的方法在缓存中的索引值就可以了，我们需要找的方法是<code>test1</code>，他的<code>SEL</code>为<code>4294971226</code>。</p>
+<ol>
+<li><code>and    w12, w1, w11</code> 初步计算出方法的索引值，<code>4294971226 &amp; 3 == 2</code> ；</li>
+<li><code>add    x12, x10, x12, LSL #(1+3)</code>，步骤1计算出了<code>&amp;</code>的结果，接下来就把指针移动到，序号为<code>2</code>的地方，左移<code>4</code>位正好是<code>16</code>个字节大小，要想跳到哪个序号直接序号左移<code>4</code>位即可，再加上初始的地址<code>x10</code>，就是序号的地址。</li>
+<li><code>ldp    x17, x9, [x12]</code>，分别取出序号<code>2</code>的<code>_imp</code>和<code>_key</code>赋值给寄存器<code>x17</code>和<code>x9</code>。</li>
+</ol>
+<p>知道每个元素的地址计算方式了，那么就是挨个判断是否是我们要找的方法了，我们初始值是序号<code>2</code>，接下来进入判断逻辑,流程图如下。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-80f3a8556997601f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="untitled.png"></p>
+<p>由于我们是第一次调用是没有缓存的，所以即将进入方法<code>__objc_msgSend_uncached</code>，不幸的是这个方法还是汇编代码。</p>
+<h2 id="三、方法列表查找-amp-动态方法解析"><a href="#三、方法列表查找-amp-动态方法解析" class="headerlink" title="三、方法列表查找 &amp; 动态方法解析"></a>三、方法列表查找 &amp; 动态方法解析</h2><p>如果缓存中没有我们要找的方法，那么就会进入<code>__objc_msgSend_uncached</code>，汇编代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> STATIC_ENTRY __objc_msgSend_uncached</span><br><span class="line"></span><br><span class="line">UNWIND __objc_msgSend_uncached, FrameWithNoSaves</span><br><span class="line"></span><br><span class="line">// THIS IS NOT A CALLABLE C FUNCTION</span><br><span class="line">// Out-of-band p16 is the class to search</span><br><span class="line"></span><br><span class="line">MethodTableLookup</span><br><span class="line">TailCallFunctionPointer x17</span><br><span class="line"></span><br><span class="line">END_ENTRY __objc_msgSend_uncached</span><br></pre></td></tr></table></figure>
+<p>实际上这个就是调用的宏<code>MethodTableLookup</code>如果宏没有跳转就会调用<code>TailCallFunctionPointer x17</code>了，我们先看<code>MethodTableLookup</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">.macro MethodTableLookup</span><br><span class="line">	</span><br><span class="line">	// push frame</span><br><span class="line">	SignLR</span><br><span class="line">	stp	fp, lr, [sp, #-16]!</span><br><span class="line">	mov	fp, sp</span><br><span class="line"></span><br><span class="line">	// save parameter registers: x0..x8, q0..q7</span><br><span class="line">	sub	sp, sp, #(10*8 + 8*16)</span><br><span class="line">	stp	q0, q1, [sp, #(0*16)]</span><br><span class="line">	stp	q2, q3, [sp, #(2*16)]</span><br><span class="line">	stp	q4, q5, [sp, #(4*16)]</span><br><span class="line">	stp	q6, q7, [sp, #(6*16)]</span><br><span class="line">	stp	x0, x1, [sp, #(8*16+0*8)]</span><br><span class="line">	stp	x2, x3, [sp, #(8*16+2*8)]</span><br><span class="line">	stp	x4, x5, [sp, #(8*16+4*8)]</span><br><span class="line">	stp	x6, x7, [sp, #(8*16+6*8)]</span><br><span class="line">	str	x8,     [sp, #(8*16+8*8)]</span><br><span class="line"></span><br><span class="line">	// receiver and selector already in x0 and x1</span><br><span class="line">	mov	x2, x16</span><br><span class="line">	bl	__class_lookupMethodAndLoadCache3</span><br><span class="line"></span><br><span class="line">	// IMP in x0</span><br><span class="line">	mov	x17, x0</span><br><span class="line">	</span><br><span class="line">	// restore registers and return</span><br><span class="line">	ldp	q0, q1, [sp, #(0*16)]</span><br><span class="line">	ldp	q2, q3, [sp, #(2*16)]</span><br><span class="line">	ldp	q4, q5, [sp, #(4*16)]</span><br><span class="line">	ldp	q6, q7, [sp, #(6*16)]</span><br><span class="line">	ldp	x0, x1, [sp, #(8*16+0*8)]</span><br><span class="line">	ldp	x2, x3, [sp, #(8*16+2*8)]</span><br><span class="line">	ldp	x4, x5, [sp, #(8*16+4*8)]</span><br><span class="line">	ldp	x6, x7, [sp, #(8*16+6*8)]</span><br><span class="line">	ldr	x8,     [sp, #(8*16+8*8)]</span><br><span class="line"></span><br><span class="line">	mov	sp, fp</span><br><span class="line">	ldp	fp, lr, [sp], #16</span><br><span class="line">	AuthenticateLR</span><br><span class="line"></span><br><span class="line">.endmacro</span><br></pre></td></tr></table></figure>
+<p>如果懂函数栈帧的话，其实这个段汇编代码很简单，头和尾其实是常规操作，前面是开辟栈空间，保护寄存器的值，尾部恢复寄存器的值，以及恢复栈平衡，关键代码其实是<code>bl __class_lookupMethodAndLoadCache3</code>,这个<code>__class_lookupMethodAndLoadCache3</code>方法是一个我们熟悉的高级语言方法了，其实就是<code>_class_lookupMethodAndLoadCache3</code></p>
+<p>在文件<code>objc-runtime-new.m</code>中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IMP _class_lookupMethodAndLoadCache3(id obj, SEL sel, Class cls)</span><br><span class="line">&#123;</span><br><span class="line">    return lookUpImpOrForward(cls, sel, obj, </span><br><span class="line">                              YES/*initialize*/, NO/*cache*/, YES/*resolver*/);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="lookUpImpOrForward的代码如下（有删减）"><a href="#lookUpImpOrForward的代码如下（有删减）" class="headerlink" title="lookUpImpOrForward的代码如下（有删减）"></a><code>lookUpImpOrForward</code>的代码如下（有删减）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">IMP lookUpImpOrForward(Class cls, SEL sel, id inst, </span><br><span class="line">                       bool initialize, bool cache, bool resolver)</span><br><span class="line">&#123;</span><br><span class="line">    IMP imp = nil;</span><br><span class="line">    bool triedResolver = NO;</span><br><span class="line"></span><br><span class="line">    runtimeLock.assertUnlocked();</span><br><span class="line">    </span><br><span class="line"> retry:    </span><br><span class="line"></span><br><span class="line">    // 1.查找缓存 </span><br><span class="line">    imp = cache_getImp(cls, sel);</span><br><span class="line">    if (imp) goto done;</span><br><span class="line"></span><br><span class="line">    // 2.查找自己的方法列表并存入缓存</span><br><span class="line">    &#123;</span><br><span class="line">        Method meth = getMethodNoSuper_nolock(cls, sel);</span><br><span class="line">        if (meth) &#123;</span><br><span class="line">            log_and_fill_cache(cls, meth-&gt;imp, sel, inst, cls);</span><br><span class="line">            imp = meth-&gt;imp;</span><br><span class="line">            goto done;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 3.递归查找父类的缓存或者方法列表</span><br><span class="line">    &#123;</span><br><span class="line">        unsigned attempts = unreasonableClassCount();</span><br><span class="line">        for (Class curClass = cls-&gt;superclass;</span><br><span class="line">             curClass != nil;</span><br><span class="line">             curClass = curClass-&gt;superclass)</span><br><span class="line">        &#123;</span><br><span class="line">            </span><br><span class="line">           // 3.1 查找父类的缓存</span><br><span class="line">            imp = cache_getImp(curClass, sel);</span><br><span class="line">             // 如果父类缓存中有 ！！！存入的是自己的缓存列表，并不是存到父类的缓存列表！！！</span><br><span class="line">            if (imp) &#123;</span><br><span class="line">                if (imp != (IMP)_objc_msgForward_impcache) &#123;</span><br><span class="line">                // 不在缓存的话存入自己的缓存</span><br><span class="line">                    log_and_fill_cache(cls, imp, sel, inst, curClass);</span><br><span class="line">                    goto done;</span><br><span class="line">                &#125;</span><br><span class="line">                else &#123;</span><br><span class="line">                    // Found a forward:: entry in a superclass.</span><br><span class="line">                    // Stop searching, but don&apos;t cache yet; call method </span><br><span class="line">                    // resolver for this class first.</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            // 3.2 父类缓存中没有 ， 就查找父类的方法列表</span><br><span class="line">            Method meth = getMethodNoSuper_nolock(curClass, sel);</span><br><span class="line">            if (meth) &#123;</span><br><span class="line">             // 如果父类方法列表中有 ！！！存入的是自己的缓存列表，并不是存到父类的缓存列表！！！</span><br><span class="line">                log_and_fill_cache(cls, meth-&gt;imp, sel, inst, curClass);</span><br><span class="line">                imp = meth-&gt;imp;</span><br><span class="line">                goto done;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 以上情况都没有 就会进入动态方法解析</span><br><span class="line"></span><br><span class="line">    if (resolver  &amp;&amp;  !triedResolver) &#123;</span><br><span class="line">    // 也就是我们熟悉的 【+resolveClassMethod or +resolveInstanceMethod.】</span><br><span class="line">        _class_resolveMethod(cls, sel, inst);</span><br><span class="line">        triedResolver = YES;</span><br><span class="line">        goto retry;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 以上还没有找到 就会进入消息转发阶段</span><br><span class="line">    imp = (IMP)_objc_msgForward_impcache;</span><br><span class="line">    cache_fill(cls, sel, imp, inst);</span><br><span class="line"></span><br><span class="line"> done:</span><br><span class="line">    runtimeLock.unlock();</span><br><span class="line"></span><br><span class="line">    return imp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注释都写在后面了，流程图如下：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-75e5fdb34601d905.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="lookUpImpOrForward.png"></p>
+<h2 id="四、消息转发（-objc-msgForward-impcache）"><a href="#四、消息转发（-objc-msgForward-impcache）" class="headerlink" title="四、消息转发（_objc_msgForward_impcache）"></a>四、消息转发（_objc_msgForward_impcache）</h2><p>这个方法是汇编实现的，<code>objc-msg-arm64.s</code>中的汇编代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">STATIC_ENTRY __objc_msgForward_impcache</span><br><span class="line"></span><br><span class="line">	// No stret specialization.</span><br><span class="line">	b	__objc_msgForward</span><br><span class="line"></span><br><span class="line">	END_ENTRY __objc_msgForward_impcache</span><br></pre></td></tr></table></figure>
+<p>其实它就是对<code>__objc_msgForward</code>的一个封装而已</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ENTRY __objc_msgForward</span><br><span class="line"></span><br><span class="line">adrp	x17, __objc_forward_handler@PAGE</span><br><span class="line">ldr	p17, [x17, __objc_forward_handler@PAGEOFF]</span><br><span class="line">TailCallFunctionPointer x17</span><br><span class="line"></span><br><span class="line">END_ENTRY __objc_msgForward</span><br></pre></td></tr></table></figure>
+<p><code>__objc_forward_handler</code>是<code>runtime</code>的一个默认实现，代码在<code>objc-runtime.m</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">__attribute__((noreturn)) void </span><br><span class="line">objc_defaultForwardHandler(id self, SEL sel)</span><br><span class="line">&#123;</span><br><span class="line">    _objc_fatal(&quot;%c[%s %s]: unrecognized selector sent to instance %p &quot;</span><br><span class="line">                &quot;(no message forward handler is installed)&quot;, </span><br><span class="line">                class_isMetaClass(object_getClass(self)) ? &apos;+&apos; : &apos;-&apos;, </span><br><span class="line">                object_getClassName(self), sel_getName(sel), self);</span><br><span class="line">&#125;</span><br><span class="line">void *_objc_forward_handler = (void*)objc_defaultForwardHandler;</span><br></pre></td></tr></table></figure>
+<p>需要借助一个<code>demo</code>来继续下面的探索,选择以下<code>Forwarding_demo</code>工程</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-9daf9ab804d00475.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15456305553025.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-f1e42941e8076c30.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15456308945541.jpg"></p>
+<h3 id="4-1、查看调用堆栈-【X86架构】"><a href="#4-1、查看调用堆栈-【X86架构】" class="headerlink" title="4.1、查看调用堆栈-【X86架构】"></a>4.1、查看调用堆栈-【X86架构】</h3><p>运行以后会闪退，函数堆栈如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(lldb) bt</span><br><span class="line">* thread #1, queue = &apos;com.apple.main-thread&apos;, stop reason = breakpoint 1.1</span><br><span class="line">    frame #0: 0x0000000107ca2705 libobjc.A.dylib`objc_exception_throw</span><br><span class="line">    frame #1: 0x0000000108bfdf44 CoreFoundation`-[NSObject(NSObject) doesNotRecognizeSelector:] + 132</span><br><span class="line">    frame #2: 0x0000000108be3ed6 CoreFoundation`___forwarding___ + 1446</span><br><span class="line">    frame #3: 0x0000000108be5da8 CoreFoundation`__forwarding_prep_0___ + 120</span><br><span class="line">  * frame #4: 0x000000010738572c Forwarding_demo`-[ViewController viewDidLoad]</span><br><span class="line"></span><br><span class="line">【...】</span><br></pre></td></tr></table></figure>
+<p>从函数堆栈可以看出调用完<code>performSelector:</code>方法以后，代码就进入了<code>CoreFoundation</code>框架了，然后就到了<code>__forwarding_prep_0___</code> -&gt; <code>___forwarding___</code>，<code>CoreFoundation</code>代码是开源的可以去<a href="https://opensource.apple.com/tarballs/CF/" target="_blank" rel="noopener">这里</a>下载,我下载的是<code>CF-1153.18 2</code>,遗憾的是虽然<code>CoreFoundation</code>代码是开源的，但是苹果没有给出以上方法的实现。</p>
+<h4 id="4-1-1、断点查看方法实现"><a href="#4-1-1、断点查看方法实现" class="headerlink" title="4.1.1、断点查看方法实现"></a>4.1.1、断点查看方法实现</h4><p>运行程序，分别增加2个断点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(lldb) breakpoint set -n &apos;__forwarding_prep_0___&apos;</span><br><span class="line">Breakpoint 3: where = CoreFoundation`__forwarding_prep_0___, address = 0x00000001079efd30</span><br><span class="line">(lldb) breakpoint set -n &apos;___forwarding___&apos;</span><br><span class="line">Breakpoint 4: where = CoreFoundation`___forwarding___, address = 0x00000001079ed930</span><br><span class="line">(lldb)</span><br></pre></td></tr></table></figure>
+<p>运行程序，程序首先进入<code>__forwarding_prep_0___</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CoreFoundation`__forwarding_prep_0___:</span><br><span class="line">-&gt;  0x1079efd30 &lt;+0&gt;:   pushq  %rbp</span><br><span class="line">    [...]</span><br><span class="line">    0x1079efda3 &lt;+115&gt;: callq  0x1079ed930               ; ___forwarding___</span><br><span class="line">    [...]</span><br></pre></td></tr></table></figure>
+<p>过掉这个断点程序会进入<code>___forwarding___</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CoreFoundation`___forwarding___:</span><br><span class="line">-&gt;  0x1079ed930 &lt;+0&gt;:    pushq  %rbp</span><br><span class="line">    0x1079ed931 &lt;+1&gt;:    movq   %rsp, %rbp</span><br><span class="line">    0x1079ed934 &lt;+4&gt;:    pushq  %r15</span><br><span class="line">    0x1079ed936 &lt;+6&gt;:    pushq  %r14</span><br><span class="line">    0x1079ed938 &lt;+8&gt;:    pushq  %r13</span><br><span class="line">    0x1079ed93a &lt;+10&gt;:   pushq  %r12</span><br><span class="line">    0x1079ed93c &lt;+12&gt;:   pushq  %rbx</span><br><span class="line">    0x1079ed93d &lt;+13&gt;:   subq   $0x28, %rsp</span><br><span class="line">    0x1079ed941 &lt;+17&gt;:   movq   0x26c798(%rip), %rax      ; (void *)0x000000010907b070: __stack_chk_guard</span><br><span class="line">    0x1079ed948 &lt;+24&gt;:   movq   (%rax), %rax</span><br><span class="line">    0x1079ed94b &lt;+27&gt;:   movq   %rax, -0x30(%rbp)</span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
+<p>代码很长，<code>4.1.3</code>会专门分析这个方法</p>
+<h4 id="4-1-2、逆向CoreFoundation-framework查看方法实现"><a href="#4-1-2、逆向CoreFoundation-framework查看方法实现" class="headerlink" title="4.1.2、逆向CoreFoundation.framework查看方法实现"></a>4.1.2、逆向CoreFoundation.framework查看方法实现</h4><p>除了直接添加断点的方式，还可以通过逆向<code>CoreFoundation.framework</code>来窥探实现，这样更直观，还能知道函数调用关系，<code>CoreFoundation.framework</code>放在<code>/System/Library/Frameworks/CoreFoundation.framework</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-7e7403e3e0e24a43.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="15456324177613.jpg"></p>
+<p>找到了<code>___forwarding___</code>实现，并且知道是谁调用的，分别是框出来的部分<code>__forwarding_prep_0___</code>和<code>__forwarding_prep_1___</code>，点击进入<code>__forwarding_prep_0___</code>，同样的方式最后定位到了<code>___CFInitialize</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-7baef2a17a03749d.jpg" alt="15456325212259.jpg"></p>
+<p>通过汇编确实看出<code>___CFInitialize</code>调用了<code>___forwarding___</code>方法，但是开源的代码根本没有这个相关的影子。</p>
+<h4 id="4-1-3、分析forwarding实现"><a href="#4-1-3、分析forwarding实现" class="headerlink" title="4.1.3、分析forwarding实现"></a>4.1.3、分析<strong>forwarding</strong>实现</h4><p>我们已经逆向出来了<code>__forwarding__</code>的汇编代码，但是可读性还是太差了，网上<a href="http://www.arigrant.com/blog/2013/12/13/a-selector-left-unhandled" target="_blank" rel="noopener">有人</a>已经将汇编代码转成熟悉的样子，这个方法就是消息转发的全部了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">void __forwarding__(BOOL isStret, void *frameStackPointer, ...) &#123;</span><br><span class="line">  id receiver = *(id *)frameStackPointer;</span><br><span class="line">  SEL sel = *(SEL *)(frameStackPointer + 4);</span><br><span class="line"></span><br><span class="line">  Class receiverClass = object_getClass(receiver);</span><br><span class="line"></span><br><span class="line">  if (class_respondsToSelector(receiverClass, @selector(forwardingTargetForSelector:))) &#123;</span><br><span class="line">    id forwardingTarget = [receiver forwardingTargetForSelector:sel];</span><br><span class="line">    if (forwardingTarget) &#123;</span><br><span class="line">      return objc_msgSend(forwardingTarget, sel, ...);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const char *className = class_getName(object_getClass(receiver));</span><br><span class="line">  const char *zombiePrefix = &quot;_NSZombie_&quot;;</span><br><span class="line">  size_t prefixLen = strlen(zombiePrefix);</span><br><span class="line">  if (strncmp(className, zombiePrefix, prefixLen) == 0) &#123;</span><br><span class="line">    CFLog(kCFLogLevelError,</span><br><span class="line">          @&quot;-[%s %s]: message sent to deallocated instance %p&quot;,</span><br><span class="line">          className + prefixLen,</span><br><span class="line">          sel_getName(sel),</span><br><span class="line">          receiver);</span><br><span class="line">    &lt;breakpoint-interrupt&gt;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  if (class_respondsToSelector(receiverClass, @selector(methodSignatureForSelector:))) &#123;</span><br><span class="line">    NSMethodSignature *methodSignature = [receiver methodSignatureForSelector:sel];</span><br><span class="line">    if (methodSignature) &#123;</span><br><span class="line">      BOOL signatureIsStret = [methodSignature _frameDescriptor]-&gt;returnArgInfo.flags.isStruct;</span><br><span class="line">      if (signatureIsStret != isStret) &#123;</span><br><span class="line">        CFLog(kCFLogLevelWarning ,</span><br><span class="line">              @&quot;*** NSForwarding: warning: method signature and compiler disagree on struct-return-edness of &apos;%s&apos;.  Signature thinks it does%s return a struct, and compiler thinks it does%s.&quot;,</span><br><span class="line">              sel_getName(sel),</span><br><span class="line">              signatureIsStret ? &quot;&quot; : not,</span><br><span class="line">              isStret ? &quot;&quot; : not);</span><br><span class="line">      &#125;</span><br><span class="line">      if (class_respondsToSelector(receiverClass, @selector(forwardInvocation:))) &#123;</span><br><span class="line">        NSInvocation *invocation = [NSInvocation _invocationWithMethodSignature:methodSignature</span><br><span class="line">                                                                          frame:frameStackPointer];</span><br><span class="line">        [receiver forwardInvocation:invocation];</span><br><span class="line"></span><br><span class="line">        void *returnValue = NULL;</span><br><span class="line">        [invocation getReturnValue:&amp;value];</span><br><span class="line">        return returnValue;</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        CFLog(kCFLogLevelWarning ,</span><br><span class="line">              @&quot;*** NSForwarding: warning: object %p of class &apos;%s&apos; does not implement forwardInvocation: -- dropping message&quot;,</span><br><span class="line">              receiver,</span><br><span class="line">              className);</span><br><span class="line">        return 0;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const char *selName = sel_getName(sel);</span><br><span class="line">  SEL *registeredSel = sel_getUid(selName);</span><br><span class="line"></span><br><span class="line">  if (sel != registeredSel) &#123;</span><br><span class="line">    CFLog(kCFLogLevelWarning ,</span><br><span class="line">          @&quot;*** NSForwarding: warning: selector (%p) for message &apos;%s&apos; does not match selector known to Objective C runtime (%p)-- abort&quot;,</span><br><span class="line">          sel,</span><br><span class="line">          selName,</span><br><span class="line">          registeredSel);</span><br><span class="line">  &#125; else if (class_respondsToSelector(receiverClass, @selector(doesNotRecognizeSelector:))) &#123;</span><br><span class="line">    [receiver doesNotRecognizeSelector:sel];</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    CFLog(kCFLogLevelWarning ,</span><br><span class="line">          @&quot;*** NSForwarding: warning: object %p of class &apos;%s&apos; does not implement doesNotRecognizeSelector: -- abort&quot;,</span><br><span class="line">          receiver,</span><br><span class="line">          className);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // The point of no return.</span><br><span class="line">  kill(getpid(), 9);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>涉及到的顺序：</p>
+<ol>
+<li><code>forwardingTargetForSelector:</code>；</li>
+<li><code>methodSignatureForSelector:</code>；</li>
+<li><code>forwardInvocation:</code>;</li>
+<li><code>doesNotRecognizeSelector:</code>。</li>
+</ol>
+<h2 id="五、objc-msgSend完整流程"><a href="#五、objc-msgSend完整流程" class="headerlink" title="五、objc_msgSend完整流程"></a>五、objc_msgSend完整流程</h2><p><img src="https://upload-images.jianshu.io/upload_images/3279997-46e84b0dd25ec536.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="msg_send.png"></p>
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/161539425082_.pic.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+
+
+   
+           <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+        </script>
+      
+      <div style="display: flex;flex-direction: row;justify-content: flex-end;margin-right: 20px;">
+        <span style="margin-left: 50px;color:#999;" id="busuanzi_container_page_pv">
+              访问量<span id="busuanzi_value_page_pv" ></span>次
+            </span>
+      </div>   
+
+      
+  
+
+
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/12/18/认识ARM64汇编/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">认识ARM64汇编</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 
-    
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、前言"><span class="toc-number">1.</span> <span class="toc-text">一、前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、缓存查找"><span class="toc-number">2.</span> <span class="toc-text">二、缓存查找</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1、计算方法test1的索引"><span class="toc-number">2.1.</span> <span class="toc-text">2.1、计算方法test1的索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2、首次调用test（没有缓存的汇编代码）"><span class="toc-number">2.2.</span> <span class="toc-text">2.2、首次调用test（没有缓存的汇编代码）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1、objc-msg-arm64-s汇编代码如下"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.2.1、objc-msg-arm64.s汇编代码如下</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2、汇编代码分析"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2.2、汇编代码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-2-1、ldp-x10-x11-x16-16"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">2.2.2.1、ldp    x10, x11, [x16, #16</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-2-2、查找缓存列表"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">2.2.2.2、查找缓存列表</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、方法列表查找-amp-动态方法解析"><span class="toc-number">3.</span> <span class="toc-text">三、方法列表查找 &amp; 动态方法解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#lookUpImpOrForward的代码如下（有删减）"><span class="toc-number">3.1.</span> <span class="toc-text">lookUpImpOrForward的代码如下（有删减）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、消息转发（-objc-msgForward-impcache）"><span class="toc-number">4.</span> <span class="toc-text">四、消息转发（_objc_msgForward_impcache）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1、查看调用堆栈-【X86架构】"><span class="toc-number">4.1.</span> <span class="toc-text">4.1、查看调用堆栈-【X86架构】</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-1、断点查看方法实现"><span class="toc-number">4.1.1.</span> <span class="toc-text">4.1.1、断点查看方法实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-2、逆向CoreFoundation-framework查看方法实现"><span class="toc-number">4.1.2.</span> <span class="toc-text">4.1.2、逆向CoreFoundation.framework查看方法实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-3、分析forwarding实现"><span class="toc-number">4.1.3.</span> <span class="toc-text">4.1.3、分析forwarding实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、objc-msgSend完整流程"><span class="toc-number">5.</span> <span class="toc-text">五、objc_msgSend完整流程</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="通过runtime源码完整分析消息机制" data-title="通过runtime源码完整分析消息机制" data-url="http://yoursite.com/2018/12/24/通过runtime源码完整分析消息机制/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"litten-hexo"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+  
+  
+
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="https://www.wenjunjiang.win/css/gitment.css">
+
+<style type="text/css">
+
+   .gitment-comment-header {
+	  background-color: transparent;
+	}
+
+	a.gitment-comment-name,
+	a.gitment-comment-name:visited {
+		color: #2196F3
+	}
+</style>
+
+<script src="https://jjeejj.github.io/js/gitment.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2018/12/24/通过runtime源码完整分析消息机制/",
+  owner: 'fangshufeng',
+  repo: 'fangshufeng.github.io',
+  oauth: {
+    client_id: '889a210d751e50ade6dd',
+    client_secret: 'd443d8c86de77a856fe0eaa85b743ba066377f67',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
+
+
 
 
 
@@ -247,8 +495,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

@@ -19,11 +19,11 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-032685ebbe97828a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-ee40ea0fb19742ef.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-f390b3dce4853955.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-4a560add5618c60e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-4a560add5618c60e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800/h/500">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-17ff3f49071fadf2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-32bc9034b5fe6b35.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-3003d84f1a89bc02.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-12T13:23:12.521Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-3003d84f1a89bc02.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500">
+<meta property="og:updated_time" content="2018-12-24T13:30:01.229Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【iOS逆向】-- debugserver">
 <meta name="twitter:description" content="Xcode 为什么可以调试APP?平时开发中当我们给代码打断点，调试程序（lldb），这一切都离不开一个媒介debugserver，它负责将lldb指令给到app，然后app将结果通过debugserver传给lldb debugserver一开始是在Xcode中的，一旦手机连接Xcode信任后，debugserver便会安装到手机上  Xcode目录： /Applications/Xcode.a">
@@ -250,7 +250,7 @@
 <h2 id="用debugserver启动或附加进程"><a href="#用debugserver启动或附加进程" class="headerlink" title="用debugserver启动或附加进程"></a>用<code>debugserver</code>启动或附加进程</h2><h3 id="启动进程"><a href="#启动进程" class="headerlink" title="启动进程"></a>启动进程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">debugserver -x backboard IP:port /path/to/executable</span><br></pre></td></tr></table></figure>
 <p>debugserver会启动executable，并开启port端口， 等待来自IP的LLDB接入。</p>
 <p>先实现一个打开系统的app,iPhone系统应用都放在<code>/Applications</code>下面</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-4a560add5618c60e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15443469873180.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-4a560add5618c60e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800/h/500" alt="15443469873180.jpg"></p>
 <p>已打开系统的计算器为例</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iPhone:~ root# debugserver -x backboard *:1234 /Applications/Calculator.app/Calculator</span><br></pre></td></tr></table></figure>
 <p>上面的代码会启动<code>Calculator.app</code>，并开启1234端 口，等待任意IP地址的LLDB接入。</p>
@@ -296,7 +296,7 @@
 <h5 id="打印寄存器的值"><a href="#打印寄存器的值" class="headerlink" title="打印寄存器的值"></a>打印寄存器的值</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">(lldb) po $w8</span><br><span class="line">20</span><br><span class="line"></span><br><span class="line">(lldb) p $w9</span><br><span class="line">(unsigned int) $1 = 10</span><br><span class="line">(lldb)</span><br></pre></td></tr></table></figure>
 <h5 id="打印层级"><a href="#打印层级" class="headerlink" title="打印层级"></a>打印层级</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(lldb) po [[[UIApplication sharedApplication] keyWindow] recursiveDescription]</span><br><span class="line">&lt;UIWindow: 0x14c63e650; frame = (0 0; 414 736); autoresize = W+H; gestureRecognizers = &lt;NSArray: 0x14c637830&gt;; layer = &lt;UIWindowLayer: 0x14c63d3c0&gt;&gt;</span><br><span class="line">   | &lt;UIView: 0x14c54fe20; frame = (0 0; 414 736); autoresize = W+H; layer = &lt;CALayer: 0x14c54f000&gt;&gt;</span><br><span class="line">   |    | &lt;_UILayoutGuide: 0x14c550280; frame = (0 0; 0 20); hidden = YES; layer = &lt;CALayer: 0x14c54e040&gt;&gt;</span><br><span class="line">   |    | &lt;_UILayoutGuide: 0x14c550c30; frame = (0 736; 0 0); hidden = YES; layer = &lt;CALayer: 0x14c63c690&gt;&gt;</span><br><span class="line">   |    | &lt;UIButton: 0x14c641240; frame = (100 100; 100 100); opaque = NO; layer = &lt;CALayer: 0x14c6411f0&gt;&gt;</span><br><span class="line">   |    |    | &lt;UIButtonLabel: 0x14c63a3c0; frame = (23 39.3333; 54 21.6667); text = &apos;点我啊&apos;; opaque = NO; userInteractionEnabled = NO; layer = &lt;_UILabelLayer: 0x14c633470&gt;&gt;</span><br><span class="line">   |    |    |    | &lt;_UILabelContentLayer: 0x14c651170&gt; (layer)</span><br><span class="line"></span><br><span class="line">(lldb)</span><br></pre></td></tr></table></figure>
 <h5 id="给按钮加一个黄色背景"><a href="#给按钮加一个黄色背景" class="headerlink" title="给按钮加一个黄色背景"></a>给按钮加一个黄色背景</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(lldb) po  [0x14c641240 setBackgroundColor:[UIColor yellowColor] ]</span><br><span class="line">0x0000000000000001</span><br><span class="line"></span><br><span class="line">(lldb) c</span><br><span class="line">Process 1083 resuming</span><br><span class="line">(lldb)</span><br></pre></td></tr></table></figure>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-3003d84f1a89bc02.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15446009775607.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-3003d84f1a89bc02.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500" alt="15446009775607.jpg"></p>
 <p><a href="https://github.com/fangshufeng/demo_project" target="_blank" rel="noopener">demo地址</a></p>
 <p>（完）</p>
 
@@ -568,19 +568,19 @@ gitment.render('gitment-ctn')
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">其他</a>
+                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">其他</a>
               </li>
              
               <li class="article-tag-list-item">

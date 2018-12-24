@@ -22,14 +22,14 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-b4cb4d10da5d501a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-dbd6792e83653ec4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-fa8e02dc8e18da66.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-5846082b5cad0fea.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-5846082b5cad0fea.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/600">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-5c810caacadbee7d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-8bac6cfe15f52ddb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-bf96628c8fb06e66.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-590b234867f682cc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-db48af4dd528ed27.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-b902fb1bd98d02f4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-01T08:07:52.525Z">
+<meta property="og:updated_time" content="2018-12-24T13:35:41.537Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LLDB">
 <meta name="twitter:description" content="平时开发的过程中使用Xcode都是图形化操作习惯了，要是脱离了xcode你还能调试代码吗，恩，Xcode已经把我们惯坏了，不管怎样，作为一个开发对于了解图形操作背后的东西应该要了解。 申明：本文的[]都表示命令简写">
@@ -265,7 +265,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(lldb) frame variable</span><br><span class="line">(ViewController *) self = 0x00007fe390a04960</span><br><span class="line">(SEL) _cmd = &quot;touchesBegan:withEvent:&quot;</span><br><span class="line">(__NSSetM *) touches = 0x0000600003d30640 1 element</span><br><span class="line">(UITouchesEvent *) event = 0x0000600000f66250</span><br><span class="line">(int) a = 10</span><br></pre></td></tr></table></figure>
 <p>我们知道<code>oc</code>的方法内置了<code>self</code>和<code>_cmd</code>参数,所以上面有<code>self</code>和<code>_cmd</code></p>
 <h4 id="汇编代码调试"><a href="#汇编代码调试" class="headerlink" title="汇编代码调试"></a>汇编代码调试</h4><p>开启汇编模式</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-5846082b5cad0fea.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15428781223072.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-5846082b5cad0fea.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="15428781223072.jpg"></p>
 <p>和源码的区别是</p>
 <ul>
 <li>ni : 单步运⾏，把子函数当做整体⼀一步执行</li>
@@ -590,19 +590,19 @@ gitment.render('gitment-ctn')
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">其他</a>
+                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">其他</a>
               </li>
              
               <li class="article-tag-list-item">
