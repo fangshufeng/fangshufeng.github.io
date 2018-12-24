@@ -16,7 +16,7 @@
 <meta property="og:description" content="一、前言 本文主要分析当我们调用[p test1]的过程中，runtime是如何调用的。 本文的调试代码地址 由于runtime源码无法正常跑在真机上，本文是通过断点x86代码来类比分析arm64。 本文的代码是objc-750和之前的480有些不一样的地方;">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-ab3ede58bbf13a31.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-49bbc1d566165712.jpg">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-49bbc1d566165712.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-43f90e41fca74089.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-67876c05f635f497.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-9b5b9c51ee5e5504.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800/h/300">
@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-7e7403e3e0e24a43.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-7baef2a17a03749d.jpg">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-46e84b0dd25ec536.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-24T13:49:59.749Z">
+<meta property="og:updated_time" content="2018-12-24T13:53:57.325Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="通过runtime源码完整分析消息机制">
 <meta name="twitter:description" content="一、前言 本文主要分析当我们调用[p test1]的过程中，runtime是如何调用的。 本文的调试代码地址 由于runtime源码无法正常跑在真机上，本文是通过断点x86代码来类比分析arm64。 本文的代码是objc-750和之前的480有些不一样的地方;">
@@ -226,7 +226,7 @@
 <h2 id="二、缓存查找"><a href="#二、缓存查找" class="headerlink" title="二、缓存查找"></a>二、缓存查找</h2><p>先添加如下测试代码</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/3279997-ab3ede58bbf13a31.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="15454413434857.jpg"></p>
 <p><code>23</code>行添加断点</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-49bbc1d566165712.jpg" alt="15454419571462.jpg"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-49bbc1d566165712.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="15454419571462.jpg"></p>
 <p>点击运行程序，程序将断点在<code>23</code>行</p>
 <h3 id="2-1、计算方法test1的索引"><a href="#2-1、计算方法test1的索引" class="headerlink" title="2.1、计算方法test1的索引"></a>2.1、计算方法<code>test1</code>的索引</h3><p><img src="https://upload-images.jianshu.io/upload_images/3279997-43f90e41fca74089.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/500" alt="15454455754798.jpg"></p>
 <ol>
@@ -556,19 +556,19 @@ gitment.render('gitment-ctn')
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">其他</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">
