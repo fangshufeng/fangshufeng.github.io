@@ -9,6 +9,7 @@
   <title>通过runtime源码完整分析消息机制 | I&#39;m FangLaoDa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="一、前言 本文主要分析当我们调用[p test1]的过程中，runtime是如何调用的。 本文的调试代码地址 由于runtime源码无法正常跑在真机上，本文是通过断点x86代码来类比分析arm64。 本文的代码是objc-750和之前的480有些不一样的地方;">
+<meta name="keywords" content="Objective-C,runtime">
 <meta property="og:type" content="article">
 <meta property="og:title" content="通过runtime源码完整分析消息机制">
 <meta property="og:url" content="http://yoursite.com/2018/12/24/通过runtime源码完整分析消息机制/index.html">
@@ -29,7 +30,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-7e7403e3e0e24a43.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/800">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-7baef2a17a03749d.jpg">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-46e84b0dd25ec536.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-24T13:53:57.325Z">
+<meta property="og:updated_time" content="2019-01-05T10:36:03.847Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="通过runtime源码完整分析消息机制">
 <meta name="twitter:description" content="一、前言 本文主要分析当我们调用[p test1]的过程中，runtime是如何调用的。 本文的调试代码地址 由于runtime源码无法正常跑在真机上，本文是通过断点x86代码来类比分析arm64。 本文的代码是objc-750和之前的480有些不一样的地方;">
@@ -342,6 +343,21 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">runtime</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -370,6 +386,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/01/05/oc中实现线程同步的手段/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          oc中实现线程同步的手段
+        
+      </div>
+    </a>
   
   
     <a href="/2018/12/18/认识ARM64汇编/" id="article-nav-older" class="article-nav-link-wrap">
@@ -482,7 +507,7 @@ gitment.render('gitment-ctn')
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 fanglaoda
+    		&copy; 2019 fanglaoda
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -572,6 +597,14 @@ gitment.render('gitment-ctn')
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OC-LOCK</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">线程同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">React-Native</a>
               </li>
              
@@ -581,6 +614,10 @@ gitment.render('gitment-ctn')
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MachO</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">runtime</a>
               </li>
             
             <div class="clearfix"></div>
