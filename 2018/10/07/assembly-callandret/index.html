@@ -25,7 +25,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-51afc637980bee1a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-43e9d290e8ea021d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-cec64959deae50c2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-10-14T00:09:34.099Z">
+<meta property="og:updated_time" content="2019-01-13T00:31:44.183Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【8086汇编】-- call 和 ret 指令 的应用和本质">
 <meta name="twitter:description" content="在高级语言开发中会把一些功能封装成方法然后调用，下面我们来用汇编实现一个打印hello world的方法">
@@ -221,8 +221,7 @@
 <p>如果想把打印封装成一个函数，在汇编里面通过<code>call</code>和<code>ret</code>指令配合使用的</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code    ds:data    ss:stack</span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">stack segment</span><br><span class="line">       db 10 dup(0) ;申请10个字节，并且默认都是0 </span><br><span class="line">stack ends       </span><br><span class="line"></span><br><span class="line">data segment</span><br><span class="line"></span><br><span class="line">   string db &apos;Hello World!$&apos;  </span><br><span class="line">    </span><br><span class="line">data ends</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">code segment </span><br><span class="line">    </span><br><span class="line">start:</span><br><span class="line">      </span><br><span class="line">      mov ax, data</span><br><span class="line">      mov ds, ax </span><br><span class="line">      </span><br><span class="line">      mov ax , stack</span><br><span class="line">      mov ss ,ax</span><br><span class="line">      mov sp , 10h</span><br><span class="line">      </span><br><span class="line">      call printFunc    </span><br><span class="line">                      </span><br><span class="line">      mov ax , 1122h                </span><br><span class="line">      ;当ah == 4ch 的时候 调用系统的退出函数</span><br><span class="line">      mov ax, 4c00h</span><br><span class="line">      int 21h</span><br><span class="line"></span><br><span class="line">printFunc: ; printFunc为伪指令，值为下面一行的地址</span><br><span class="line">      </span><br><span class="line">      ;ds + dx 才能给打印函数传参</span><br><span class="line">      mov dx,offset string</span><br><span class="line">      </span><br><span class="line">      ;当ah == 9h 的时候 调用系统的print函数 </span><br><span class="line">      mov ah,9h  </span><br><span class="line">      int 21h    </span><br><span class="line">             </span><br><span class="line">       ret      </span><br><span class="line">      </span><br><span class="line">code ends</span><br><span class="line"></span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
 <p>通过<code>call</code>和<code>ret</code>指令就可以实现一个方法调用了，相信你已经发现了下面的代码增加了一个<code>stack</code>段，这就涉及到<code>call</code>和<code>ret</code>指令的本质了</p>
-<p>##<code>call</code>和<code>ret</code>指令的本质</p>
-<p><code>call</code>指令，相当于 </p>
+<h2 id="call和ret指令的本质"><a href="#call和ret指令的本质" class="headerlink" title="call和ret指令的本质"></a><code>call</code>和<code>ret</code>指令的本质</h2><p><code>call</code>指令，相当于 </p>
 <blockquote>
 <ol>
 <li>push IP // 具体应该说是call下面一行的ip</li>
@@ -377,7 +376,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#call指令"><span class="toc-number">1.</span> <span class="toc-text">call指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ret指令"><span class="toc-number">2.</span> <span class="toc-text">ret指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自己实现函数调用"><span class="toc-number"></span> <span class="toc-text">自己实现函数调用</span></a>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#call和ret指令的本质"><span class="toc-number">1.</span> <span class="toc-text">call和ret指令的本质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#call指令"><span class="toc-number">1.1.</span> <span class="toc-text">call指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ret指令"><span class="toc-number">1.2.</span> <span class="toc-text">ret指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自己实现函数调用"><span class="toc-number">2.</span> <span class="toc-text">自己实现函数调用</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -532,11 +531,11 @@ gitment.render('gitment-ctn')
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
+                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
+                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -548,15 +547,15 @@ gitment.render('gitment-ctn')
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">React-Native</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">OC-LOCK</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">线程同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">React-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -569,6 +568,38 @@ gitment.render('gitment-ctn')
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">runtime</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ASLR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Clutch</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">dumpdecrypted</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">WiFi-SSH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">USB-SSH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">函数调用协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">cache_t</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">objc_debug_taggedpointer_obfuscator</a>
               </li>
             
             <div class="clearfix"></div>

@@ -9,7 +9,7 @@
   <title>OC--方法缓存 | I&#39;m FangLaoDa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="有过一些oc基础的开发对oc的消息机制应该都是不陌生的，调用某个对象的方法其实就是给对象发送一条消息，然后接收的对象根据接收到的方法，查找自己的方法列表，然后调用的过程。那oc是如何查找方法的？，是每一次都是去遍历自己的方法列表吗，那这样岂不是效率很低？，如何才能提高查找效率呢？我相信你也有这样的疑惑的，本篇将带来苹果的底层是如何实现的。">
-<meta name="keywords" content="Objective-C">
+<meta name="keywords" content="Objective-C,cache_t">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OC--方法缓存">
 <meta property="og:url" content="http://yoursite.com/2018/09/04/cache/index.html">
@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-2f03e281fad6f329.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-9dce29bc54b3e560.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-e7845566b0a2cba3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-10-28T14:56:07.840Z">
+<meta property="og:updated_time" content="2019-01-13T00:32:59.156Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OC--方法缓存">
 <meta name="twitter:description" content="有过一些oc基础的开发对oc的消息机制应该都是不陌生的，调用某个对象的方法其实就是给对象发送一条消息，然后接收的对象根据接收到的方法，查找自己的方法列表，然后调用的过程。那oc是如何查找方法的？，是每一次都是去遍历自己的方法列表吗，那这样岂不是效率很低？，如何才能提高查找效率呢？我相信你也有这样的疑惑的，本篇将带来苹果的底层是如何实现的。">
@@ -315,6 +315,10 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
         		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">cache_t</a>
+        		</li>
       		
 		</ul>
 	</div>
@@ -542,11 +546,11 @@ gitment.render('gitment-ctn')
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
+                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
+                <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -558,15 +562,15 @@ gitment.render('gitment-ctn')
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">React-Native</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">OC-LOCK</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">线程同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">React-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -579,6 +583,38 @@ gitment.render('gitment-ctn')
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">runtime</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ASLR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Clutch</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">dumpdecrypted</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">WiFi-SSH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">USB-SSH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">函数调用协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">cache_t</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">objc_debug_taggedpointer_obfuscator</a>
               </li>
             
             <div class="clearfix"></div>
