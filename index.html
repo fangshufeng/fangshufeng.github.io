@@ -181,13 +181,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/18/Fri Jan 18 2019 21:20:45 GMT+0800/">如何使用DSYM文件来符号化崩溃信息</a>
+      <a class="article-title" href="/2019/01/18/如何使用DSYM文件来符号化崩溃信息/">如何使用DSYM文件来符号化崩溃信息</a>
     </h1>
   
 
 
            
-        <a href="/2019/01/18/Fri Jan 18 2019 21:20:45 GMT+0800/" class="archive-article-date">
+        <a href="/2019/01/18/如何使用DSYM文件来符号化崩溃信息/" class="archive-article-date">
   	<time datetime="2019-01-18T13:20:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-18</time>
 </a>
         
@@ -204,7 +204,7 @@
 <p>这种信息开发肯定无法找到具体的报错的地方的，本文就是这将这些转成下面这种可读的形式，方便查找问题的</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/3279997-0529b6d7f0a88def.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15476967966597.jpg"></p>
         
-          <a class="article-more-a" href="/2019/01/18/Fri Jan 18 2019 21:20:45 GMT+0800/#more">more >></a>
+          <a class="article-more-a" href="/2019/01/18/如何使用DSYM文件来符号化崩溃信息/#more">more >></a>
         
       
 
@@ -244,7 +244,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/18/Fri Jan 18 2019 21:20:45 GMT+0800/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/18/如何使用DSYM文件来符号化崩溃信息/">展开全文 >></a>
         </p>
       
 
@@ -294,13 +294,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/13/Sun Jan 13 2019 08:24:22 GMT+0800/">你不知道的TaggedPointer</a>
+      <a class="article-title" href="/2019/01/13/你不知道的TaggedPointer/">你不知道的TaggedPointer</a>
     </h1>
   
 
 
            
-        <a href="/2019/01/13/Sun Jan 13 2019 08:24:22 GMT+0800/" class="archive-article-date">
+        <a href="/2019/01/13/你不知道的TaggedPointer/" class="archive-article-date">
   	<time datetime="2019-01-13T00:24:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
 </a>
         
@@ -322,7 +322,7 @@
 <p><img src="https://upload-images.jianshu.io/upload_images/3279997-d8298957b49c3f18.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15469379882496.jpg"></p>
 <p>可以看到我就想存一个<code>2</code>用掉了<code>24</code>个字节，由于我们的<code>NSNumber</code>和<code>NSDate</code>对象的值一般不需要<code>8</code>个字节，<code>4</code>个字节的长度<code>2^31=2147483648</code>可以表达的数量已经达到了<code>20</code>多亿了，为了不造成内存的浪费，想到将指针的值(<code>8</code>个字节)进行拆分，一部分表示数据，一部分用来表示是一个特殊的指针，他不执行任何对象，这就是<code>TaggedPointer</code>技术，这样<code>指针</code> = <code>Data</code> + <code>Tag</code>，那么我们的存一个数字只需要<code>8</code>个字节就够了。</p>
         
-          <a class="article-more-a" href="/2019/01/13/Sun Jan 13 2019 08:24:22 GMT+0800/#more">more >></a>
+          <a class="article-more-a" href="/2019/01/13/你不知道的TaggedPointer/#more">more >></a>
         
       
 
@@ -350,7 +350,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/13/Sun Jan 13 2019 08:24:22 GMT+0800/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/13/你不知道的TaggedPointer/">展开全文 >></a>
         </p>
       
 
@@ -400,13 +400,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/05/Sat Jan 05 2019 18:30:18 GMT+0800/">oc中实现线程同步的手段</a>
+      <a class="article-title" href="/2019/01/05/oc中实现线程同步的手段/">oc中实现线程同步的手段</a>
     </h1>
   
 
 
            
-        <a href="/2019/01/05/Sat Jan 05 2019 18:30:18 GMT+0800/" class="archive-article-date">
+        <a href="/2019/01/05/oc中实现线程同步的手段/" class="archive-article-date">
   	<time datetime="2019-01-05T10:30:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-05</time>
 </a>
         
@@ -420,7 +420,7 @@
       
         <p>当多线程访问共享资源的时候，会出现资源竞争的情况，导致数据错乱的问题，OC中要想实现线程间的同步的话，有以下手段：</p>
         
-          <a class="article-more-a" href="/2019/01/05/Sat Jan 05 2019 18:30:18 GMT+0800/#more">more >></a>
+          <a class="article-more-a" href="/2019/01/05/oc中实现线程同步的手段/#more">more >></a>
         
       
 
@@ -452,7 +452,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/05/Sat Jan 05 2019 18:30:18 GMT+0800/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/05/oc中实现线程同步的手段/">展开全文 >></a>
         </p>
       
 
@@ -502,13 +502,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/24/Mon Dec 24 2018 21:04:24 GMT+0800/">通过runtime源码完整分析消息机制</a>
+      <a class="article-title" href="/2018/12/24/通过runtime源码完整分析消息机制/">通过runtime源码完整分析消息机制</a>
     </h1>
   
 
 
            
-        <a href="/2018/12/24/Mon Dec 24 2018 21:04:24 GMT+0800/" class="archive-article-date">
+        <a href="/2018/12/24/通过runtime源码完整分析消息机制/" class="archive-article-date">
   	<time datetime="2018-12-24T13:04:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-24</time>
 </a>
         
@@ -527,7 +527,7 @@
 <li>本文的代码是<code>objc-750</code>和之前的<code>480</code>有些不一样的地方;</li>
 </ol>
         
-          <a class="article-more-a" href="/2018/12/24/Mon Dec 24 2018 21:04:24 GMT+0800/#more">more >></a>
+          <a class="article-more-a" href="/2018/12/24/通过runtime源码完整分析消息机制/#more">more >></a>
         
       
 
@@ -555,7 +555,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/24/Mon Dec 24 2018 21:04:24 GMT+0800/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/24/通过runtime源码完整分析消息机制/">展开全文 >></a>
         </p>
       
 
@@ -605,13 +605,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/18/Tue Dec 18 2018 21:04:22 GMT+0800/">认识ARM64汇编</a>
+      <a class="article-title" href="/2018/12/18/认识ARM64汇编/">认识ARM64汇编</a>
     </h1>
   
 
 
            
-        <a href="/2018/12/18/Tue Dec 18 2018 21:04:22 GMT+0800/" class="archive-article-date">
+        <a href="/2018/12/18/认识ARM64汇编/" class="archive-article-date">
   	<time datetime="2018-12-18T13:04:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-18</time>
 </a>
         
@@ -629,7 +629,7 @@
 <p>在<code>64</code>位架构中有<code>31</code>个<code>64</code>位的通用寄存器。</p>
 <p>可以通过<code>register read</code>查看</p>
         
-          <a class="article-more-a" href="/2018/12/18/Tue Dec 18 2018 21:04:22 GMT+0800/#more">more >></a>
+          <a class="article-more-a" href="/2018/12/18/认识ARM64汇编/#more">more >></a>
         
       
 
@@ -653,7 +653,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/18/Tue Dec 18 2018 21:04:22 GMT+0800/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/18/认识ARM64汇编/">展开全文 >></a>
         </p>
       
 
@@ -703,13 +703,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/12/Wed Dec 12 2018 21:21:20 GMT+0800/">【iOS逆向】-- debugserver</a>
+      <a class="article-title" href="/2018/12/12/【iOS逆向】-debugserver/">【iOS逆向】-- debugserver</a>
     </h1>
   
 
 
            
-        <a href="/2018/12/12/Wed Dec 12 2018 21:21:20 GMT+0800/" class="archive-article-date">
+        <a href="/2018/12/12/【iOS逆向】-debugserver/" class="archive-article-date">
   	<time datetime="2018-12-12T13:21:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-12</time>
 </a>
         
@@ -731,7 +731,7 @@
 </ol>
 <p>但是缺少<code>task_for_pid</code>权限，通过<code>Xcode</code>安装的<code>debugserver</code>，只能调试自己的app,要想逆向别人的app，这种肯定是行不通的。前面说到，不能调试别人app的原因是权限不够，要想在没有源码的情况下调试别人的app，就需要修改<code>debugserver</code>权限。</p>
         
-          <a class="article-more-a" href="/2018/12/12/Wed Dec 12 2018 21:21:20 GMT+0800/#more">more >></a>
+          <a class="article-more-a" href="/2018/12/12/【iOS逆向】-debugserver/#more">more >></a>
         
       
 
@@ -759,7 +759,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/12/Wed Dec 12 2018 21:21:20 GMT+0800/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/12/【iOS逆向】-debugserver/">展开全文 >></a>
         </p>
       
 
@@ -809,13 +809,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/08/Sat Dec 08 2018 14:14:32 GMT+0800/">【iOS逆向】-- theos的安装与使用</a>
+      <a class="article-title" href="/2018/12/08/【iOS逆向】-theos的安装与使用/">【iOS逆向】-- theos的安装与使用</a>
     </h1>
   
 
 
            
-        <a href="/2018/12/08/Sat Dec 08 2018 14:14:32 GMT+0800/" class="archive-article-date">
+        <a href="/2018/12/08/【iOS逆向】-theos的安装与使用/" class="archive-article-date">
   	<time datetime="2018-12-08T06:14:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-08</time>
 </a>
         
@@ -832,7 +832,7 @@
 <p>Theos是一个越狱开发工具包，由iOS越狱界知名 人士Dustin Howett（@DHowett）开发并分享到<br>GitHub上。Theos与其他越狱开发工具相比，最大的 特点就是简单：下载安装简单、Logos语法简单、编译发布简单，可以让使用者把精力都放在开发工作上 去。</p>
 </blockquote>
         
-          <a class="article-more-a" href="/2018/12/08/Sat Dec 08 2018 14:14:32 GMT+0800/#more">more >></a>
+          <a class="article-more-a" href="/2018/12/08/【iOS逆向】-theos的安装与使用/#more">more >></a>
         
       
 
@@ -856,7 +856,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/08/Sat Dec 08 2018 14:14:32 GMT+0800/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/08/【iOS逆向】-theos的安装与使用/">展开全文 >></a>
         </p>
       
 
@@ -906,13 +906,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/29/Thu Nov 29 2018 22:07:53 GMT+0800/">【认识MachO】</a>
+      <a class="article-title" href="/2018/11/29/认识MachO/">【认识MachO】</a>
     </h1>
   
 
 
            
-        <a href="/2018/11/29/Thu Nov 29 2018 22:07:53 GMT+0800/" class="archive-article-date">
+        <a href="/2018/11/29/认识MachO/" class="archive-article-date">
   	<time datetime="2018-11-29T14:07:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-29</time>
 </a>
         
@@ -928,7 +928,7 @@
 <figure class="highlight mm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#define	MH_OBJECT	0x1		/* relocatable object file */</span></span><br><span class="line"><span class="meta">#define	MH_EXECUTE	0x2		/* demand paged executable file */</span></span><br><span class="line"><span class="meta">#define	MH_FVMLIB	0x3		/* fixed VM shared library file */</span></span><br><span class="line"><span class="meta">#define	MH_CORE		0x4		/* core file */</span></span><br><span class="line"><span class="meta">#define	MH_PRELOAD	0x5		/* preloaded executable file */</span></span><br><span class="line"><span class="meta">#define	MH_DYLIB	0x6		/* dynamically bound shared library */</span></span><br><span class="line"><span class="meta">#define	MH_DYLINKER	0x7		/* dynamic link editor */</span></span><br><span class="line"><span class="meta">#define	MH_BUNDLE	0x8		/* dynamically bound bundle file */</span></span><br><span class="line"><span class="meta">#define	MH_DYLIB_STUB	0x9		/* shared library stub for static */</span></span><br><span class="line">					<span class="comment">/*  linking only, no section contents */</span></span><br><span class="line"><span class="meta">#define	MH_DSYM		0xa		/* companion file with only debug */</span></span><br><span class="line">					<span class="comment">/*  sections */</span></span><br><span class="line"><span class="meta">#define	MH_KEXT_BUNDLE	0xb		/* x86_64 kexts */</span></span><br></pre></td></tr></table></figure>
 <p>列举一些常见的类型</p>
         
-          <a class="article-more-a" href="/2018/11/29/Thu Nov 29 2018 22:07:53 GMT+0800/#more">more >></a>
+          <a class="article-more-a" href="/2018/11/29/认识MachO/#more">more >></a>
         
       
 
@@ -952,7 +952,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/29/Thu Nov 29 2018 22:07:53 GMT+0800/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/11/29/认识MachO/">展开全文 >></a>
         </p>
       
 
@@ -1002,13 +1002,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/22/Thu Nov 22 2018 21:59:26 GMT+0800/">LLDB</a>
+      <a class="article-title" href="/2018/11/22/LLDB/">LLDB</a>
     </h1>
   
 
 
            
-        <a href="/2018/11/22/Thu Nov 22 2018 21:59:26 GMT+0800/" class="archive-article-date">
+        <a href="/2018/11/22/LLDB/" class="archive-article-date">
   	<time datetime="2018-11-22T13:59:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-22</time>
 </a>
         
@@ -1023,7 +1023,7 @@
         <p>平时开发的过程中使用<code>Xcode</code>都是图形化操作习惯了，要是脱离了xcode你还能调试代码吗，恩，<code>Xcode</code>已经把我们惯坏了，不管怎样，作为一个开发对于了解图形操作背后的东西应该要了解。</p>
 <p>申明：本文的<code>[]</code>都表示命令简写</p>
         
-          <a class="article-more-a" href="/2018/11/22/Thu Nov 22 2018 21:59:26 GMT+0800/#more">more >></a>
+          <a class="article-more-a" href="/2018/11/22/LLDB/#more">more >></a>
         
       
 
@@ -1047,7 +1047,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/22/Thu Nov 22 2018 21:59:26 GMT+0800/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/11/22/LLDB/">展开全文 >></a>
         </p>
       
 
@@ -1097,13 +1097,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/18/Sun Nov 18 2018 20:53:02 GMT+0800/">【iOS逆向】- 脱壳</a>
+      <a class="article-title" href="/2018/11/18/【iOS逆向】-脱壳/">【iOS逆向】- 脱壳</a>
     </h1>
   
 
 
            
-        <a href="/2018/11/18/Sun Nov 18 2018 20:53:02 GMT+0800/" class="archive-article-date">
+        <a href="/2018/11/18/【iOS逆向】-脱壳/" class="archive-article-date">
   	<time datetime="2018-11-18T12:53:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
 </a>
         
@@ -1118,7 +1118,7 @@
         <p>苹果手机的应用市场分为<code>App Store</code>和非<code>App Store</code>（<code>PP助手</code>、<code>爱思助手</code>）。</p>
 <p>我们平时编写的代码最后发布到<code>App Store</code>的时候苹果会对包进行一个加密，生成一个壳程序，防止被篡改。也就是说在<code>App Store</code>上下载的程序都是被加过壳，其他越狱市场下载的一般是没有加过壳的。有很多方式可以看是否已经加过壳了，下面简单介绍一下。</p>
         
-          <a class="article-more-a" href="/2018/11/18/Sun Nov 18 2018 20:53:02 GMT+0800/#more">more >></a>
+          <a class="article-more-a" href="/2018/11/18/【iOS逆向】-脱壳/#more">more >></a>
         
       
 
@@ -1150,7 +1150,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/18/Sun Nov 18 2018 20:53:02 GMT+0800/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/11/18/【iOS逆向】-脱壳/">展开全文 >></a>
         </p>
       
 
@@ -1344,14 +1344,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MachO</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">runtime</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">DSYM</a>
               </li>
              
@@ -1365,6 +1357,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">dwarfdump</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MachO</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">runtime</a>
               </li>
             
             <div class="clearfix"></div>
