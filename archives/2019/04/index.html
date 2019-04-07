@@ -6,24 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>OC--KVO实现原理 | I&#39;m FangLaoDa</title>
+  <title>Archives: 2019/4 | I&#39;m FangLaoDa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="基本用法创建一个iOS项目新建类TestObj 123456789101112131415161718//TestObj.h#import &amp;lt;Foundation/Foundation.h&amp;gt;@interface TestObj : NSObject@property (nonatomic, copy) NSString *name;@end//TestObj.m#import &amp;quo">
-<meta name="keywords" content="Objective-C">
-<meta property="og:type" content="article">
-<meta property="og:title" content="OC--KVO实现原理">
-<meta property="og:url" content="http://yoursite.com/2018/08/08/kvo/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="I&#39;m FangLaoDa">
+<meta property="og:url" content="http://yoursite.com/archives/2019/04/index.html">
 <meta property="og:site_name" content="I&#39;m FangLaoDa">
-<meta property="og:description" content="基本用法创建一个iOS项目新建类TestObj 123456789101112131415161718//TestObj.h#import &amp;lt;Foundation/Foundation.h&amp;gt;@interface TestObj : NSObject@property (nonatomic, copy) NSString *name;@end//TestObj.m#import &amp;quo">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-e1add16805ced1ab.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-05cb164687ddae05.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3279997-44254ebe41c89a0e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-10-13T14:05:27.744Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="OC--KVO实现原理">
-<meta name="twitter:description" content="基本用法创建一个iOS项目新建类TestObj 123456789101112131415161718//TestObj.h#import &amp;lt;Foundation/Foundation.h&amp;gt;@interface TestObj : NSObject@property (nonatomic, copy) NSString *name;@end//TestObj.m#import &amp;quo">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3279997-e1add16805ced1ab.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="I&#39;m FangLaoDa">
   
     <link rel="alternative" href="/atom.xml" title="I&#39;m FangLaoDa" type="application/atom+xml">
   
@@ -180,124 +171,35 @@
           </div>
           <div id="js-content" class="content-ll">
             
-
-<article id="post-kvo" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 class="article-title" itemprop="name">
-      OC--KVO实现原理
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2019/04/07/深入理解fishhook/" class="archive-article-date">
+  	<time datetime="2019-04-07T03:36:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-07</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/04/07/深入理解fishhook/">深入理解fishhook</a>
     </h1>
   
 
-
-           
-        <a href="/2018/08/08/kvo/" class="archive-article-date">
-  	<time datetime="2018-08-08T02:35:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-08</time>
-</a>
-        
-    
- 
-      </header>
-    
- 
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>创建一个<code>iOS</code>项目<br>新建类<code>TestObj</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//TestObj.h</span><br><span class="line"></span><br><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">@interface TestObj : NSObject</span><br><span class="line"></span><br><span class="line">@property (nonatomic, copy) NSString *name;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">//TestObj.m</span><br><span class="line"></span><br><span class="line">#import &quot;TestObj.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation TestObj</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p><code>ViewController</code>如果要需要监听<code>TestObj</code>对象的<code>name</code>值的改变，代码如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#import &quot;TestObj.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) TestObj *obj1;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    TestObj *obj1 = [[TestObj alloc] init];</span><br><span class="line">    obj1.name = @&quot;jack&quot;;</span><br><span class="line">    _obj1 = obj1;</span><br><span class="line">    </span><br><span class="line">    [self.obj1 addObserver:self forKeyPath:@&quot;name&quot; options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event &#123;</span><br><span class="line">    self.obj1.name = @&quot;Tom&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary&lt;NSKeyValueChangeKey,id&gt; *)change context:(void *)context &#123;</span><br><span class="line">    NSLog(@&quot;%@对象的%@值改变了%@&quot;,object,keyPath,change);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运作模拟器点击后输出以下 很简单</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> &lt;TestObj: 0x6000024d4400&gt;对象的name值改变了&#123;</span><br><span class="line">    kind = 1;</span><br><span class="line">    new = Tom;</span><br><span class="line">    old = jack;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h4 id="如何实现的当属性改变的时候方法会调用"><a href="#如何实现的当属性改变的时候方法会调用" class="headerlink" title="如何实现的当属性改变的时候方法会调用"></a>如何实现的当属性改变的时候方法会调用</h4><p>在<code>addObserver:forKeyPath:options:context:</code>方法前后加入下面的打印</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">NSLog(@&quot;begin--%@&quot;,object_getClass(self.obj1));</span><br><span class="line"></span><br><span class="line"> [self.obj1 addObserver:self forKeyPath:@&quot;name&quot; options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];</span><br><span class="line"> </span><br><span class="line"> NSLog(@&quot;end--%@&quot;,object_getClass(self.obj1));</span><br><span class="line"> </span><br><span class="line"> NSLog(@&quot;%d&quot;,[self.obj1 isKindOfClass:[TestObj class]]);</span><br></pre></td></tr></table></figure>
-<p>输出<code>self.obj1</code>前后的具体是哪个对象的实例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">begin--TestObj</span><br><span class="line">end--NSKVONotifying_TestObj</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-<p>由<code>isKindOfClass</code>输出的结果可以看出<code>addObserver:forKeyPath:options:context:</code>就会生成<code>TestObj</code>的子类名字为<code>NSKVONotifying</code>+<code>_</code>+<code>TestObj</code>;</p>
-<h4 id="谁调用了addObserver-forKeyPath-options-context-方法"><a href="#谁调用了addObserver-forKeyPath-options-context-方法" class="headerlink" title="谁调用了addObserver:forKeyPath:options:context:方法"></a>谁调用了<code>addObserver:forKeyPath:options:context:</code>方法</h4><p><code>TestObj</code>增加一个方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//.h</span><br><span class="line">- (void)updateWithName:(NSString *)name;</span><br><span class="line"></span><br><span class="line">//.m</span><br><span class="line">- (void)updateWithName:(NSString *)name &#123;</span><br><span class="line">    _name = [name copy];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>ViewController</code>调用修改为下面的形式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event &#123;</span><br><span class="line">//    self.obj1.name = @&quot;Tom&quot;;</span><br><span class="line">    [self.obj1 updateWithName:@&quot;Tom&quot;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>发现没有任何打印，得出新生成的子类是重写父类的<code>set</code>方法从而达到选择性调用<code>addObserver:forKeyPath:options:context:</code>方法的</p>
-<h4 id="生成的子类NSKVONotifying-XXX的数据结构是怎样的"><a href="#生成的子类NSKVONotifying-XXX的数据结构是怎样的" class="headerlink" title="生成的子类NSKVONotifying+_+XXX的数据结构是怎样的"></a>生成的子类<code>NSKVONotifying</code>+<code>_</code>+<code>XXX</code>的数据结构是怎样的</h4><p>通过上面已经知道<code>addObserver:forKeyPath:options:context:</code>方法以后生成了一个新的对象，那么这个子类对象的元类对象和原来的类相同吗，修改代码如下看看结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    TestObj *obj1 = [[TestObj alloc] init];</span><br><span class="line">    obj1.name = @&quot;jack&quot;;</span><br><span class="line">    _obj1 = obj1;</span><br><span class="line">    </span><br><span class="line">    TestObj *obj2 = [[TestObj alloc] init];</span><br><span class="line">    _obj2 = obj2;</span><br><span class="line"></span><br><span class="line">    TestObj *obj3 = [[TestObj alloc] init];</span><br><span class="line">    TestObj *obj4 = [[TestObj alloc] init];</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;前-%p--%p--%p--%p&quot;,</span><br><span class="line">          object_getClass(object_getClass(obj1)),</span><br><span class="line">          object_getClass(object_getClass(obj2)),</span><br><span class="line">          object_getClass(object_getClass(obj3)),</span><br><span class="line">          object_getClass(object_getClass(obj4)));</span><br><span class="line">    [self.obj1 addObserver:self forKeyPath:@&quot;name&quot; options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];</span><br><span class="line">    NSLog(@&quot;end--%@&quot;,object_getClass(self.obj1));</span><br><span class="line">    [self.obj2 addObserver:self forKeyPath:@&quot;name&quot; options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];</span><br><span class="line">    NSLog(@&quot;后-%p--%p--%p--%p&quot;,</span><br><span class="line">          object_getClass(object_getClass(obj1)),</span><br><span class="line">          object_getClass(object_getClass(obj2)),</span><br><span class="line">          object_getClass(object_getClass(obj3)),</span><br><span class="line">          object_getClass(object_getClass(obj4)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">前-0x10ee87318--0x10ee87318--0x10ee87318--0x10ee87318</span><br><span class="line"></span><br><span class="line">后-0x600002e818c0--0x600002e818c0--0x10ee87318--0x10ee87318</span><br></pre></td></tr></table></figure>
-<p>说明生成的新类对象的元类对象也变了，<code>addObserver:forKeyPath:options:context:</code>过后就变成了下面的这张图。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-e1add16805ced1ab.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15336327004011.jpg"></p>
-<h4 id="为什么-self-obj1-isMemberOfClass-self-obj3-class-true"><a href="#为什么-self-obj1-isMemberOfClass-self-obj3-class-true" class="headerlink" title="为什么[self.obj1 isMemberOfClass:[self.obj3 class]] == true?"></a>为什么[self.obj1 isMemberOfClass:[self.obj3 class]] == true?</h4><p>读过<code>runtime</code>源码应该知道<code>isMemberOfClass</code>实现如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> - (BOOL)isMemberOfClass:(Class)cls &#123;</span><br><span class="line">        return [self class] == cls;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">- (Class)class &#123;</span><br><span class="line">    return object_getClass(self);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也就是说<code>isMemberOfClass</code>获取的是对象的<code>isa</code>指针，那按照上面的这张图<code>self.obj1</code>调用<code>isMemberOfClass</code>应该是<code>NSKVONotifying_TestObj</code>，而<code>self.obj3 class]</code>应该是<code>TestObj</code>,怎么会相等呢</p>
-<p>再修改下代码如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    TestObj *obj1 = [[TestObj alloc] init];</span><br><span class="line">    obj1.name = @&quot;jack&quot;;</span><br><span class="line">    _obj1 = obj1;</span><br><span class="line"></span><br><span class="line">    TestObj *obj3 = [[TestObj alloc] init];</span><br><span class="line"></span><br><span class="line">    [self.obj1 addObserver:self forKeyPath:@&quot;name&quot; options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">    unsigned count = 0;</span><br><span class="line">    Method *methodList = class_copyMethodList(object_getClass(self.obj1), &amp;count);</span><br><span class="line">    </span><br><span class="line">    for (int i = 0; i &lt; count; i++) &#123;</span><br><span class="line">        Method method = methodList[I];</span><br><span class="line">        </span><br><span class="line">        IMP imp = method_getImplementation(method)  ;</span><br><span class="line">        NSLog(@&quot;方法名称：%@--%p&quot;,</span><br><span class="line">              NSStringFromSelector(method_getName(method)),imp);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">方法名称：setName:--0x10f1e0e8a</span><br><span class="line">方法名称：class--0x10f1df8c0</span><br><span class="line">方法名称：dealloc--0x10f1df662</span><br><span class="line">方法名称：_isKVOA--0x10f1df65a</span><br></pre></td></tr></table></figure>
-<p>说明<code>NSKVONotifying_TestObj</code>里面有4个方法，重写了<code>setName:</code>、<code>class</code>、<code>dealloc</code>、<code>_isKVOA</code></p>
-<p>断点在此处</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-05cb164687ddae05.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15336330950056.jpg"></p>
-<p>输出</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3279997-44254ebe41c89a0e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15336331072380.jpg"></p>
-<p>我们可以分别得到具体的方法实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">imp = 0x000000010af1ae8a (Foundation`_NSSetObjectValueAndNotify)</span><br><span class="line">方法名称：setName:--0x10af1ae8a // 最后调用了Foundation中的_NSSetObjectValueAndNotify方法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Printing description of imp:</span><br><span class="line">(IMP) imp = 0x000000010af198c0 (Foundation`NSKVOClass)</span><br><span class="line">方法名称：class--0x10af198c0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(IMP) imp = 0x000000010164d662 (Foundation`NSKVODeallocate)</span><br><span class="line">方法名称：dealloc--0x10164d662</span><br><span class="line"></span><br><span class="line">(IMP) imp = 0x000000010f16165a (Foundation`NSKVOIsAutonotifying)</span><br><span class="line">方法名称：_isKVOA--0x10f16165a</span><br></pre></td></tr></table></figure>
-<p>对于<code>class</code>我们有理由猜测就是返回了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (Class)class &#123;</span><br><span class="line">    return [TestObj class];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也就解释了为什么返回true了</p>
-<h4 id="具体值改变的时机"><a href="#具体值改变的时机" class="headerlink" title="具体值改变的时机"></a>具体值改变的时机</h4><p>我们把代码恢复到下面的样子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    TestObj *obj1 = [[TestObj alloc] init];</span><br><span class="line">    obj1.name = @&quot;jack&quot;;</span><br><span class="line">    _obj1 = obj1;</span><br><span class="line">    </span><br><span class="line">    [self.obj1 addObserver:self forKeyPath:@&quot;name&quot; options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event &#123;</span><br><span class="line">    self.obj1.name = @&quot;Tom&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary&lt;NSKeyValueChangeKey,id&gt; *)change context:(void *)context &#123;</span><br><span class="line">    NSLog(@&quot;%@对象的%@值改变了%@&quot;,object,keyPath,change);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在<code>TestObj.m</code>中增加2个方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (void)willChangeValueForKey:(NSString *)key &#123;</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;willChangeValueForKey--begin&quot;);</span><br><span class="line">    [super willChangeValueForKey:key];</span><br><span class="line">    NSLog(@&quot;willChangeValueForKey--end&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)didChangeValueForKey:(NSString *)key &#123;</span><br><span class="line">    NSLog(@&quot;didChangeValueForKey--begin&quot;);</span><br><span class="line">    [super didChangeValueForKey:key];</span><br><span class="line">    NSLog(@&quot;didChangeValueForKey--end&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>再运行点击输出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">willChangeValueForKey--begin</span><br><span class="line">willChangeValueForKey--end</span><br><span class="line">didChangeValueForKey--begin</span><br><span class="line">&lt;TestObj: 0x600003fd0640&gt;对象的name值改变了&#123;</span><br><span class="line">    kind = 1;</span><br><span class="line">    new = Tom;</span><br><span class="line">    old = Tom;</span><br><span class="line">&#125;</span><br><span class="line">didChangeValueForKey--end</span><br></pre></td></tr></table></figure>
-<p>得出2个结论：</p>
-<ol>
-<li><code>NSKVONotifying_TestObj</code>重写了set方法并且调用了<code>willChangeValueForKey</code>和<code>didChangeValueForKey</code>；</li>
-<li>真正改变的时机是<code>didChangeValueForKey</code>方法，因为<code>didChangeValueForKey--end</code>之前值已经发生了改变</li>
-</ol>
-<h4 id="如何在不调用set方法的情况下主动触发KVO"><a href="#如何在不调用set方法的情况下主动触发KVO" class="headerlink" title="如何在不调用set方法的情况下主动触发KVO?"></a>如何在不调用<code>set</code>方法的情况下主动触发<code>KVO</code>?</h4><p>由前面我们知道直接通过以下方式是不会触发<code>KVO</code>的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (void)updateWithName:(NSString *)name &#123;</span><br><span class="line">    _name = name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>要想这种方式也会触发<code>KVO</code>监听需要改造下代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (void)updateWithName:(NSString *)name &#123;</span><br><span class="line">    [self willChangeValueForKey:@&quot;name&quot;];</span><br><span class="line">    _name = name;</span><br><span class="line">    [self didChangeValueForKey:@&quot;name&quot;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样就可以了</p>
-<p><code>willChangeValueForKey</code>必须要调用的，读者可以自己试试看不加会不会触发到监听</p>
-
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/assets/img/161539425082_.pic.jpg">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -305,152 +207,27 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
         		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">fishhook</a>
+        		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-
-
-   
-           <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
-        </script>
-      
-      <div style="display: flex;flex-direction: row;justify-content: flex-end;margin-right: 20px;">
-        <span style="margin-left: 50px;color:#999;" id="busuanzi_container_page_pv">
-              访问量<span id="busuanzi_value_page_pv" ></span>次
-            </span>
-      </div>   
-
-      
-  
-
-
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2018/08/11/kvc/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          OC-KVC调用和赋值原理
-        
-      </div>
-    </a>
   
   
-    <a href="/2018/08/02/oc-method/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">OC--如何获取变量和方法的信息</div>
-      <i class="icon-circle-right"></i>
-    </a>
+    </div></section>
   
 
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本用法"><span class="toc-number">1.</span> <span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何实现的当属性改变的时候方法会调用"><span class="toc-number">2.</span> <span class="toc-text">如何实现的当属性改变的时候方法会调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#谁调用了addObserver-forKeyPath-options-context-方法"><span class="toc-number">3.</span> <span class="toc-text">谁调用了addObserver:forKeyPath:options:context:方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#生成的子类NSKVONotifying-XXX的数据结构是怎样的"><span class="toc-number">4.</span> <span class="toc-text">生成的子类NSKVONotifying+_+XXX的数据结构是怎样的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么-self-obj1-isMemberOfClass-self-obj3-class-true"><span class="toc-number">5.</span> <span class="toc-text">为什么[self.obj1 isMemberOfClass:[self.obj3 class]] == true?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#具体值改变的时机"><span class="toc-number">6.</span> <span class="toc-text">具体值改变的时机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何在不调用set方法的情况下主动触发KVO"><span class="toc-number">7.</span> <span class="toc-text">如何在不调用set方法的情况下主动触发KVO?</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  <div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="kvo" data-title="OC--KVO实现原理" data-url="http://yoursite.com/2018/08/08/kvo/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"litten-hexo"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
-
-  
-  
-  
-
-  
-
-  
-
-  
-  <div id="gitment-ctn"></div>
-<link rel="stylesheet" type="text/css" href="https://raw.githack.com/fangshufeng/gitments/master/gitment.css" >
-<!--<link rel="stylesheet" type="text/css" href="https://www.wenjunjiang.win/css/gitment.css" >-->
-
-<style type="text/css">
-
-   .gitment-comment-header {
-	  background-color: transparent;
-	}
-
-	a.gitment-comment-name,
-	a.gitment-comment-name:visited {
-		color: #2196F3
-	}
-</style>
-
-<script type="text/javascript" src="https://raw.githack.com/fangshufeng/gitments/master/gitments.js" ></script>
-<!--<script type="text/javascript" src="https://www.wenjunjiang.win/js/gitment.js" ></script>-->
-<script>
-var gitment = new Gitment({
-  id: "Wed Aug 08 2018 10:35:59 GMT+0800",
-  owner: 'fangshufeng',
-  repo: 'fangshufeng.github.io',
-  oauth: {
-    client_id: '889a210d751e50ade6dd',
-    client_secret: 'd443d8c86de77a856fe0eaa85b743ba066377f67',
-  },
-})
-gitment.render('gitment-ctn')
-</script>
-
-  
-
-
+    
 
 
 
@@ -474,8 +251,8 @@ gitment.render('gitment-ctn')
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

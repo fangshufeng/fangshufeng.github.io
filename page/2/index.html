@@ -174,6 +174,109 @@
   
     
 
+<article id="post-【iOS逆向】-脱壳" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/18/【iOS逆向】-脱壳/">【iOS逆向】- 脱壳</a>
+    </h1>
+  
+
+
+           
+        <a href="/2018/11/18/【iOS逆向】-脱壳/" class="archive-article-date">
+  	<time datetime="2018-11-18T12:53:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
+</a>
+        
+    
+ 
+      </header>
+    
+ 
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>苹果手机的应用市场分为<code>App Store</code>和非<code>App Store</code>（<code>PP助手</code>、<code>爱思助手</code>）。</p>
+<p>我们平时编写的代码最后发布到<code>App Store</code>的时候苹果会对包进行一个加密，生成一个壳程序，防止被篡改。也就是说在<code>App Store</code>上下载的程序都是被加过壳，其他越狱市场下载的一般是没有加过壳的。有很多方式可以看是否已经加过壳了，下面简单介绍一下。</p>
+        
+          <a class="article-more-a" href="/2018/11/18/【iOS逆向】-脱壳/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">iOS逆向</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Clutch</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">dumpdecrypted</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/18/【iOS逆向】-脱壳/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+
+
+   
+        
+      
+  
+
+
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  
+    
+
 <article id="post-【iOS逆向】-Cycript" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -980,33 +1083,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>上篇讲到了<code>Block</code>其实就是<code>oc对象</code></p>
-<p>本文主要讲解<code>Block值捕获</code>以及如何修改<code>block</code>捕获的变量,说明下本文的目录结构</p>
-<ol>
-<li><p>Block是如何捕获变量的</p>
-<ul>
-<li>捕获的是auto局部变量<ul>
-<li>基本数据类型</li>
-<li>对象类型</li>
-</ul>
-</li>
-<li>捕获的是非auto变量（static变量的和全局变量）<ul>
-<li>基本数据类型</li>
-<li>对象类型</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Block捕获对对象的引用计数的影响</p>
-<ul>
-<li>对象类型</li>
-</ul>
-</li>
-<li><p>__block如何做到可以修改变量的</p>
-<ul>
-<li>__block变量的内存结构</li>
-</ul>
-</li>
-</ol>
+<p>本文主要讲解<code>Block值捕获</code>以及如何修改<code>block</code>捕获的变量,说明下本文的目录结构（简书竟然没做目录功能，有点失望，给个简书生成目录的<a href="https://blog.csdn.net/Wonder233/article/details/78558307" target="_blank" rel="noopener">链接</a>吧）</p>
+<p>注意把示例中的这行代码改成下面的形式，否则无效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// @match        https://www.jianshu.com/p/*</span><br></pre></td></tr></table></figure>
         
           <a class="article-more-a" href="/2018/08/25/block-2/#more">more >></a>
         
@@ -1033,101 +1112,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/08/25/block-2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-
-
-   
-        
-      
-  
-
-
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-  
-    
-
-<article id="post-block-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/19/block-1/">OC--Block--(一)</a>
-    </h1>
-  
-
-
-           
-        <a href="/2018/08/19/block-1/" class="archive-article-date">
-  	<time datetime="2018-08-19T10:45:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-19</time>
-</a>
-        
-    
- 
-      </header>
-    
- 
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>##基本知识点回顾</p>
-<p>我们知道按照变量的作用域划分的话，变量可划分为<code>局部变量</code>和<code>全局变量</code>，而<code>局部变量</code>又分为<code>自动变量</code>和<code>静态变量</code>，<code>全局变量</code>分为<code>静态全局变量</code>和<code>非静态全局变量</code></p>
-        
-          <a class="article-more-a" href="/2018/08/19/block-1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/19/block-1/">展开全文 >></a>
         </p>
       
 
@@ -1257,11 +1241,15 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
+                <a href="javascript:void(0)" class="js-tag color3">其他</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1273,15 +1261,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">其他</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">cache_t</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">React-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1290,6 +1270,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">线程同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">React-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1309,11 +1293,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Clutch</a>
+                <a href="javascript:void(0)" class="js-tag color1">objc_debug_taggedpointer_obfuscator</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">dumpdecrypted</a>
+                <a href="javascript:void(0)" class="js-tag color4">fishhook</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1333,15 +1317,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">objc_debug_taggedpointer_obfuscator</a>
+                <a href="javascript:void(0)" class="js-tag color2">Clutch</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MachO</a>
+                <a href="javascript:void(0)" class="js-tag color4">dumpdecrypted</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">runtime</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MachO</a>
               </li>
             
             <div class="clearfix"></div>

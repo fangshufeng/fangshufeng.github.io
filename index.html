@@ -174,6 +174,105 @@
   
     
 
+<article id="post-深入理解fishhook" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/07/深入理解fishhook/">深入理解fishhook</a>
+    </h1>
+  
+
+
+           
+        <a href="/2019/04/07/深入理解fishhook/" class="archive-article-date">
+  	<time datetime="2019-04-07T03:36:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-07</time>
+</a>
+        
+    
+ 
+      </header>
+    
+ 
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、fishhook能做什么事情？"><a href="#一、fishhook能做什么事情？" class="headerlink" title="一、fishhook能做什么事情？"></a>一、fishhook能做什么事情？</h2><p><code>c</code>函数的地址是在编译的时候就已经确定了，位于程序的<code>TEXT</code>段，为只读区域：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3279997-8f794d6e41192329.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15545964839502.jpg"></p>
+        
+          <a class="article-more-a" href="/2019/04/07/深入理解fishhook/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">fishhook</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/07/深入理解fishhook/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+
+
+   
+        
+      
+  
+
+
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  
+    
+
 <article id="post-如何使用DSYM文件来符号化崩溃信息" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -925,7 +1024,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>MachO文件是mac平台上一类文件的简称，它的类型有以下种类，可以在<code>#import &lt;mach-o/loader.h&gt;</code>文件中找到</p>
-<figure class="highlight mm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#define	MH_OBJECT	0x1		/* relocatable object file */</span></span><br><span class="line"><span class="meta">#define	MH_EXECUTE	0x2		/* demand paged executable file */</span></span><br><span class="line"><span class="meta">#define	MH_FVMLIB	0x3		/* fixed VM shared library file */</span></span><br><span class="line"><span class="meta">#define	MH_CORE		0x4		/* core file */</span></span><br><span class="line"><span class="meta">#define	MH_PRELOAD	0x5		/* preloaded executable file */</span></span><br><span class="line"><span class="meta">#define	MH_DYLIB	0x6		/* dynamically bound shared library */</span></span><br><span class="line"><span class="meta">#define	MH_DYLINKER	0x7		/* dynamic link editor */</span></span><br><span class="line"><span class="meta">#define	MH_BUNDLE	0x8		/* dynamically bound bundle file */</span></span><br><span class="line"><span class="meta">#define	MH_DYLIB_STUB	0x9		/* shared library stub for static */</span></span><br><span class="line">					<span class="comment">/*  linking only, no section contents */</span></span><br><span class="line"><span class="meta">#define	MH_DSYM		0xa		/* companion file with only debug */</span></span><br><span class="line">					<span class="comment">/*  sections */</span></span><br><span class="line"><span class="meta">#define	MH_KEXT_BUNDLE	0xb		/* x86_64 kexts */</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#define	MH_OBJECT	0x1		/* relocatable object file */</span><br><span class="line">#define	MH_EXECUTE	0x2		/* demand paged executable file */</span><br><span class="line">#define	MH_FVMLIB	0x3		/* fixed VM shared library file */</span><br><span class="line">#define	MH_CORE		0x4		/* core file */</span><br><span class="line">#define	MH_PRELOAD	0x5		/* preloaded executable file */</span><br><span class="line">#define	MH_DYLIB	0x6		/* dynamically bound shared library */</span><br><span class="line">#define	MH_DYLINKER	0x7		/* dynamic link editor */</span><br><span class="line">#define	MH_BUNDLE	0x8		/* dynamically bound bundle file */</span><br><span class="line">#define	MH_DYLIB_STUB	0x9		/* shared library stub for static */</span><br><span class="line">					/*  linking only, no section contents */</span><br><span class="line">#define	MH_DSYM		0xa		/* companion file with only debug */</span><br><span class="line">					/*  sections */</span><br><span class="line">#define	MH_KEXT_BUNDLE	0xb		/* x86_64 kexts */</span><br></pre></td></tr></table></figure>
 <p>列举一些常见的类型</p>
         
           <a class="article-more-a" href="/2018/11/29/认识MachO/#more">more >></a>
@@ -1088,109 +1187,6 @@
 
 
   
-    
-
-<article id="post-【iOS逆向】-脱壳" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/18/【iOS逆向】-脱壳/">【iOS逆向】- 脱壳</a>
-    </h1>
-  
-
-
-           
-        <a href="/2018/11/18/【iOS逆向】-脱壳/" class="archive-article-date">
-  	<time datetime="2018-11-18T12:53:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
-</a>
-        
-    
- 
-      </header>
-    
- 
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>苹果手机的应用市场分为<code>App Store</code>和非<code>App Store</code>（<code>PP助手</code>、<code>爱思助手</code>）。</p>
-<p>我们平时编写的代码最后发布到<code>App Store</code>的时候苹果会对包进行一个加密，生成一个壳程序，防止被篡改。也就是说在<code>App Store</code>上下载的程序都是被加过壳，其他越狱市场下载的一般是没有加过壳的。有很多方式可以看是否已经加过壳了，下面简单介绍一下。</p>
-        
-          <a class="article-more-a" href="/2018/11/18/【iOS逆向】-脱壳/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">iOS逆向</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Clutch</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">dumpdecrypted</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/18/【iOS逆向】-脱壳/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-
-
-   
-        
-      
-  
-
-
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1280,11 +1276,15 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Cisco</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
+                <a href="javascript:void(0)" class="js-tag color3">其他</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1296,15 +1296,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">其他</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">cache_t</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">React-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1313,6 +1305,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">线程同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">React-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1332,11 +1328,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Clutch</a>
+                <a href="javascript:void(0)" class="js-tag color1">objc_debug_taggedpointer_obfuscator</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">dumpdecrypted</a>
+                <a href="javascript:void(0)" class="js-tag color4">fishhook</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1356,15 +1352,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">objc_debug_taggedpointer_obfuscator</a>
+                <a href="javascript:void(0)" class="js-tag color2">Clutch</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MachO</a>
+                <a href="javascript:void(0)" class="js-tag color4">dumpdecrypted</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">runtime</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MachO</a>
               </li>
             
             <div class="clearfix"></div>
